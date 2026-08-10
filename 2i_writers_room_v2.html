@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Pubcast 2i — Writer's Room</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+:root{
+  --marble-1:#f8f2e4; --marble-2:#efe4cc; --marble-edge:#d8c9a8;
+  --brass:#c9862f; --brass-deep:#9a6a22; --brass-glow:rgba(201,134,47,0.55);
+  --ink:#1c1b19; --pencil:#3d3833; --pencil-soft:#6b6459;
+  --paper-line:#b9c6d8; --manuscript-bg:#fffdf6; --gray-strip:#cfc7b6;
+  --danger:#9a4b3f; --glass-border:rgba(255,255,255,0.6);
+}
+*{box-sizing:border-box;}
+html,body{height:100%;}
+body{
+  margin:0; background:radial-gradient(ellipse at top, #eee2c4 0%, #d9c9a4 60%, #cdbb90 100%);
+  font-family:'Cormorant Garamond', serif; color:var(--ink); overflow:hidden;
+}
+.shell{
+  display:grid; grid-template-columns: 1fr 58px 2fr; height:100vh; gap:10px; padding:10px;
+}
+.glass{
+  background:linear-gradient(160deg, rgba(255,253,246,0.82), rgba(239,228,204,0.65));
+  border:1px solid var(--glass-border); border-radius:14px;
+  box-shadow:0 12px 30px -14px rgba(60,45,10,0.35), inset 0 1px 0 rgba(255,255,255,0.6);
+  backdrop-filter:blur(6px);
+}
+
+/* ===== LEFT THIRD: chat (top) + reference (bottom) ===== */
+.left-col{ display:flex; flex-direction:column; gap:10px; min-height:0; }
+.chat-pane{ flex:1.15; display:flex; flex-direction:column; min-height:0; padding:12px; }
+.ref-pane{ flex:0.85; display:flex; flex-direction:column; min-height:0; padding:12px; }
+.pane-label{
+  font-family:'IBM Plex Mono',monospace; font-size:9.5px; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--brass-deep); margin-bottom:8px; display:flex; align-items:center; gap:6px;
+}
+.pane-label::before{ content:''; width:5px; height:5px; border-radius:50%; background:var(--brass); box-shadow:0 0 6px var(--brass-glow); }
+.chat-log{ flex:1; overflow-y:auto; display:flex; flex-direction:column; gap:8px; padding-right:2px; }
+.chat-msg{ font-size:14.5px; line-height:1.45; padding:8px 11px; border-radius:9px; max-width:92%; }
+.chat-msg.pp{ background:rgba(255,255,255,0.55); border:1px solid var(--marble-edge); align-self:flex-start; }
+.chat-msg.you{ background:rgba(201,134,47,0.16); border:1px solid var(--brass-glow); align-self:flex-end; }
+.chat-msg .who{ font-family:'IBM Plex Mono',monospace; font-size:9px; text-transform:uppercase; letter-spacing:.06em; color:var(--pencil-soft); display:block; margin-bottom:2px; }
+.chat-input-row{ display:flex; gap:6px; margin-top:8px; }
+.chat-input-row input{
+  flex:1; font-family:'Cormorant Garamond',serif; font-size:14.5px; padding:8px 10px;
+  border:1px solid var(--marble-edge); border-radius:8px; background:rgba(255,253,246,0.85); outline:none;
+}
+.chat-input-row input:focus{ border-color:var(--brass); box-shadow:0 0 0 2px var(--brass-glow); }
+.chat-input-row button{ padding:8px 12px; }
+.ref-list{ flex:1; overflow-y:auto; display:flex; flex-direction:column; gap:6px; }
+.ref-item{
+  font-size:13px; padding:7px 9px; border-radius:7px; background:rgba(255,255,255,0.45);
+  border:1px solid var(--marble-edge); cursor:pointer; display:flex; justify-content:space-between; gap:8px;
+}
+.ref-item:hover{ background:rgba(201,134,47,0.12); }
+.ref-item small{ color:var(--pencil-soft); font-family:'IBM Plex Mono',monospace; font-size:9.5px; white-space:nowrap; }
+.ref-open{ margin-top:8px; }
+.ref-view-back{ margin-bottom:8px; }
+.ref-view-title{ font-family:'IBM Plex Mono',monospace; font-size:9.5px; color:var(--pencil-soft); margin-bottom:6px; }
+.ref-view-text{ font-family:'Cormorant Garamond',serif; font-size:14.5px; line-height:1.55; white-space:pre-wrap; }
+
+/* ===== CENTER RAIL ===== */
+.rail{ display:flex; flex-direction:column; align-items:center; padding:10px 0; }
+.rail-menu{
+  width:38px; height:38px; border-radius:10px; border:1px solid var(--marble-edge);
+  background:rgba(255,255,255,0.5); display:flex; align-items:center; justify-content:center;
+  cursor:pointer; font-size:16px; color:var(--brass-deep);
+}
+.rail-spacer{ flex:1; width:2px; background:linear-gradient(var(--marble-edge), transparent 10%, transparent 90%, var(--marble-edge)); margin:10px 0; }
+.rail-stack{ display:flex; flex-direction:column-reverse; gap:8px; align-items:center; }
+.rail-btn{
+  width:40px; height:40px; border-radius:10px; border:1px solid var(--brass-deep);
+  background:linear-gradient(160deg,#2a231c,#171310); color:var(--brass);
+  display:flex; align-items:center; justify-content:center; font-size:15px; cursor:pointer;
+  box-shadow:0 3px 8px rgba(0,0,0,0.25);
+}
+.rail-btn:hover{ filter:brightness(1.18); }
+.rail-btn.active{ background:linear-gradient(160deg,var(--brass),var(--brass-deep)); color:#fff; }
+.rail-btn[disabled]{ opacity:.35; cursor:default; }
+.rail-speed{ writing-mode:vertical-lr; transform:rotate(180deg); height:70px; margin:4px 0; accent-color:var(--brass); }
+
+/* ===== RIGHT TWO-THIRDS: work area ===== */
+.work{ display:flex; flex-direction:column; min-height:0; overflow:hidden; padding:0; }
+.docbar{
+  display:flex; align-items:center; gap:8px; padding:8px 12px; border-bottom:1px solid var(--marble-edge);
+  font-family:'IBM Plex Mono',monospace; font-size:10.5px;
+}
+.doc-title{
+  flex:1; font-family:'Cormorant Garamond',serif; font-size:15px; border:none; background:transparent; outline:none; color:var(--ink);
+}
+.save-status{ color:var(--pencil-soft); }
+.docbar button{ font-family:'IBM Plex Mono',monospace; font-size:10.5px; padding:5px 10px; }
+
+.manuscript-tail{
+  background:var(--manuscript-bg); padding:10px 26px 8px; border-bottom:1px solid var(--marble-edge);
+  font-family:'Cormorant Garamond',serif; font-size:15.5px; line-height:1.55; max-height:64px; overflow:hidden;
+  position:relative;
+}
+.manuscript-tail::after{
+  content:''; position:absolute; left:0; right:0; bottom:0; height:18px;
+  background:linear-gradient(transparent, var(--manuscript-bg));
+}
+.manuscript-tail .zlabel{ position:absolute; top:2px; right:12px; font-family:'IBM Plex Mono',monospace; font-size:8px; letter-spacing:.1em; color:var(--pencil-soft); text-transform:uppercase; }
+
+.transition-strip{
+  background:linear-gradient(180deg, var(--manuscript-bg), var(--gray-strip));
+  padding:8px 26px; border-bottom:1px solid var(--marble-edge);
+  font-family:'Kalam',cursive; font-size:14px; color:#54514a; opacity:.72; min-height:22px;
+  transition:opacity .3s ease;
+}
+.transition-strip .zlabel{ display:block; font-family:'IBM Plex Mono',monospace; font-size:8px; letter-spacing:.1em; color:var(--pencil-soft); text-transform:uppercase; margin-bottom:2px; opacity:1; }
+
+.buffer-crawl{
+  flex:1; min-height:0; overflow-y:auto; position:relative;
+  background:
+    repeating-linear-gradient(0deg, transparent, transparent 29px, var(--paper-line) 30px),
+    #f4ead9;
+  padding:10px 26px 40px;
+}
+.crawl-inner{ display:flex; flex-direction:column-reverse; gap:2px; }
+.line{
+  font-family:'Kalam',cursive; font-size:17px; line-height:30px; color:var(--pencil);
+  padding:0 6px; border-radius:4px; cursor:pointer; position:relative;
+}
+.line:hover{ background:rgba(201,134,47,0.10); }
+.line.buffered{ opacity:.85; }
+.line.reading{ background:rgba(201,134,47,0.16); }
+.line.reading .sweep{
+  position:absolute; inset:0; border-radius:4px; background:var(--brass-glow);
+  background-size:0% 100%; background-repeat:no-repeat; background-image:linear-gradient(to right, var(--brass-glow), var(--brass-glow));
+  animation-name:sweep; animation-timing-function:linear; animation-fill-mode:forwards; z-index:-1;
+}
+@keyframes sweep{ from{background-size:0% 100%;} to{background-size:100% 100%;} }
+.line.reaction{ outline:1px dashed var(--brass); }
+.reaction-ring{
+  display:inline-block; width:9px; height:9px; border-radius:50%; margin-left:8px;
+  border:2px solid var(--brass); border-top-color:transparent; animation:spin 1s linear infinite; vertical-align:middle;
+}
+@keyframes spin{ to{ transform:rotate(360deg); } }
+.line textarea{ width:100%; font:inherit; font-size:17px; line-height:1.5; border:none; background:transparent; resize:vertical; outline:none; }
+.line-controls{ display:flex; gap:6px; margin:2px 6px 6px; }
+.line-controls button{ font-size:10.5px; padding:3px 9px; }
+.crawl-empty{ font-family:'Kalam',cursive; color:var(--pencil-soft); font-size:15px; padding:6px; }
+.regen-flag{ font-family:'IBM Plex Mono',monospace; font-size:9.5px; color:var(--danger); margin:0 6px 4px; }
+.regen-flag.ok{ color:#3d7a4a; }
+
+button{
+  font-family:'IBM Plex Mono',monospace; border:1px solid var(--brass-deep);
+  background:linear-gradient(160deg,var(--brass),var(--brass-deep)); color:#fff;
+  border-radius:6px; cursor:pointer; letter-spacing:.02em;
+}
+button.secondary{ background:transparent; color:var(--brass-deep); }
+button:disabled{ opacity:.35; cursor:default; }
+button:active:not(:disabled){ transform:translateY(1px); }
+
+.status-strip{
+  display:flex; align-items:center; gap:10px; padding:6px 12px; border-top:1px solid var(--marble-edge);
+  font-family:'IBM Plex Mono',monospace; font-size:9.5px; color:var(--pencil-soft);
+}
+.status-dot{ width:6px;height:6px;border-radius:50%; background:var(--pencil-soft); }
+.status-dot.playing{ background:#3d7a4a; }
+.status-dot.paused{ background:var(--brass); }
+
+.menu-panel{
+  position:absolute; left:64px; top:12px; z-index:30; min-width:230px; padding:8px;
+  background:#fffdf7; border:1px solid var(--marble-edge); border-radius:8px;
+  box-shadow:0 12px 24px rgba(0,0,0,.18); display:none;
+}
+.menu-panel.open{ display:block; }
+.menu-panel button{ display:block; width:100%; text-align:left; margin:3px 0; }
+.menu-note{ font-family:'IBM Plex Mono',monospace; font-size:9.5px; color:var(--pencil-soft); padding:4px 6px 8px; line-height:1.4; }
+</style>
+</head>
+<body>
+
+<div class="shell">
+  <div class="left-col">
+    <div class="chat-pane glass">
+      <div class="pane-label">PubPartner — Chat</div>
+      <div class="chat-log" id="chatLog"></div>
+      <div class="chat-input-row">
+        <input id="chatInput" type="text" placeholder="Talk with PubPartner about this scene…" />
+        <button id="chatSendBtn">Send</button>
+      </div>
+    </div>
+    <div class="ref-pane glass">
+      <div class="pane-label">Reference / Continuity</div>
+      <div class="ref-list" id="refList"></div>
+      <button class="secondary ref-open" id="refOpenBtn">Open another document…</button>
+    </div>
+  </div>
+
+  <div class="rail">
+    <div class="rail-menu" id="menuBtn" title="Menu">☰</div>
+    <div class="menu-panel" id="menuPanel">
+      <div class="menu-note">Finalized manuscript text is locked. Select a line, then unlock it deliberately.</div>
+      <button class="secondary" id="unlockBtn">Unlock selected / line…</button>
+      <button class="secondary" id="lockAllBtn">Lock all finalized text</button>
+      <button class="secondary" id="newChapterBtn">Start new chapter</button>
+    </div>
+    <div class="rail-spacer"></div>
+    <div class="rail-stack">
+      <button class="rail-btn" id="stopBtn" title="Stop">■</button>
+      <button class="rail-btn" id="approveBtn" title="Approve buffer now — commit early">✓</button>
+      <button class="rail-btn" id="skipBtn" title="Skip ahead">⏭</button>
+      <button class="rail-btn" id="playBtn" title="Play / Pause">▶</button>
+      <input class="rail-speed" id="speed" type="range" min="1" max="5" value="3" title="Read speed" />
+      <button class="rail-btn" id="genBtn" title="Generate next page">✎</button>
+    </div>
+  </div>
+
+  <div class="work glass">
+    <div class="docbar">
+      <input id="docTitle" class="doc-title" type="text" value="Untitled Pubcast 2i Document" />
+      <button id="saveBtn">Save</button>
+      <button class="secondary" id="saveAsBtn">Save As…</button>
+      <span id="saveStatus" class="save-status">unsaved</span>
+    </div>
+
+    <div class="manuscript-tail" id="manuscriptTail"><span class="zlabel">Manuscript — locked</span></div>
+    <div class="transition-strip" id="transitionStrip"><span class="zlabel">Nearing commit</span></div>
+
+    <div class="buffer-crawl" id="bufferCrawl">
+      <div class="crawl-inner" id="crawlInner"></div>
+    </div>
+
+    <div class="status-strip">
+      <span class="status-dot" id="statusDot"></span><span id="statusText">idle</span>
+      <span id="branchLabel">branch: original</span>
+      <span id="wordMeta" style="margin-left:auto;">0 words drafted</span>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   HANDOFF NOTE (read this before editing):
+   Engine (state model, structural-edit detection, save/load,
+   speech, branches) is carried over from Pubcast-2i-Prototype.html
+   almost unchanged. What's NEW in this file:
+   - Buffer is sized in WORDS (page-based), not fixed line count.
+   - REACTION_MS pause after each line finishes reading, before
+     auto-advancing — gives a beat to interrupt.
+   - approveBtn-equivalent (genBtn is repurposed as "Generate";
+     TODO: a dedicated Approve action to force-commit early is
+     not yet wired — see TODO list at bottom of this comment block).
+   - Chat pane and Reference pane are visual + basic local echo
+     only. Not connected to a real PubPartner backend yet.
+   TODO for next session:
+   1. Wire chat input to an actual generation call (currently
+      chatSendBtn just echoes into chatLog).
+   2. Add explicit "Approve" control to force-flush buffer into
+      committed before it reaches PAGE word threshold.
+   3. Reference pane ("Open another document…") is a static list;
+      wire to real file open / chapter-scroll-back.
+   4. Verify Star Wars crawl scroll direction reads correctly at
+      long buffer lengths (currently relies on column-reverse flex
+      + scrollTop, not a true perspective transform).
+   5. Replace SCENE/ALT_DOCKS/ALT_GENERIC demo arrays with real
+      generation once PubPartner API is wired in.
+   ============================================================ */
+
+const SCENE = [
+  "The rain kept tapping the window in that slow, deliberate rhythm.",
+  "Sahira slid the envelope across the table without looking up.",
+  "\"You don't have to open it here,\" she said.",
+  "Repeat turned it over once, feeling the weight of whatever was inside.",
+  "\"I know,\" he said. \"I'm going to anyway.\"",
+  "He peeled back the flap slowly, like it might still change its mind.",
+  "The paper inside was thinner than he expected.",
+  "For a second neither of them said anything at all.",
+  "Then he folded it back along its original crease.",
+  "\"Okay,\" he said. \"Okay. I believe you.\"",
+  "He tucked the envelope into his jacket pocket, close to his chest.",
+  "The diner's fluorescent lights buzzed faintly overhead.",
+  "Sahira watched him with an expression he couldn't quite name.",
+  "\"You're not going to say anything else?\" she asked.",
+  "\"Not yet,\" he said. \"Not until I know it's real.\"",
+  "The waitress refilled coffee neither of them had asked for.",
+  "Outside, the rain hadn't let up, and neither had the quiet between them."
+];
+const ALT_DOCKS = [
+  "He pushed the chair back and stood before she could answer.",
+  "\"I'm not waiting on this one,\" he said, already reaching for his coat.",
+  "The docks weren't far, and the envelope wasn't getting lighter in his pocket.",
+  "Sahira called after him but the door had already swung shut.",
+  "Rain hit him the second he stepped outside, cold and immediate.",
+  "He didn't look back at the diner window."
+];
+const ALT_GENERIC = [
+  "\"Say something else, then,\" she said, quieter now.",
+  "He turned the salt shaker over in his fingers instead of answering.",
+  "\"You always do this,\" she said. \"Go quiet right when it matters.\"",
+  "He looked up at her, finally, and there wasn't anything guarded left in it.",
+  "\"I'm not going quiet,\" he said. \"I'm just done guessing what you need me to say.\"",
+  "The rain outside had eased into something softer, almost polite about it."
+];
+const BRANCHES = { docks: ALT_DOCKS, generic: ALT_GENERIC, original: SCENE };
+let currentBranch = 'original';
+let pool = SCENE.slice();
+let pointer = 0;
+let committed = [];
+let buffer = [];
+let reading = null;
+let playing = false;
+let editingTarget = null;
+let selectedLineIndex = null;
+let committedChapters = [];
+let currentChapter = 1;
+let speaking = false;
+let reactionTimer = null;
+
+// --- NEW: page-based buffer sizing ---
+const WORDS_PER_PAGE = 300;
+const BUFFER_PAGES = 1.5;
+const BUFFER_WORD_CAP = Math.round(WORDS_PER_PAGE * BUFFER_PAGES);
+const REACTION_MS = 12000; // 10-15s reaction window after each line reads
+
+const SPEED_MS = {1:2600, 2:2000, 3:1500, 4:1000, 5:650};
+
+const manuscriptTail = document.getElementById('manuscriptTail');
+const transitionStrip = document.getElementById('transitionStrip');
+const crawlInner = document.getElementById('crawlInner');
+const playBtn = document.getElementById('playBtn');
+const stopBtn = document.getElementById('stopBtn');
+const approveBtn = document.getElementById('approveBtn');
+const skipBtn = document.getElementById('skipBtn');
+const genBtn = document.getElementById('genBtn');
+const speedInput = document.getElementById('speed');
+const docTitleInput = document.getElementById('docTitle');
+const saveBtn = document.getElementById('saveBtn');
+const saveAsBtn = document.getElementById('saveAsBtn');
+const saveStatus = document.getElementById('saveStatus');
+const menuBtn = document.getElementById('menuBtn');
+const menuPanel = document.getElementById('menuPanel');
+const unlockBtn = document.getElementById('unlockBtn');
+const lockAllBtn = document.getElementById('lockAllBtn');
+const newChapterBtn = document.getElementById('newChapterBtn');
+const statusDot = document.getElementById('statusDot');
+const statusText = document.getElementById('statusText');
+const branchLabelEl = document.getElementById('branchLabel');
+const wordMetaEl = document.getElementById('wordMeta');
+const chatLog = document.getElementById('chatLog');
+const chatInput = document.getElementById('chatInput');
+const chatSendBtn = document.getElementById('chatSendBtn');
+const refList = document.getElementById('refList');
+const refOpenBtn = document.getElementById('refOpenBtn');
+
+let documentHandle = null;
+let documentDirty = true;
+let documentTitle = 'Untitled Pubcast 2i Document';
+
+function setDirty(dirty=true){ documentDirty = dirty; saveStatus.textContent = dirty ? 'unsaved changes' : 'saved'; }
+function safeTitle(){ return (docTitleInput.value||'').trim() || 'Untitled Pubcast 2i Document'; }
+function fileNameFromTitle(t){ return (t.replace(/[\\/:*?"<>|]/g,'-').replace(/\s+/g,' ').trim()||'Untitled Pubcast 2i Document') + '.2i'; }
+function markDocumentChanged(){ setDirty(true); }
+
+function documentPayload(){
+  documentTitle = safeTitle();
+  return { format:'2i-document', version:2, title:documentTitle, savedAt:new Date().toISOString(),
+    state:{ committed:committed.slice(), committedChapters:committedChapters.slice(), currentChapter,
+      buffer:buffer.slice(), reading: reading?{text:reading.text}:null, branch:currentBranch, pointer,
+      speed:Number(speedInput.value) } };
+}
+function downloadDocument(payload,fileName){
+  const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob); const a=document.createElement('a');
+  a.href=url; a.download=fileName; a.click(); setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+async function saveAsDocument(){
+  const payload=documentPayload(); const suggestedName=fileNameFromTitle(payload.title);
+  if('showSaveFilePicker' in window){
+    try{
+      const handle=await window.showSaveFilePicker({suggestedName,types:[{description:'2i Document',accept:{'application/json':['.2i']}}]});
+      const w=await handle.createWritable(); await w.write(JSON.stringify(payload,null,2)); await w.close();
+      documentHandle=handle; setDirty(false); return;
+    }catch(err){ if(err&&err.name==='AbortError')return; }
+  }
+  downloadDocument(payload,suggestedName); documentHandle=null; setDirty(false);
+}
+async function saveDocument(){
+  const payload=documentPayload();
+  if(documentHandle){
+    try{ const w=await documentHandle.createWritable(); await w.write(JSON.stringify(payload,null,2)); await w.close(); setDirty(false); return; }
+    catch(err){ documentHandle=null; }
+  }
+  await saveAsDocument();
+}
+saveBtn.onclick=saveDocument; saveAsBtn.onclick=saveAsDocument;
+docTitleInput.addEventListener('input',()=>{ documentTitle=safeTitle(); markDocumentChanged(); document.title=documentTitle+' — 2i'; });
+document.title=safeTitle()+' — 2i';
+
+menuBtn.onclick=(e)=>{ e.stopPropagation(); menuPanel.classList.toggle('open'); };
+document.addEventListener('click',(e)=>{ if(!menuPanel.contains(e.target)&&e.target!==menuBtn) menuPanel.classList.remove('open'); });
+unlockBtn.onclick=()=>{
+  menuPanel.classList.remove('open');
+  if(!committed.length){ alert('There are no finalized lines to unlock yet.'); return; }
+  let index = Number.isInteger(selectedLineIndex) ? selectedLineIndex : committed.length-1;
+  const answer = prompt('Unlock which finalized line? Enter its line number.', String(index+1));
+  if(answer===null) return;
+  const n=Number(answer); if(!Number.isInteger(n)||n<1||n>committed.length){ alert('Invalid line number.'); return; }
+  const ta = prompt('Edit line '+n+':', committed[n-1]);
+  if(ta===null) return;
+  committed[n-1]=ta; markDocumentChanged(); render();
+};
+lockAllBtn.onclick=()=>{ menuPanel.classList.remove('open'); selectedLineIndex=null; render(); };
+newChapterBtn.onclick=()=>{ menuPanel.classList.remove('open'); currentChapter+=1; markDocumentChanged(); render(); alert('Chapter '+currentChapter+' is now active.'); };
+
+function isStructuralEdit(oldText,newText){
+  if(oldText.trim()===newText.trim()) return false;
+  if(/dock|leav|stand|walk out|coat|actually|instead|wait[,.]|no[,.] |not\b/i.test(newText)) return true;
+  const norm=s=>s.toLowerCase().replace(/[^a-z0-9' ]/g,'').split(/\s+/).filter(Boolean);
+  const oldWords=norm(oldText), newWords=norm(newText); const oldSet=new Set(oldWords);
+  const shared=newWords.filter(w=>oldSet.has(w)).length;
+  const overlap=shared/Math.max(newWords.length,1);
+  const lenDelta=Math.abs(oldWords.length-newWords.length)/Math.max(oldWords.length,newWords.length,1);
+  return overlap<0.55 || lenDelta>0.4;
+}
+function rerouteIfTriggered(text){
+  let target;
+  if(/dock|leav|stand|walk out|coat/i.test(text)) target='docks';
+  else if(currentBranch==='original') target='generic';
+  else target = currentBranch==='docks' ? 'generic' : 'docks';
+  currentBranch=target; pool=BRANCHES[target].slice(); pointer=0; updateBranchLabel();
+}
+function updateBranchLabel(){ branchLabelEl.textContent='branch: '+currentBranch; }
+
+function bufferWordCount(){ return buffer.join(' ').trim().split(/\s+/).filter(Boolean).length; }
+
+function commitBufferEdit(i,newText){
+  const oldText=buffer[i]; const structural=isStructuralEdit(oldText,newText);
+  buffer[i]=newText; markDocumentChanged();
+  if(structural){ buffer=buffer.slice(0,i+1); reading=null; rerouteIfTriggered(newText); flashRegen(); }
+  else{ flashOk(); }
+  editingTarget=null; render();
+}
+function commitReadingEdit(newText){
+  const oldText=reading?reading.text:''; const structural=isStructuralEdit(oldText,newText);
+  reading={text:newText}; markDocumentChanged();
+  if(structural){ rerouteIfTriggered(newText); flashRegen(); } else { flashOk(); }
+  editingTarget=null; render();
+}
+function flashRegen(){ pendingFlag={ok:false,text:'↻ regenerating forward from your edit…'}; setTimeout(()=>{pendingFlag=null;render();},900); render(); }
+function flashOk(){ pendingFlag={ok:true,text:'✓ minor edit — nothing downstream touched'}; setTimeout(()=>{pendingFlag=null;render();},1400); render(); }
+let pendingFlag=null;
+
+function focusEditor(){ const ta=document.querySelector('textarea'); if(ta){ ta.focus(); ta.setSelectionRange(ta.value.length,ta.value.length); } }
+function pauseForEdit(){ if(playing) stopPlaying(); }
+
+function render(){
+  // manuscript tail — last 2 lines only
+  const tail = committed.slice(-2);
+  manuscriptTail.innerHTML = '<span class="zlabel">Manuscript — locked</span>' +
+    (tail.length ? tail.map(t=>'<div>'+escapeHtml(t)+'</div>').join('') : '<div style="color:var(--pencil-soft);font-style:italic;">Nothing finalized yet.</div>');
+
+  // transition strip — oldest buffer line(s), about to commit
+  const nearest = buffer.slice(0, Math.max(0, buffer.length - Math.ceil(buffer.length/2)));
+  const strip = buffer.length ? buffer[0] : '';
+  transitionStrip.innerHTML = '<span class="zlabel">Nearing commit</span>' + (strip ? escapeHtml(strip) : '<span style="opacity:.5;">— nothing aging toward commit yet —</span>');
+
+  // crawl: buffer (oldest near top of this container) + reading + upcoming draft pool preview
+  crawlInner.innerHTML = '';
+  if(pendingFlag){ const f=document.createElement('div'); f.className='regen-flag'+(pendingFlag.ok?' ok':''); f.textContent=pendingFlag.text; crawlInner.appendChild(f); }
+
+  if(!buffer.length && !reading){
+    const e=document.createElement('div'); e.className='crawl-empty'; e.textContent='— nothing drafted yet. Hit Generate or Play. —';
+    crawlInner.appendChild(e);
+  }
+
+  buffer.forEach((text,i)=>{
+    const isEditing = editingTarget && editingTarget.type==='buffer' && editingTarget.index===i;
+    const div=document.createElement('div'); div.className='line buffered'+(isEditing?' editing':'');
+    if(isEditing){
+      div.innerHTML = '<textarea rows="2">'+escapeHtml(text)+'</textarea><div class="line-controls"><button data-save-buf="'+i+'">Save &amp; regenerate forward</button><button data-cancel-buf="'+i+'" class="secondary">Cancel</button></div>';
+    } else {
+      div.textContent = text;
+      div.onclick = ()=>{ pauseForEdit(); editingTarget={type:'buffer',index:i}; render(); focusEditor(); };
+    }
+    crawlInner.appendChild(div);
+  });
+
+  if(reading){
+    const isEditingReading = editingTarget && editingTarget.type==='reading';
+    const div=document.createElement('div');
+    if(isEditingReading){
+      div.className='line editing';
+      div.innerHTML = '<textarea rows="2">'+escapeHtml(reading.text)+'</textarea><div class="line-controls"><button data-save-reading="1">Save &amp; regenerate forward</button><button data-cancel-reading="1" class="secondary">Cancel</button></div>';
+    } else {
+      div.className = 'line reading' + (inReaction ? ' reaction' : '');
+      const sweep=document.createElement('span'); sweep.className='sweep';
+      if(playing && !inReaction){ sweep.style.animationDuration = SPEED_MS[speedInput.value]+'ms'; }
+      div.appendChild(sweep);
+      div.appendChild(document.createTextNode(reading.text));
+      if(inReaction){ const ring=document.createElement('span'); ring.className='reaction-ring'; ring.title='Reaction window — click to interrupt'; div.appendChild(ring); }
+      div.onclick = ()=>{ pauseForEdit(); clearReaction(); editingTarget={type:'reading'}; render(); focusEditor(); };
+    }
+    crawlInner.appendChild(div);
+  }
+
+  crawlInner.querySelectorAll('[data-save-buf]').forEach(btn=>{ btn.onclick=()=>{ const i=parseInt(btn.getAttribute('data-save-buf')); const ta=btn.closest('.line').querySelector('textarea'); commitBufferEdit(i,ta.value); }; });
+  crawlInner.querySelectorAll('[data-cancel-buf]').forEach(btn=>{ btn.onclick=()=>{ editingTarget=null; render(); }; });
+  const saveReadingBtn = crawlInner.querySelector('[data-save-reading]');
+  if(saveReadingBtn) saveReadingBtn.onclick=()=>{ const ta=crawlInner.querySelector('textarea'); commitReadingEdit(ta.value); };
+  const cancelReadingBtn = crawlInner.querySelector('[data-cancel-reading]');
+  if(cancelReadingBtn) cancelReadingBtn.onclick=()=>{ editingTarget=null; render(); };
+
+  document.getElementById('bufferCrawl').scrollTop = 0; // newest (bottom of doc) stays anchored near visual bottom via column-reverse
+
+  transitionStrip.style.opacity = buffer.length ? '1' : '.4';
+  statusDot.className='status-dot '+(playing?'playing':((buffer.length||committed.length||reading)?'paused':''));
+  statusText.textContent = playing ? (speaking?'reading aloud…':'reading…') : (inReaction ? 'reaction window…' : ((buffer.length||committed.length||reading)?'paused':'idle'));
+  wordMetaEl.textContent = bufferWordCount()+' / '+BUFFER_WORD_CAP+' words in buffer';
+  playBtn.textContent = playing ? '⏸' : '▶';
+  if(typeof renderRefPane==='function' && refMode==='list') renderRefPane();
+}
+function escapeHtml(s){ return s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+let inReaction = false;
+function clearReaction(){ inReaction=false; if(reactionTimer){ clearTimeout(reactionTimer); reactionTimer=null; } }
+
+function speechText(text,done){
+  if(!('speechSynthesis' in window)){ if(done) done(); return false; }
+  window.speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(text);
+  u.rate = 0.75 + (Number(speedInput.value)-1)*0.12; u.pitch=1;
+  u.onstart=()=>{ speaking=true; render(); };
+  u.onend=()=>{ speaking=false; render(); if(done) done(); };
+  u.onerror=()=>{ speaking=false; render(); if(done) done(); };
+  window.speechSynthesis.speak(u); return true;
+}
+function stopSpeech(){ if('speechSynthesis' in window) window.speechSynthesis.cancel(); speaking=false; }
+
+function graduateIfOverCap(){
+  while(bufferWordCount() > BUFFER_WORD_CAP && buffer.length){
+    committed.push(buffer.shift());
+    committedChapters.push(currentChapter);
+  }
+}
+
+// Approve: force the whole current buffer into the locked manuscript now,
+// without waiting for it to hit the page-word cap. Same "you can still
+// unlock it later" rule applies — this isn't more permanent than the
+// normal auto-graduate.
+function approveBuffer(){
+  if(!buffer.length) return;
+  committed.push(...buffer);
+  committedChapters.push(...buffer.map(()=>currentChapter));
+  buffer = [];
+  markDocumentChanged();
+  renderRefPane();
+  render();
+}
+approveBtn.onclick = approveBuffer;
+
+function tick(){
+  if(reading){
+    buffer.push(reading.text); markDocumentChanged(); reading=null;
+    graduateIfOverCap();
+  }
+  if(pointer < pool.length){
+    reading={ text: pool[pointer] }; pointer++; markDocumentChanged(); render();
+    if(playing){
+      speechText(reading.text, ()=>{
+        if(!playing || !reading) return;
+        inReaction = true; render();
+        reactionTimer = setTimeout(()=>{ inReaction=false; if(playing && reading) tick(); }, REACTION_MS);
+      });
+    }
+  } else { stopPlaying(); }
+  render();
+}
+function startPlaying(){
+  if(playing) return; playing=true; clearReaction();
+  if(!reading && pointer<pool.length) tick();
+  else if(reading) speechText(reading.text, ()=>{ if(!playing||!reading) return; inReaction=true; render(); reactionTimer=setTimeout(()=>{ inReaction=false; if(playing&&reading) tick(); }, REACTION_MS); });
+  render();
+}
+function stopPlaying(){ stopSpeech(); clearReaction(); playing=false; render(); }
+function skipReaction(){ if(inReaction){ clearReaction(); if(playing && reading) tick(); } }
+
+playBtn.onclick=()=> playing ? stopPlaying() : startPlaying();
+stopBtn.onclick=()=>{ stopPlaying(); };
+skipBtn.onclick=()=>{ if(inReaction) skipReaction(); else if(!playing && pointer<pool.length){ tick(); } };
+genBtn.onclick=()=>{ if(!playing) tick(); }; // manual "generate next line" without audio
+speedInput.onchange=markDocumentChanged;
+
+// --- Chat: local echo only (TODO wire to real PubPartner backend) ---
+function addChatMsg(who,text){
+  const div=document.createElement('div'); div.className='chat-msg '+(who==='you'?'you':'pp');
+  div.innerHTML='<span class="who">'+(who==='you'?'You':'PubPartner')+'</span>'+escapeHtml(text);
+  chatLog.appendChild(div); chatLog.scrollTop=chatLog.scrollHeight;
+}
+addChatMsg('pp',"Welcome back. Say the word and I'll draft the next page — we'll go over it together before anything locks in.");
+function sendChat(){
+  const v=chatInput.value.trim(); if(!v) return;
+  addChatMsg('you',v); chatInput.value='';
+  setTimeout(()=>addChatMsg('pp','(placeholder reply — not yet wired to a real model call)'),350);
+}
+chatSendBtn.onclick=sendChat;
+chatInput.addEventListener('keydown',e=>{ if(e.key==='Enter') sendChat(); });
+
+// --- Reference pane: real chapter scroll-back (this document) + real
+// "open another document" (reads any .2i file, read-only, does NOT touch
+// the active working document's state). ---
+let refMode = 'list'; // 'list' | 'view'
+let refViewTitle = '';
+let refViewText = '';
+
+function currentDocChapterList(){
+  const chapters = [...new Set(committedChapters)];
+  return chapters.map(ch => ({
+    label: 'Chapter '+ch+' — this document',
+    getText: () => committed.filter((_,i)=>committedChapters[i]===ch).join('\n\n')
+  }));
+}
+
+function renderRefPane(){
+  if(refMode==='view'){
+    refOpenBtn.style.display='none';
+    refList.innerHTML =
+      '<button class="secondary ref-view-back" id="refBackBtn">← Back to list</button>'+
+      '<div class="ref-view-title">'+escapeHtml(refViewTitle)+'</div>'+
+      '<div class="ref-view-text">'+escapeHtml(refViewText || '— nothing finalized in this chapter yet —')+'</div>';
+    document.getElementById('refBackBtn').onclick = ()=>{ refMode='list'; renderRefPane(); };
+    return;
+  }
+  refOpenBtn.style.display='';
+  refList.innerHTML='';
+  const chapters = currentDocChapterList();
+  if(!chapters.length){
+    const e=document.createElement('div'); e.className='ref-item'; e.style.cursor='default';
+    e.innerHTML='<span style="color:var(--pencil-soft);font-style:italic;">No finalized chapters yet — nothing to scroll back to.</span>';
+    refList.appendChild(e);
+    return;
+  }
+  chapters.forEach(ch=>{
+    const el=document.createElement('div'); el.className='ref-item';
+    el.innerHTML='<span>'+escapeHtml(ch.label)+'</span><small>scroll back</small>';
+    el.onclick=()=>{ refViewTitle=ch.label; refViewText=ch.getText(); refMode='view'; renderRefPane(); };
+    refList.appendChild(el);
+  });
+}
+
+async function openReferenceDocument(){
+  let file = null;
+  if('showOpenFilePicker' in window){
+    try{
+      const [handle] = await window.showOpenFilePicker({ types:[{ description:'2i Document', accept:{'application/json':['.2i']} }] });
+      file = await handle.getFile();
+    }catch(err){ if(err && err.name==='AbortError') return; }
+  }
+  if(!file){
+    file = await new Promise(resolve=>{
+      const input=document.createElement('input');
+      input.type='file'; input.accept='.2i,application/json';
+      input.onchange=()=>resolve(input.files[0]||null);
+      input.click();
+    });
+  }
+  if(!file) return;
+  try{
+    const text = await file.text();
+    const data = JSON.parse(text);
+    if(data.format!=='2i-document' || !data.state) throw new Error('not a 2i document');
+    const chapters = Array.isArray(data.state.committed) ? data.state.committed : [];
+    refViewTitle = (data.title || file.name) + ' — external reference (read-only)';
+    refViewText = chapters.join('\n\n');
+    refMode='view'; renderRefPane();
+  }catch(err){
+    alert('Could not read that as a 2i document.');
+  }
+}
+refOpenBtn.onclick = openReferenceDocument;
+renderRefPane();
+
+updateBranchLabel();
+render();
+</script>
+</body>
+</html>
