@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Pub Partner — Writer's Room (Belle Époque UI study)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=EB+Garamond:ital@0;1&display=swap" rel="stylesheet">
+<style>
+
+  :root{
+    --brass-hi:#f3dfa8;
+    --brass-mid:#c99b4a;
+    --brass-low:#7a5423;
+    --brass-shadow:#3a260f;
+    --parchment:#e9dcb8;
+    --parchment-line:#c9b586;
+    --walnut-hi:#5a3a22;
+    --walnut-low:#231208;
+    --leather:#3c2415;
+    --ink:#241a10;
+  }
+
+  *{box-sizing:border-box;}
+
+  html,body{
+    margin:0;
+    padding:0;
+    background:#0b0704;
+    font-family:'EB Garamond', serif;
+    color:var(--parchment);
+    min-height:100vh;
+  }
+
+  /* ============ STAGE ============ */
+  .stage{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:48px 24px;
+    background:
+      radial-gradient(circle at 30% 20%, rgba(120,80,30,0.10), transparent 55%),
+      radial-gradient(circle at 75% 80%, rgba(90,50,15,0.08), transparent 50%),
+      #0b0704;
+    position:relative;
+  }
+
+  /* Tier 1 approach for the room backdrop: layered radial gradients simulating
+     lantern falloff — this is the honest limit of what gradients alone do.
+     It reads as "lit room", not "lit surface". Surfaces below use Tier 2. */
+
+  /* ============ THE PANEL ============ */
+  .panel-wrap{
+    position:relative;
+    width:min(920px, 100%);
+    filter: url(#brassRelief);
+  }
+
+  .frame{
+    position:relative;
+    padding:22px;
+    background:
+      linear-gradient(155deg, var(--brass-hi) 0%, var(--brass-mid) 35%, var(--brass-low) 70%, var(--brass-shadow) 100%);
+    border-radius:6px;
+    box-shadow:
+      0 0 0 1px rgba(0,0,0,0.6),
+      0 30px 60px rgba(0,0,0,0.65),
+      inset 0 1px 0 rgba(255,235,190,0.5),
+      inset 0 -2px 4px rgba(0,0,0,0.4);
+  }
+
+  /* corner ornaments: pure SVG, no image asset, scale cleanly at any panel size
+     — this is the honest substitute for a real 9-slice border-image asset,
+     which would need a sourced/baked brass texture file I don't have here. */
+  .corner{
+    position:absolute;
+    width:46px;
+    height:46px;
+    pointer-events:none;
+  }
+  .corner svg{ width:100%; height:100%; display:block; }
+  .corner.tl{ top:6px; left:6px; }
+  .corner.tr{ top:6px; right:6px; transform:scaleX(-1); }
+  .corner.bl{ bottom:6px; left:6px; transform:scaleY(-1); }
+  .corner.br{ bottom:6px; right:6px; transform:scale(-1,-1); }
+
+  .inner{
+    position:relative;
+    background: linear-gradient(180deg, #241811 0%, #1a1109 100%);
+    border-radius:3px;
+    overflow:hidden;
+    box-shadow: inset 0 2px 8px rgba(0,0,0,0.6);
+  }
+
+  /* wood grain: feTurbulence-driven relief, applied via filter on this layer */
+  .wood-relief{
+    position:absolute;
+    inset:0;
+    filter:url(#woodRelief);
+    opacity:0.55;
+    mix-blend-mode:overlay;
+    pointer-events:none;
+  }
+
+  /* ============ HEADER / WORDMARK ============ */
+  .header{
+    position:relative;
+    padding:26px 32px 20px;
+    text-align:center;
+    border-bottom:1px solid rgba(201,155,74,0.35);
+  }
+  .eyebrow{
+    font-family:'EB Garamond', serif;
+    font-style:italic;
+    font-size:13px;
+    letter-spacing:0.18em;
+    color:#c9a15c;
+    text-transform:uppercase;
+    margin:0 0 6px;
+  }
+  .wordmark{
+    margin:0;
+    font-family:'Cormorant Garamond', serif;
+    font-weight:700;
+    font-size:44px;
+    letter-spacing:0.06em;
+    filter:url(#brassText);
+  }
+  .wordmark tspan.sub{ font-size:16px; font-weight:400; font-style:italic; }
+
+  /* ============ BODY LAYOUT ============ */
+  .body{
+    position:relative;
+    display:grid;
+    grid-template-columns:220px 1fr;
+    min-height:520px;
+  }
+
+  /* ---- left: leather rail with brushed-metal room tabs ---- */
+  .rail{
+    position:relative;
+    padding:22px 14px;
+    background:
+      linear-gradient(180deg, #2e1c10, #1c1009);
+    border-right:1px solid rgba(0,0,0,0.5);
+  }
+  .rail-grain{
+    position:absolute; inset:0;
+    filter:url(#leatherRelief);
+    opacity:0.65;
+    mix-blend-mode:soft-light;
+    pointer-events:none;
+  }
+  .room-tab{
+    position:relative;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:11px 14px;
+    margin-bottom:8px;
+    border-radius:3px;
+    font-size:14px;
+    letter-spacing:0.03em;
+    color:#d8c49a;
+    cursor:default;
+    border:1px solid transparent;
+  }
+  .room-tab .dial{
+    width:14px; height:14px; border-radius:50%;
+    background:conic-gradient(from 210deg, #f3dfa8, #7a5423, #c99b4a, #3a260f, #f3dfa8);
+    box-shadow:0 0 0 1px rgba(0,0,0,0.6), inset 0 0 2px rgba(0,0,0,0.5);
+    flex:none;
+  }
+  .room-tab.active{
+    background:linear-gradient(180deg, rgba(201,155,74,0.22), rgba(201,155,74,0.06));
+    border-color:rgba(201,155,74,0.45);
+    color:#f3dfa8;
+    box-shadow:
+      inset 0 1px 0 rgba(255,235,190,0.15),
+      inset 0 -6px 10px -6px rgba(0,0,0,0.6);
+  }
+
+  /* ---- right: the manuscript ---- */
+  .manuscript-wrap{
+    position:relative;
+    padding:26px 34px 30px;
+  }
+
+  .manuscript{
+    position:relative;
+    background:
+      linear-gradient(180deg, var(--parchment) 0%, #ddcda0 100%);
+    border-radius:2px;
+    box-shadow:
+      0 10px 26px rgba(0,0,0,0.5),
+      inset 0 0 40px rgba(90,58,29,0.18);
+    padding:26px 30px 26px 54px;
+    color:var(--ink);
+    min-height:360px;
+  }
+  .manuscript-grain{
+    position:absolute; inset:0;
+    filter:url(#paperGrain);
+    opacity:0.5;
+    mix-blend-mode:multiply;
+    border-radius:2px;
+    pointer-events:none;
+  }
+  .rule-line{
+    position:relative;
+    border-bottom:1px solid var(--parchment-line);
+    padding:6px 0 6px 4px;
+    font-size:17px;
+    line-height:1.5;
+    min-height:1.5em;
+  }
+  .rule-line .lineno{
+    position:absolute;
+    left:-34px;
+    top:6px;
+    font-size:12px;
+    color:#a3906a;
+    font-style:italic;
+    width:26px;
+    text-align:right;
+  }
+  .rule-line.buffer{ color:#5a4527; font-style:italic; }
+  .rule-line.locked{ color:var(--ink); }
+  .rule-line.locked::after{
+    content:"";
+    position:absolute;
+    right:0; top:0; bottom:0;
+    width:3px;
+    background:linear-gradient(180deg, var(--brass-mid), var(--brass-low));
+    opacity:0.55;
+  }
+
+  .threshold{
+    position:relative;
+    margin:10px 0 14px;
+    height:1px;
+    background:linear-gradient(90deg, transparent, rgba(122,84,35,0.7), transparent);
+  }
+  .threshold::before{
+    content:"THRESHOLD — CROSSED LINES LOCK BELOW";
+    position:absolute;
+    left:50%; top:-9px; transform:translateX(-50%);
+    background:var(--parchment);
+    padding:0 10px;
+    font-size:10px;
+    letter-spacing:0.14em;
+    color:#8a6f42;
+    font-family:'EB Garamond', serif;
+  }
+
+  /* ---- frosted "edit mode" panel, Tier 1: backdrop-filter glass ---- */
+  .edit-glass{
+    position:absolute;
+    top:34px;
+    right:36px;
+    width:200px;
+    padding:14px 16px;
+    background:rgba(255,250,235,0.14);
+    backdrop-filter: blur(14px) saturate(1.5);
+    -webkit-backdrop-filter: blur(14px) saturate(1.5);
+    border:1px solid rgba(255,240,200,0.28);
+    border-radius:8px;
+    box-shadow:0 8px 22px rgba(0,0,0,0.35);
+    color:#f3dfa8;
+    font-size:12.5px;
+    letter-spacing:0.02em;
+  }
+  .edit-glass .title{
+    font-style:italic;
+    color:#f3dfa8;
+    margin:0 0 6px;
+    font-size:13px;
+  }
+  .edit-glass .row{
+    display:flex; justify-content:space-between;
+    padding:3px 0;
+    color:#e6d4a8;
+    border-top:1px solid rgba(255,240,200,0.14);
+  }
+  .edit-glass .row:first-of-type{ border-top:none; }
+
+  /* mic row */
+  .mic-row{
+    display:flex; align-items:center; gap:8px;
+    margin-top:10px;
+    padding-top:10px;
+    border-top:1px solid rgba(255,240,200,0.18);
+  }
+  .mic-dot{
+    width:8px; height:8px; border-radius:50%;
+    background:#e0885a;
+    box-shadow:0 0 6px 1px rgba(224,136,90,0.7);
+  }
+
+  .footer-note{
+    text-align:center;
+    font-size:11px;
+    color:#6b5734;
+    letter-spacing:0.06em;
+    padding:12px 0 4px;
+  }
+
+</style>
+</head>
+<body>
+
+<!-- ============ SVG FILTER DEFINITIONS — Tier 2, real relief-lighting math ============ -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+
+    <!-- brass frame relief: turbulence -> bump -> specular light that tracks the cursor -->
+    <filter id="brassRelief" x="-20%" y="-20%" width="140%" height="140%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7" result="brassNoise"/>
+      <feDiffuseLighting in="brassNoise" lighting-color="#fff3d6" surfaceScale="1.2" diffuseConstant="0.9" result="brassDiffuse">
+        <fePointLight id="brassLight" x="180" y="-40" z="140"/>
+      </feDiffuseLighting>
+      <feComposite in="brassDiffuse" in2="SourceGraphic" operator="arithmetic" k1="0.55" k2="0.55" k3="0" k4="0" result="lit"/>
+      <feMerge>
+        <feMergeNode in="SourceGraphic"/>
+        <feMergeNode in="lit"/>
+      </feMerge>
+    </filter>
+
+    <!-- wood panel relief: coarser turbulence, diffuse only (matte, not shiny) -->
+    <filter id="woodRelief" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="turbulence" baseFrequency="0.012 0.09" numOctaves="3" seed="4" result="woodNoise"/>
+      <feDiffuseLighting in="woodNoise" lighting-color="#caa46b" surfaceScale="2.4" diffuseConstant="1.0" result="woodLit">
+        <feDistantLight azimuth="235" elevation="45"/>
+      </feDiffuseLighting>
+    </filter>
+
+    <!-- leather relief: fine irregular turbulence, low elevation light for a tooled look -->
+    <filter id="leatherRelief" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.35" numOctaves="4" seed="11" result="leatherNoise"/>
+      <feDiffuseLighting in="leatherNoise" lighting-color="#b98d55" surfaceScale="1.6" diffuseConstant="1.0" result="leatherLit">
+        <feDistantLight azimuth="300" elevation="35"/>
+      </feDiffuseLighting>
+    </filter>
+
+    <!-- paper grain: very fine, low-contrast turbulence, multiplied onto parchment -->
+    <filter id="paperGrain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="21" result="paperNoise"/>
+      <feColorMatrix in="paperNoise" type="matrix"
+        values="0 0 0 0 0.55
+                0 0 0 0 0.47
+                0 0 0 0 0.33
+                0 0 0 0.35 0"/>
+    </filter>
+
+    <!-- brass wordmark: specular hot highlight, cursor-tracked light -->
+    <filter id="brassText" x="-30%" y="-60%" width="160%" height="220%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="1" seed="3" result="txNoise"/>
+      <feSpecularLighting in="txNoise" surfaceScale="2" specularConstant="1.3" specularExponent="16" lighting-color="#fff6dd" result="spec">
+        <fePointLight id="textLight" x="140" y="-30" z="90"/>
+      </feSpecularLighting>
+      <feComposite in="spec" in2="SourceAlpha" operator="in" result="specClipped"/>
+      <feFlood flood-color="#8a5f22" result="base"/>
+      <feComposite in="base" in2="SourceAlpha" operator="in" result="baseClipped"/>
+      <feMerge>
+        <feMergeNode in="baseClipped"/>
+        <feMergeNode in="specClipped"/>
+      </feMerge>
+    </filter>
+
+  </defs>
+</svg>
+
+<div class="stage" id="stage">
+
+  <div class="panel-wrap">
+    <div class="frame">
+
+      <div class="corner tl"><svg viewBox="0 0 46 46"><path d="M2 44 L2 14 Q2 2 14 2 L44 2" fill="none" stroke="#3a260f" stroke-width="2"/><path d="M2 44 L2 16 Q2 4 16 4 L44 4" fill="none" stroke="#f3dfa8" stroke-width="1"/><circle cx="10" cy="10" r="2.5" fill="#f3dfa8" stroke="#3a260f" stroke-width="0.75"/></svg></div>
+      <div class="corner tr"><svg viewBox="0 0 46 46"><path d="M2 44 L2 14 Q2 2 14 2 L44 2" fill="none" stroke="#3a260f" stroke-width="2"/><path d="M2 44 L2 16 Q2 4 16 4 L44 4" fill="none" stroke="#f3dfa8" stroke-width="1"/><circle cx="10" cy="10" r="2.5" fill="#f3dfa8" stroke="#3a260f" stroke-width="0.75"/></svg></div>
+      <div class="corner bl"><svg viewBox="0 0 46 46"><path d="M2 44 L2 14 Q2 2 14 2 L44 2" fill="none" stroke="#3a260f" stroke-width="2"/><path d="M2 44 L2 16 Q2 4 16 4 L44 4" fill="none" stroke="#f3dfa8" stroke-width="1"/><circle cx="10" cy="10" r="2.5" fill="#f3dfa8" stroke="#3a260f" stroke-width="0.75"/></svg></div>
+      <div class="corner br"><svg viewBox="0 0 46 46"><path d="M2 44 L2 14 Q2 2 14 2 L44 2" fill="none" stroke="#3a260f" stroke-width="2"/><path d="M2 44 L2 16 Q2 4 16 4 L44 4" fill="none" stroke="#f3dfa8" stroke-width="1"/><circle cx="10" cy="10" r="2.5" fill="#f3dfa8" stroke="#3a260f" stroke-width="0.75"/></svg></div>
+
+      <div class="inner">
+        <div class="wood-relief"></div>
+
+        <div class="header">
+          <p class="eyebrow">Pub Partner</p>
+          <svg viewBox="0 0 500 60" width="100%" height="60" style="max-width:460px">
+            <text x="250" y="42" text-anchor="middle" font-family="Cormorant Garamond, serif" font-weight="700" font-size="40" letter-spacing="2" filter="url(#brassText)">2i — THE WRITER'S ROOM</text>
+          </svg>
+        </div>
+
+        <div class="body">
+          <div class="rail">
+            <div class="rail-grain"></div>
+            <div class="room-tab active"><span class="dial"></span>2i — Writer's Room</div>
+            <div class="room-tab"><span class="dial"></span>Pub Partner</div>
+            <div class="room-tab"><span class="dial"></span>Iteration Wallet</div>
+            <div class="room-tab"><span class="dial"></span>BlackBox</div>
+            <div class="room-tab"><span class="dial"></span>The View</div>
+          </div>
+
+          <div class="manuscript-wrap">
+            <div class="manuscript">
+              <div class="manuscript-grain"></div>
+
+              <div class="rule-line locked"><span class="lineno">1</span>INT. LANTERN DECK — NIGHT</div>
+              <div class="rule-line locked"><span class="lineno">2</span>The brass gears turn slow, patient, certain.</div>
+              <div class="rule-line locked"><span class="lineno">3</span>CURTSEY watches the light bend around the glass.</div>
+
+              <div class="threshold"></div>
+
+              <div class="rule-line buffer"><span class="lineno">4</span>She reaches for the dial, and—</div>
+              <div class="rule-line buffer"><span class="lineno">5</span>|</div>
+
+            </div>
+
+            <div class="edit-glass">
+              <p class="title">Edit mode</p>
+              <div class="row"><span>Locked lines</span><span>3</span></div>
+              <div class="row"><span>Buffer lines</span><span>2</span></div>
+              <div class="row"><span>Chapter</span><span>I</span></div>
+              <div class="mic-row">
+                <span class="mic-dot"></span>
+                <span>Talk to Pub Partner</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-note">2i / Pub Partner — SVG relief-lighting study, no external texture assets — cursor moves the brass light source</div>
+
+</div>
+
+<script>
+  // Tier 2 payoff: the point lights actually track the cursor, so the brass
+  // and the wordmark genuinely relight as you move — not a static image.
+  const brassLight = document.getElementById('brassLight');
+  const textLight = document.getElementById('textLight');
+  const stage = document.getElementById('stage');
+
+  stage.addEventListener('mousemove', (e) => {
+    const rect = stage.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    brassLight.setAttribute('x', x);
+    brassLight.setAttribute('y', y);
+    textLight.setAttribute('x', x - rect.width / 2 + 250);
+    textLight.setAttribute('y', y - 120);
+  });
+</script>
+
+</body>
+</html>
