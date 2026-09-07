@@ -1,0 +1,3023 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Pubcast 2i — Writer's Room — Notebook Dominant v15</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+:root{
+  /* Ivory, backlit by lantern glow, with gold + silver sheen accents */
+  --ivory:#f9f4e6; --ivory-deep:#efe4cc; --ivory-glow:#fffbf0;
+  --gold:#cda349; --gold-bright:#eecf83; --gold-deep:#93701f; --gold-glow:rgba(238,207,131,0.45);
+  --silver:#cfd6da; --silver-bright:#f4f7f8; --silver-deep:#96a0a6; --silver-glow:rgba(228,236,239,0.55);
+  --brass:var(--gold); --brass-deep:var(--gold-deep); --brass-glow:var(--gold-glow);
+  --marble-edge:#ddd0ac;
+  --ink:#231f18; --pencil:#4a4032; --pencil-soft:#7c7160;
+  --paper-line:#c9cdd1; --manuscript-bg:#fffcf3; --gray-strip:#d9d2c0;
+  --graybox:rgba(90,88,80,0.09); --graybox-edge:rgba(90,88,80,0.18);
+  --danger:#a24a3a; --glass-border:rgba(205,163,73,0.32);
+  --lantern:radial-gradient(ellipse at 50% -10%, rgba(238,207,131,0.30), rgba(238,207,131,0) 62%);
+
+  /* Room materials — mahogany desk, oxblood/oak leather, deep green velvet */
+  --mahogany:#3a2013; --mahogany-mid:#2a1610; --mahogany-deep:#1b0f09; --walnut:#241209;
+  --oxblood:#5c2a24; --leather-seam:rgba(0,0,0,0.28);
+  --velvet:#1f4a3a; --velvet-deep:#123024; --velvet-bright:#2e6b52; --velvet-glow:rgba(46,107,82,0.38);
+  --parchment:#ecdfc3; --parchment-soft:#c3b391;
+
+  /* Tortoiseshell — amber with dark mottling, used on dividers and frame edges */
+  --tortoise-amber:#8a5a22; --tortoise-light:#c98f3f; --tortoise-dark:#2c1608;
+}
+*{box-sizing:border-box;}
+html,body{height:100%;}
+body{
+  margin:0;
+  background:
+    radial-gradient(ellipse 55% 32% at 50% 0%, rgba(238,207,131,0.14), transparent 62%),
+    radial-gradient(ellipse 45% 30% at 12% 105%, rgba(46,107,82,0.10), transparent 60%),
+    linear-gradient(165deg, #2c190f 0%, #1d1009 55%, #130a05 100%);
+  font-family:'Cormorant Garamond', serif; color:var(--parchment); overflow:hidden;
+}
+.shell{
+  display:grid; grid-template-columns: 1fr 36px 2fr; height:100vh; gap:8px; padding:10px;
+}
+.glass{
+  border:3px solid transparent;
+  background:
+    linear-gradient(160deg, rgba(72,44,27,0.88), var(--mahogany-deep) 88%) padding-box,
+    url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60"><defs><filter id="tortoise"><feTurbulence type="fractalNoise" baseFrequency="0.15" numOctaves="4" result="noise" seed="99" /><feDisplacementMap in="SourceGraphic" in2="noise" scale="6" /></filter></defs><rect width="60" height="60" fill="%238a5a22" /><g filter="url(%23tortoise)"><circle cx="12" cy="10" r="4" fill="%232c1608" opacity="0.8" /><circle cx="35" cy="15" r="3.5" fill="%232c1608" opacity="0.7" /><circle cx="52" cy="8" r="3" fill="%232c1608" opacity="0.6" /><circle cx="20" cy="28" r="2.5" fill="%232c1608" opacity="0.75" /><circle cx="45" cy="30" r="4" fill="%232c1608" opacity="0.8" /><circle cx="8" cy="45" r="3" fill="%232c1608" opacity="0.7" /><circle cx="30" cy="50" r="2.5" fill="%232c1608" opacity="0.65" /><circle cx="55" cy="48" r="3.5" fill="%232c1608" opacity="0.75" /><circle cx="25" cy="15" r="2" fill="%23c98f3f" opacity="0.5" /><circle cx="42" cy="22" r="2.2" fill="%23c98f3f" opacity="0.45" /><circle cx="15" cy="35" r="1.8" fill="%23c98f3f" opacity="0.5" /></g><g opacity="0.3"><line x1="0" y1="0" x2="60" y2="4" stroke="%23fff" stroke-width="0.4" /><line x1="0" y1="15" x2="60" y2="18" stroke="%23fff" stroke-width="0.3" /><line x1="0" y1="30" x2="60" y2="32" stroke="%23fff" stroke-width="0.25" /><line x1="0" y1="45" x2="60" y2="48" stroke="%23fff" stroke-width="0.3" /></g></svg>') border-box;
+  border-radius:14px;
+  box-shadow:
+    0 16px 36px -16px rgba(0,0,0,0.6),
+    inset 0 1px 0 rgba(238,207,131,0.14),
+    inset 0 0 44px rgba(46,107,82,0.05),
+    inset -3px 0 6px rgba(0,0,0,0.55),
+    inset 3px 0 6px rgba(0,0,0,0.55),
+    inset 0 -3px 5px rgba(0,0,0,0.5),
+    inset 0 3px 4px rgba(44,22,8,0.4);
+  backdrop-filter:blur(6px);
+  position:relative; color:var(--parchment);
+}
+.glass::before{
+  content:''; position:absolute; inset:0; border-radius:11px; pointer-events:none;
+  background:linear-gradient(115deg, rgba(238,207,131,0.08) 0%, transparent 30%, transparent 70%, rgba(46,107,82,0.08) 100%);
+}
+/* a tortoiseshell divider bar, for the seams between sections of a panel */
+.tortoise-seam{
+  height:9px; flex-shrink:0;
+  background:
+    url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="120" height="9"><defs><filter id="seam"><feTurbulence type="fractalNoise" baseFrequency="0.3" numOctaves="3" result="noise" /><feDisplacementMap in="SourceGraphic" in2="noise" scale="2.5" /></filter></defs><rect width="120" height="9" fill="%238a5a22" /><g filter="url(%23seam)" opacity="0.8"><circle cx="8" cy="4.5" r="1.8" fill="%232c1608" /><circle cx="25" cy="3" r="1.5" fill="%232c1608" /><circle cx="42" cy="5" r="1.6" fill="%232c1608" /><circle cx="60" cy="4" r="1.7" fill="%232c1608" /><circle cx="78" cy="5" r="1.5" fill="%232c1608" /><circle cx="95" cy="3.5" r="1.8" fill="%232c1608" /><circle cx="112" cy="4.8" r="1.6" fill="%232c1608" /></g><g opacity="0.6" stroke="%23c98f3f" stroke-width="0.3"><line x1="5" y1="0" x2="115" y2="1" /><line x1="5" y1="9" x2="115" y2="8" /></g></svg>');
+  background-repeat:repeat-x;
+  background-size:auto 100%;
+  box-shadow:
+    inset 0 2.5px 2px rgba(255,255,255,0.5),
+    inset 0 -2.5px 3px rgba(0,0,0,0.6),
+    0 1px 2px rgba(0,0,0,0.6),
+    inset 0 0 2px rgba(44,22,8,0.35);
+}
+
+/* ===== LEFT THIRD: chat (top) + reference (bottom) ===== */
+.left-col{ display:flex; flex-direction:column; gap:10px; min-height:0; }
+.chat-pane{ flex:1.15; display:flex; flex-direction:column; min-height:0; padding:12px; }
+.ref-pane{ flex:0.85; display:flex; flex-direction:column; min-height:0; padding:12px; }
+.pane-label{
+  font-family:'IBM Plex Mono',monospace; font-size:9.5px; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--brass); margin-bottom:8px; display:flex; align-items:center; gap:6px;
+}
+.pane-label::before{ content:''; width:5px; height:5px; border-radius:50%; background:var(--brass); box-shadow:0 0 6px var(--brass-glow); }
+.pane-close{
+  margin-left:auto; background:transparent; border:none; color:var(--parchment-soft);
+  font-size:11px; cursor:pointer; padding:2px 4px; border-radius:4px; line-height:1;
+}
+.pane-close:hover{ color:var(--parchment); background:rgba(255,255,255,0.08); }
+/* Closing a panel removes it entirely — the remaining panel (if any) fills
+   the left column's full height via its own flex value, no extra CSS
+   needed for that. When BOTH are closed, left-col has nothing left to show,
+   so .shell drops that grid track down to nothing and the manuscript
+   reclaims the width — see .shell.no-left-panels below. Both states are
+   driven only by the pane-close buttons and the rail toggles, never
+   automatically. */
+.chat-pane.closed, .ref-pane.closed{ display:none; }
+.shell.no-left-panels{ grid-template-columns: 0px 36px 1fr; }
+.shell.no-left-panels .left-col{ display:none; }
+.chat-log{ flex:1; overflow-y:auto; display:flex; flex-direction:column; gap:8px; padding-right:2px; }
+.chat-msg{ font-size:14.5px; line-height:1.45; padding:8px 11px; border-radius:9px; max-width:92%; color:var(--parchment); }
+.chat-msg.pp{ background:rgba(0,0,0,0.24); border:1px solid var(--leather-seam); align-self:flex-start; }
+.chat-msg.you{ background:rgba(46,107,82,0.22); border:1px solid var(--velvet-glow); align-self:flex-end; }
+.chat-msg .who{ font-family:'IBM Plex Mono',monospace; font-size:9px; text-transform:uppercase; letter-spacing:.06em; color:var(--parchment-soft); display:block; margin-bottom:2px; }
+.chat-input-row{ display:flex; gap:6px; margin-top:8px; }
+.chat-input-row input{
+  flex:1; font-family:'Cormorant Garamond',serif; font-size:14.5px; padding:8px 10px; color:var(--parchment);
+  border:1px solid var(--leather-seam); border-radius:8px; background:rgba(0,0,0,0.22); outline:none;
+}
+.chat-input-row input::placeholder{ color:var(--parchment-soft); opacity:.75; }
+.chat-input-row input:focus{ border-color:var(--brass); box-shadow:0 0 0 2px var(--brass-glow); }
+.chat-input-row button{ padding:8px 12px; }
+.ref-list{ flex:1; overflow-y:auto; display:flex; flex-direction:column; gap:6px; }
+.ref-item{
+  font-size:13px; padding:7px 9px; border-radius:7px; background:rgba(0,0,0,0.20); color:var(--parchment);
+  border:1px solid var(--leather-seam); cursor:pointer; display:flex; justify-content:space-between; gap:8px;
+}
+.ref-item:hover{ background:rgba(46,107,82,0.18); border-color:var(--velvet-glow); }
+.ref-item small{ color:var(--parchment-soft); font-family:'IBM Plex Mono',monospace; font-size:9.5px; white-space:nowrap; }
+.ref-open{ margin-top:8px; }
+.ref-view-back{ margin-bottom:8px; }
+.ref-view-title{ font-family:'IBM Plex Mono',monospace; font-size:9.5px; color:var(--parchment-soft); margin-bottom:6px; }
+.ref-view-text{ font-family:'Cormorant Garamond',serif; font-size:14.5px; line-height:1.55; white-space:pre-wrap; color:var(--parchment); }
+
+/* ===== CENTER RAIL — thin, oval, pale marble buttons that light from within ===== */
+.rail{ display:flex; flex-direction:column; align-items:center; padding:10px 0; }
+.rail-menu{
+  width:38px; height:38px; border-radius:50%;
+  border:1.5px solid rgba(100,70,35,0.8);
+  background:
+    url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="72" height="72"><defs><filter id="menunoise"><feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="2" result="noise" seed="88" /><feDisplacementMap in="SourceGraphic" in2="noise" scale="0.7" /></filter></defs><circle cx="36" cy="36" r="36" fill="%23fdfcf9" /><g opacity="0.03" filter="url(%23menunoise)"><circle cx="18" cy="18" r="3" fill="%23000" /><circle cx="54" cy="18" r="2.5" fill="%23000" /><circle cx="18" cy="54" r="2.8" fill="%23000" /><circle cx="54" cy="54" r="3" fill="%23000" /><circle cx="36" cy="36" r="2.5" fill="%23000" /></g></svg>'),
+    linear-gradient(160deg, #fdfcf9 0%, #f4eadb 50%, #e8dac8 100%);
+  background-size:100% 100%, 100% 100%;
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer; font-size:14px; color:var(--gold-deep);
+  box-shadow:
+    0 4px 12px rgba(0,0,0,0.58),
+    inset 0 1.5px 2px rgba(255,255,255,0.98),
+    inset 0 -1px 2px rgba(0,0,0,0.35),
+    inset -1.5px 0 2px rgba(0,0,0,0.2),
+    inset 1.5px 0 2px rgba(255,255,255,0.45),
+    inset 0 0 7px rgba(0,0,0,0.1);
+  transition:all .12s ease;
+}
+.rail-menu:hover{
+  background:
+    url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="72" height="72"><defs><filter id="menunoise2"><feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="2" result="noise" seed="88" /><feDisplacementMap in="SourceGraphic" in2="noise" scale="0.7" /></filter></defs><circle cx="36" cy="36" r="36" fill="%23fffff5" /><g opacity="0.03" filter="url(%23menunoise2)"><circle cx="18" cy="18" r="3" fill="%23000" /><circle cx="54" cy="18" r="2.5" fill="%23000" /><circle cx="18" cy="54" r="2.8" fill="%23000" /><circle cx="54" cy="54" r="3" fill="%23000" /><circle cx="36" cy="36" r="2.5" fill="%23000" /></g></svg>'),
+    linear-gradient(160deg, #fffff5 0%, #f9f0e0 50%, #efe1cc 100%);
+  background-size:100% 100%, 100% 100%;
+  box-shadow:
+    0 5px 16px rgba(0,0,0,0.62),
+    inset 0 1.5px 2px rgba(255,255,255,1),
+    inset 0 -1px 2.5px rgba(0,0,0,0.4),
+    inset -1.5px 0 2px rgba(0,0,0,0.22),
+    inset 1.5px 0 2px rgba(255,255,255,0.5),
+    inset 0 0 9px rgba(0,0,0,0.12);
+  transform:translateY(-1px);
+}
+.rail-menu:active{ transform:translateY(1px); }
+.rail-spacer{
+  flex:1; width:11px; margin:12px 0; border-radius:6px;
+  background:
+    url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="11" height="150"><defs><filter id="spacer"><feTurbulence type="fractalNoise" baseFrequency="0.4" numOctaves="3" result="noise" /><feDisplacementMap in="SourceGraphic" in2="noise" scale="1.5" /></filter></defs><rect width="11" height="150" fill="%238a5a22" /><g filter="url(%23spacer)" opacity="0.75"><circle cx="2" cy="15" r="1.2" fill="%232c1608" /><circle cx="8" cy="25" r="1.4" fill="%232c1608" /><circle cx="3" cy="40" r="1.3" fill="%232c1608" /><circle cx="7" cy="55" r="1.2" fill="%232c1608" /><circle cx="2" cy="70" r="1.4" fill="%232c1608" /><circle cx="8" cy="85" r="1.2" fill="%232c1608" /><circle cx="3" cy="100" r="1.3" fill="%232c1608" /><circle cx="7" cy="115" r="1.4" fill="%232c1608" /><circle cx="2" cy="130" r="1.2" fill="%232c1608" /></g><g opacity="0.5" stroke="%23c98f3f" stroke-width="0.3"><line x1="0" y1="0" x2="11" y2="1" /><line x1="0" y1="40" x2="11" y2="41" /><line x1="0" y1="80" x2="11" y2="81" /><line x1="0" y1="120" x2="11" y2="121" /></g></svg>');
+  background-repeat:repeat-y;
+  background-size:100% auto;
+  box-shadow:
+    inset 0 1px 1.5px rgba(255,255,255,0.45),
+    inset 0 -1px 1.5px rgba(0,0,0,0.5),
+    0 1px 1px rgba(0,0,0,0.5);
+}
+.rail-stack{ display:flex; flex-direction:column-reverse; gap:7px; align-items:center; }
+.rail-btn{
+  width:38px; height:26px; padding:0; border-radius:999px;
+  border:1.5px solid rgba(100,70,35,0.8);
+  background:
+    url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="76" height="52"><defs><filter id="btnoise"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" result="noise" seed="77" /><feDisplacementMap in="SourceGraphic" in2="noise" scale="0.8" /></filter></defs><rect width="76" height="52" fill="%23fdfcf9" /><g opacity="0.04" filter="url(%23btnoise)"><line x1="0" y1="5" x2="76" y2="5" stroke="%23000" stroke-width="0.3" /><line x1="0" y1="15" x2="76" y2="15" stroke="%23000" stroke-width="0.2" /><line x1="0" y1="25" x2="76" y2="25" stroke="%23000" stroke-width="0.25" /><line x1="0" y1="35" x2="76" y2="35" stroke="%23000" stroke-width="0.2" /><line x1="0" y1="45" x2="76" y2="45" stroke="%23000" stroke-width="0.3" /></g></svg>'),
+    linear-gradient(160deg, #fdfcf9 0%, #f4eadb 45%, #e8dac8 100%);
+  background-size:100% 100%, 100% 100%;
+  color:var(--gold-deep);
+  display:flex; align-items:center; justify-content:center; font-size:11px; cursor:pointer;
+  box-shadow:
+    0 4px 10px rgba(0,0,0,0.55),
+    inset 0 1.5px 2px rgba(255,255,255,0.98),
+    inset 0 -1px 2px rgba(0,0,0,0.35),
+    inset -1.5px 0 2px rgba(0,0,0,0.2),
+    inset 1.5px 0 2px rgba(255,255,255,0.45),
+    inset 0 0 6px rgba(0,0,0,0.08);
+  position:relative;
+  transition:all .12s ease;
+}
+.rail-btn::after{
+  content:''; position:absolute; inset:-4px; border-radius:999px; z-index:-1; opacity:0;
+  background:radial-gradient(circle, rgba(238,207,131,0.5), transparent 68%); transition:opacity .25s;
+}
+.rail-btn:hover::after{ opacity:.9; }
+.rail-btn:hover{
+  background:
+    url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="76" height="52"><defs><filter id="btnoise2"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" result="noise" seed="77" /><feDisplacementMap in="SourceGraphic" in2="noise" scale="0.8" /></filter></defs><rect width="76" height="52" fill="%23fffff5" /><g opacity="0.04" filter="url(%23btnoise2)"><line x1="0" y1="5" x2="76" y2="5" stroke="%23000" stroke-width="0.3" /><line x1="0" y1="15" x2="76" y2="15" stroke="%23000" stroke-width="0.2" /><line x1="0" y1="25" x2="76" y2="25" stroke="%23000" stroke-width="0.25" /><line x1="0" y1="35" x2="76" y2="35" stroke="%23000" stroke-width="0.2" /><line x1="0" y1="45" x2="76" y2="45" stroke="%23000" stroke-width="0.3" /></g></svg>'),
+    linear-gradient(160deg, #fffff5 0%, #f9f0e0 45%, #efe1cc 100%);
+  background-size:100% 100%, 100% 100%;
+  box-shadow:
+    0 5px 14px rgba(0,0,0,0.6),
+    inset 0 1.5px 2px rgba(255,255,255,1),
+    inset 0 -1px 2.5px rgba(0,0,0,0.4),
+    inset -1.5px 0 2px rgba(0,0,0,0.22),
+    inset 1.5px 0 2px rgba(255,255,255,0.5),
+    inset 0 0 8px rgba(0,0,0,0.1);
+  transform:translateY(-1px);
+}
+.rail-btn.active{
+  background:
+    url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="76" height="52"><defs><filter id="btgold"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" result="noise" seed="77" /><feDisplacementMap in="SourceGraphic" in2="noise" scale="0.8" /></filter></defs><rect width="76" height="52" fill="%23eecf83" /><g opacity="0.06" filter="url(%23btgold)"><line x1="0" y1="5" x2="76" y2="5" stroke="%23000" stroke-width="0.3" /><line x1="0" y1="15" x2="76" y2="15" stroke="%23000" stroke-width="0.2" /><line x1="0" y1="25" x2="76" y2="25" stroke="%23000" stroke-width="0.25" /><line x1="0" y1="35" x2="76" y2="35" stroke="%23000" stroke-width="0.2" /><line x1="0" y1="45" x2="76" y2="45" stroke="%23000" stroke-width="0.3" /></g></svg>'),
+    linear-gradient(160deg, var(--gold-bright) 0%, var(--gold) 50%, var(--gold-deep) 100%);
+  background-size:100% 100%, 100% 100%;
+  color:#1a0f07;
+  box-shadow:
+    0 0 18px rgba(238,207,131,0.65),
+    inset 0 1.5px 2px rgba(255,255,255,0.7),
+    inset 0 -2px 3px rgba(90,50,5,0.6),
+    inset -1.5px 0 2.5px rgba(0,0,0,0.4),
+    inset 1.5px 0 2px rgba(255,255,255,0.35),
+    inset 0 0 8px rgba(0,0,0,0.12);
+}
+.rail-btn.active::after{ opacity:1; }
+.rail-btn:active:not(.active){ transform:translateY(1px); }
+.rail-btn[disabled]{ opacity:.3; cursor:default; }
+.rail-speed{ writing-mode:vertical-lr; transform:rotate(180deg); height:60px; margin:2px 0; accent-color:var(--gold); }
+
+/* ===== RIGHT ~TWO-THIRDS: work area — a mahogany desk holding one wide, left-bound notebook ===== */
+.work{
+  display:flex; flex-direction:column; min-height:0; overflow:hidden; padding:0;
+  background:
+    var(--lantern),
+    linear-gradient(180deg, rgba(46,107,82,0.05), transparent 40%);
+  position:relative;
+  perspective:1200px;
+}
+.work::before{
+  content:''; position:absolute; inset:0;
+  background-image:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="240" height="800"><defs><filter id="wg"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="5" result="noise" seed="42" /><feDisplacementMap in="SourceGraphic" in2="noise" scale="14" xChannelSelector="R" yChannelSelector="G" /></filter><pattern id="wood" patternUnits="userSpaceOnUse" width="240" height="800"><rect width="240" height="800" fill="%231b0f09" /><rect width="240" height="800" fill="%23241209" opacity="0.25" filter="url(%23wg)" /><g opacity="0.35" filter="url(%23wg)" stroke="%23000"><line x1="0" y1="40" x2="240" y2="42" stroke-width="0.8" /><line x1="0" y1="80" x2="240" y2="83" stroke-width="0.4" /><line x1="0" y1="120" x2="240" y2="118" stroke-width="0.6" /><line x1="0" y1="160" x2="240" y2="163" stroke-width="0.3" /><line x1="0" y1="200" x2="240" y2="198" stroke-width="0.7" /><line x1="0" y1="240" x2="240" y2="243" stroke-width="0.5" /><line x1="0" y1="280" x2="240" y2="278" stroke-width="0.4" /><line x1="0" y1="320" x2="240" y2="323" stroke-width="0.6" /><line x1="0" y1="360" x2="240" y2="358" stroke-width="0.35" /><line x1="0" y1="400" x2="240" y2="403" stroke-width="0.7" /><line x1="0" y1="440" x2="240" y2="438" stroke-width="0.5" /><line x1="0" y1="480" x2="240" y2="483" stroke-width="0.4" /><line x1="0" y1="520" x2="240" y2="518" stroke-width="0.65" /><line x1="0" y1="560" x2="240" y2="563" stroke-width="0.3" /><line x1="0" y1="600" x2="240" y2="598" stroke-width="0.6" /><line x1="0" y1="640" x2="240" y2="643" stroke-width="0.45" /><line x1="0" y1="680" x2="240" y2="678" stroke-width="0.5" /><line x1="0" y1="720" x2="240" y2="723" stroke-width="0.7" /><line x1="0" y1="760" x2="240" y2="758" stroke-width="0.35" /></g><g opacity="0.15" filter="url(%23wg)"><circle cx="80" cy="150" r="12" fill="%23341f10" /><circle cx="160" cy="320" r="9" fill="%23341f10" /><circle cx="200" cy="500" r="14" fill="%23341f10" /><circle cx="60" cy="680" r="11" fill="%23341f10" /></g></pattern></defs><rect width="240" height="800" fill="url(%23wood)" /></svg>');
+  background-repeat:repeat;
+  pointer-events:none;
+  opacity:1;
+  z-index:0;
+}
+.work > *{ position:relative; z-index:1; }
+.docbar{
+  display:flex; align-items:center; gap:8px; padding:8px 16px; border-bottom:1px solid var(--leather-seam);
+  font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--parchment-soft);
+}
+.doc-title{
+  flex:1; font-family:'Cormorant Garamond',serif; font-size:15px; border:none; background:transparent; outline:none; color:var(--parchment);
+}
+.save-status{ color:var(--parchment-soft); }
+.docbar button{ font-family:'IBM Plex Mono',monospace; font-size:10.5px; padding:5px 12px; }
+
+/* the notebook: bound on the LEFT like a real notebook, not across the top like a steno pad */
+.page{ flex:1; min-height:0; display:flex; flex-direction:row; width:min(99%, 1600px); margin:2px auto 0; transform:rotateX(5deg); transform-origin:center center; box-shadow:0 28px 48px -24px rgba(0,0,0,0.75), inset 0 1px 0 rgba(255,255,255,0.08); }
+.spiral-spine{
+  flex:0 0 64px; align-self:stretch; position:relative; background:#0d0705;
+}
+.spiral-spine canvas{
+  width:100%; height:100%; display:block;
+}
+.page-sheets{ flex:1; min-width:0; display:flex; flex-direction:column; min-height:0; }
+
+.manuscript-tail{
+  background:
+    url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="180" height="120"><defs><filter id="parch"><feTurbulence type="fractalNoise" baseFrequency="0.3" numOctaves="4" result="noise" /><feDisplacementMap in="SourceGraphic" in2="noise" scale="1.5" /></filter></defs><rect width="180" height="120" fill="%23fffbf0" /><g opacity="0.05" filter="url(%23parch)"><circle cx="20" cy="15" r="8" fill="%23000" /><circle cx="60" cy="40" r="6" fill="%23000" /><circle cx="100" cy="25" r="7" fill="%23000" /><circle cx="140" cy="50" r="5" fill="%23000" /><circle cx="30" cy="80" r="6" fill="%23000" /><circle cx="90" cy="100" r="7" fill="%23000" /><circle cx="150" cy="85" r="6" fill="%23000" /></g></svg>'),
+    var(--ivory-glow);
+  padding:8px 30px 6px; border-top:1px solid rgba(255,255,255,0.9);
+  font-family:'Cormorant Garamond',serif; font-size:15.5px; line-height:1.5;
+  flex:0 0 auto; max-height:38vh; overflow-y:auto;
+  position:relative; color:var(--ink);
+}
+.manuscript-tail::after{
+  content:''; position:absolute; left:0; right:0; bottom:0; height:16px;
+  background:linear-gradient(transparent, var(--ivory-glow));
+}
+.manuscript-tail .zlabel{ position:absolute; top:3px; right:14px; font-family:'IBM Plex Mono',monospace; font-size:8px; letter-spacing:.14em; color:var(--gold-deep); text-transform:uppercase; }
+.manuscript-tail .tail-line{ cursor:pointer; border-radius:3px; padding:0 4px; margin:0 -4px; transition:background .12s ease; }
+.manuscript-tail .tail-line:hover{ background:rgba(147,112,31,0.10); }
+.manuscript-tail .tail-line.selected{ background:var(--gold-glow); box-shadow:inset 0 0 0 1px var(--gold-deep); }
+.manuscript-tail .tail-line.reading-now{ background:rgba(205,163,73,0.22); box-shadow:inset 0 0 0 1px var(--gold-glow); }
+.manuscript-tail .tail-line-editing{ max-height:none; }
+.manuscript-tail .tail-line-editing textarea{ width:100%; font-family:inherit; font-size:inherit; color:var(--ink); background:rgba(255,255,255,0.6); border:1px solid var(--gold-deep); border-radius:4px; padding:4px 6px; resize:vertical; }
+.manuscript-tail .line-controls button{ font-size:10px; padding:2px 8px; }
+
+.buffer-crawl{
+  flex:1; min-height:0; overflow-y:auto; position:relative;
+  background:
+    url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="220" height="140"><defs><filter id="parch2"><feTurbulence type="fractalNoise" baseFrequency="0.25" numOctaves="4" result="noise" /><feDisplacementMap in="SourceGraphic" in2="noise" scale="1.8" /></filter></defs><rect width="220" height="140" fill="%23faf3e1" /><g opacity="0.06" filter="url(%23parch2)"><circle cx="25" cy="20" r="9" fill="%23000" /><circle cx="75" cy="50" r="7" fill="%23000" /><circle cx="130" cy="30" r="8" fill="%23000" /><circle cx="170" cy="60" r="6" fill="%23000" /><circle cx="40" cy="100" r="7" fill="%23000" /><circle cx="110" cy="120" r="8" fill="%23000" /><circle cx="180" cy="105" r="6" fill="%23000" /></g></svg>'),
+    repeating-linear-gradient(0deg, transparent, transparent 27px, var(--paper-line) 28px),
+    linear-gradient(180deg, #faf3e1, #f4ead9 60%, #efe3cd);
+  padding:8px 30px 36px;
+  border-radius:0 0 10px 10px;
+  box-shadow:0 18px 30px -20px rgba(60,45,10,0.35);
+}
+.reading-indicator{ padding:0 30px; }
+.locked-count{ font-family:'IBM Plex Mono',monospace; font-size:9.5px; color:var(--gold-deep); margin:2px 0 6px; }
+/* The draft area — one continuous, directly-typable textarea over the
+   settled buffer. Click anywhere, cursor lands there, type — same font/
+   sizing .line used to have, so it reads the same as it always did, just
+   without the per-line boxes. Locked content has no inline visual signal
+   here anymore (a plain textarea can't vary font/style within itself) —
+   the .locked-count indicator above and the delete-protection in
+   reconcileDraftArea() are what stand in for that now. */
+.draft-area{
+  display:block; width:100%; min-height:120px; resize:none; border:none; outline:none; overflow:hidden;
+  font-family:'Kalam',cursive; font-size:16.5px; line-height:1.5; color:var(--pencil);
+  background:transparent; padding:4px 30px 20px;
+}
+.draft-area::placeholder{ color:var(--pencil-soft); opacity:.6; }
+/* Regular writing mode: the buffer-crawl section and its seam divider are
+   hidden entirely (not dormant-styled, actually removed from layout — see
+   updateCoWritingModeUI() in JS), and the manuscript expands to take that
+   space instead of leaving it blank. */
+.page-sheets.solo-mode .manuscript-tail{ flex:1; max-height:none; }
+/* Below: still used by the reading-indicator's single element (the one
+   line actively being AI-read keeps its own small, separately-rendered
+   node — see render() — since that's the only way the sweep-highlight
+   animation still works). Not used for settled buffer content anymore. */
+.line{
+  font-family:'Kalam',cursive; font-size:16.5px; line-height:1.4; color:var(--pencil);
+  padding:4px 34px 4px 10px; border-radius:5px; cursor:pointer; position:relative;
+  display:flex; align-items:center;
+}
+.line:hover{ background:rgba(205,163,73,0.10); }
+.line.reading{ background:rgba(205,163,73,0.16); border-color:var(--gold-glow); }
+.line.reading .sweep{
+  position:absolute; inset:0; border-radius:5px; background:var(--brass-glow);
+  background-size:0% 100%; background-repeat:no-repeat; background-image:linear-gradient(to right, var(--gold-glow), var(--silver-glow));
+  animation-name:sweep; animation-timing-function:linear; animation-fill-mode:forwards; z-index:-1;
+}
+@keyframes sweep{ from{background-size:0% 100%;} to{background-size:100% 100%;} }
+.line.reaction{ outline:1px dashed var(--gold); }
+.reaction-ring{
+  display:inline-block; width:8px; height:8px; border-radius:50%; margin-left:8px;
+  border:2px solid var(--gold); border-top-color:transparent; animation:spin 1s linear infinite; vertical-align:middle;
+}
+@keyframes spin{ to{ transform:rotate(360deg); } }
+.line textarea{ width:100%; font:inherit; font-size:16.5px; line-height:1.4; border:none; background:transparent; resize:vertical; outline:none; }
+.line-controls{ display:flex; gap:6px; margin:2px 6px 6px; }
+.line-controls button{ font-size:10.5px; padding:3px 9px; }
+.regen-flag{ font-family:'IBM Plex Mono',monospace; font-size:9.5px; color:var(--danger); margin:0 6px 4px; }
+.regen-flag.ok{ color:#3d7a4a; }
+
+button{
+  font-family:'IBM Plex Mono',monospace; border:1px solid var(--tortoise-dark);
+  background:radial-gradient(ellipse at 32% 22%, #fffdf6, var(--ivory-deep) 78%); color:var(--gold-deep);
+  border-radius:999px; cursor:pointer; letter-spacing:.02em; padding:6px 14px;
+  box-shadow:0 3px 6px rgba(0,0,0,0.45), inset 0 1px 1px rgba(255,255,255,0.95), inset 0 -2px 3px rgba(120,100,60,0.3);
+  transition:box-shadow .2s, filter .2s;
+}
+button:hover:not(:disabled){ box-shadow:0 3px 6px rgba(0,0,0,0.45), inset 0 1px 1px rgba(255,255,255,0.95), inset 0 -2px 3px rgba(120,100,60,0.3), 0 0 14px var(--gold-glow); }
+button.secondary{ background:transparent; color:var(--parchment); border-color:var(--leather-seam); box-shadow:none; }
+button.secondary:hover:not(:disabled){ border-color:var(--velvet-glow); box-shadow:0 0 10px var(--velvet-glow); }
+button:disabled{ opacity:.35; cursor:default; }
+button:active:not(:disabled){ transform:translateY(1px); }
+
+.status-strip{
+  display:flex; align-items:center; gap:10px; padding:6px 12px; border-top:1px solid var(--leather-seam);
+  font-family:'IBM Plex Mono',monospace; font-size:9.5px; color:var(--parchment-soft);
+}
+.status-dot{ width:6px;height:6px;border-radius:50%; background:var(--parchment-soft); }
+.status-dot.playing{ background:var(--velvet-bright); }
+.status-dot.paused{ background:var(--brass); }
+
+.menu-panel{
+  position:absolute; left:64px; top:12px; z-index:30; min-width:290px; padding:8px;
+  background:linear-gradient(160deg,#3a2013,var(--mahogany-deep)); border:1px solid var(--glass-border); border-radius:8px;
+  box-shadow:0 12px 28px rgba(0,0,0,.5); display:none; color:var(--parchment);
+}
+.menu-panel.open{ display:block; }
+.menu-panel button{ display:block; width:100%; text-align:left; margin:3px 0; border-radius:8px; }
+.menu-panel button.toggle-item{ display:flex; align-items:center; justify-content:space-between; gap:8px; }
+.menu-panel button.toggle-item::after{
+  content:'Off'; font-family:'IBM Plex Mono',monospace; font-size:9px; opacity:.55;
+  padding:2px 7px; border-radius:999px; background:rgba(255,255,255,0.08); flex-shrink:0;
+}
+.menu-panel button.toggle-item.on::after{
+  content:'On'; opacity:1; background:rgba(205,163,73,0.28); color:var(--gold-bright);
+}
+.menu-note{ font-family:'IBM Plex Mono',monospace; font-size:9.5px; color:var(--parchment-soft); padding:4px 6px 8px; line-height:1.4; }
+
+.llm-status{ font-family:'IBM Plex Mono',monospace; font-size:10px; padding:2px 8px; border-radius:999px; border:1px solid var(--glass-border); cursor:pointer; color:var(--parchment-soft); }
+.llm-status.ok{ color:#bff2c8; border-color:#4c9a63; }
+.llm-status.err{ color:#f2c0bf; border-color:#9a4c4c; }
+
+.modal-backdrop{ position:fixed; inset:0; background:rgba(10,6,3,.6); z-index:80; display:none; align-items:center; justify-content:center; }
+.modal-backdrop.open{ display:flex; }
+.modal{ width:min(440px,92vw); max-height:86vh; overflow:auto; padding:16px; border-radius:12px; color:var(--parchment); }
+.modal-body{ display:flex; flex-direction:column; gap:6px; margin-top:8px; }
+.modal-body label{ font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--parchment-soft); margin-top:6px; }
+.modal-body select, .modal-body input[type=text], .modal-body input[type=password]{
+  width:100%; padding:7px 9px; border-radius:6px; border:1px solid var(--glass-border);
+  background:rgba(0,0,0,.25); color:var(--parchment); font-family:'IBM Plex Mono',monospace; font-size:12px;
+}
+.llm-fields{ display:none; flex-direction:column; gap:4px; }
+.llm-fields.active{ display:flex; }
+.modal-actions{ display:flex; justify-content:flex-end; gap:8px; margin-top:14px; }
+
+.context-menu{
+  position:fixed; z-index:200; padding:5px; border-radius:9px;
+  box-shadow:0 10px 24px -8px rgba(0,0,0,0.65);
+}
+.context-menu button{
+  display:block; width:100%; text-align:left; font-size:12.5px; padding:7px 14px;
+  background:transparent; border:none; color:var(--parchment); cursor:pointer; border-radius:5px;
+}
+.context-menu button:hover{ background:rgba(205,163,73,0.18); }
+.llm-test-result{ margin-top:8px; font-family:'IBM Plex Mono',monospace; font-size:11px; min-height:14px; }
+.llm-test-result.ok{ color:#bff2c8; }
+.llm-test-result.err{ color:#f2c0bf; }
+
+.chat-input-row{ position:relative; }
+#chatMicBtn{ width:30px; flex:0 0 30px; padding:0; font-size:14px; }
+#chatMicBtn.listening{ background:linear-gradient(160deg,#c94747,#8a2c2c); color:#fff; animation:micPulse 1s ease-in-out infinite; }
+@keyframes micPulse{ 0%,100%{ box-shadow:0 0 0 0 rgba(201,71,71,.5);} 50%{ box-shadow:0 0 0 6px rgba(201,71,71,0);} }
+
+.chat-msg.thinking{ opacity:.6; font-style:italic; }
+
+/* smoother crawl: new lines fade+slide in instead of popping */
+.crawl-inner .line{ animation:lineIn .28s ease-out; }
+@keyframes lineIn{ from{ opacity:0; transform:translateY(6px);} to{ opacity:1; transform:translateY(0);} }
+.buffer-crawl{ scroll-behavior:smooth; }
+
+.write-row{ display:flex; gap:8px; padding:8px 10px; align-items:flex-end; border-top:1px solid var(--glass-border); background:rgba(0,0,0,.15); }
+.write-row textarea{
+  flex:1; resize:vertical; min-height:38px; max-height:140px; padding:8px 10px; border-radius:6px;
+  border:1px solid var(--glass-border); background:rgba(0,0,0,.25); color:var(--parchment);
+  font-family:'IBM Plex Mono',monospace; font-size:12.5px; line-height:1.4;
+}
+.write-row button{ flex:0 0 auto; }
+
+/* ============================================================
+   2i MATERIAL UI OVERHAUL v13
+   Design direction:
+   - real material language instead of "gradient everywhere"
+   - layered compositing / blend modes
+   - SVG relief lighting for metallic controls
+   - cursor-responsive warm light
+   - stronger hierarchy, depth, focus, and tactile states
+   - no changes to the editor's data model
+   ============================================================ */
+
+:root{
+  --ui-light-x: 50%;
+  --ui-light-y: 18%;
+  --brass-hi:#f7dfa0;
+  --brass-mid:#cda349;
+  --brass-low:#654814;
+  --ink-deep:#17110d;
+  --paper-hi:#fffdf4;
+  --paper-low:#e8dcc4;
+  --leather-hi:#4b2a19;
+  --shadow-deep:rgba(0,0,0,.72);
+  --edge-light:rgba(255,240,192,.28);
+  --grain-opacity:.12;
+}
+
+/* A very subtle global film/paper grain. It is intentionally quiet. */
+body::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:9999;
+  opacity:var(--grain-opacity);
+  mix-blend-mode:soft-light;
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(255,255,255,.35) 0 1px, transparent 1px),
+    radial-gradient(circle at 70% 60%, rgba(0,0,0,.35) 0 1px, transparent 1px),
+    radial-gradient(circle at 40% 80%, rgba(255,255,255,.25) 0 1px, transparent 1px);
+  background-size:3px 3px,5px 5px,7px 7px;
+}
+
+/* The room gets a moving lantern pool. */
+.work::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+  background:
+    radial-gradient(420px 320px at var(--ui-light-x) var(--ui-light-y),
+      rgba(238,207,131,.15),
+      rgba(238,207,131,.055) 34%,
+      transparent 70%);
+  mix-blend-mode:screen;
+  transition:background-position .12s ease-out;
+}
+
+/* Material panels: layered substrate + sheen + edge response. */
+.glass{
+  isolation:isolate;
+  overflow:hidden;
+  background:
+    linear-gradient(112deg, rgba(255,229,171,.055), transparent 18% 72%, rgba(0,0,0,.14)),
+    linear-gradient(160deg, rgba(76,44,26,.94), rgba(27,14,9,.97) 86%) padding-box,
+    linear-gradient(135deg, #e4bd68, #6d4a16 18%, #261609 52%, #c49a48 82%, #5b3d12) border-box;
+  box-shadow:
+    0 24px 55px -25px rgba(0,0,0,.82),
+    0 3px 0 rgba(255,235,177,.08),
+    inset 0 1px 0 rgba(255,247,212,.20),
+    inset 0 0 0 1px rgba(0,0,0,.52),
+    inset 18px 0 28px -30px rgba(255,216,126,.45),
+    inset -18px 0 28px -30px rgba(0,0,0,.9);
+}
+
+.glass::before{
+  z-index:-1;
+  background:
+    linear-gradient(105deg, rgba(255,255,255,.08), transparent 22% 72%, rgba(255,211,111,.06)),
+    repeating-linear-gradient(92deg, rgba(255,255,255,.018) 0 1px, transparent 1px 7px);
+  mix-blend-mode:screen;
+  opacity:.7;
+}
+
+.glass::after{
+  content:"";
+  position:absolute;
+  inset:7px;
+  border:1px solid rgba(230,194,116,.10);
+  border-radius:8px;
+  pointer-events:none;
+  box-shadow:
+    inset 0 0 0 1px rgba(0,0,0,.16),
+    inset 0 0 20px rgba(0,0,0,.20);
+}
+
+/* Header labels read like engraved brass plaques. */
+.pane-label{
+  position:relative;
+  padding:5px 8px 6px 12px;
+  margin:-2px -2px 8px;
+  border-bottom:1px solid rgba(205,163,73,.20);
+  color:#e8ca83;
+  text-shadow:0 1px 1px #090604, 0 0 9px rgba(238,207,131,.14);
+}
+.pane-label::before{
+  width:6px;
+  height:6px;
+  box-shadow:0 0 9px rgba(238,207,131,.75), 0 0 2px #fff2bd;
+}
+
+/* Chat bubbles gain physical separation and a paper/leather substrate. */
+.chat-msg{
+  position:relative;
+  border-radius:5px;
+  box-shadow:
+    0 8px 16px -12px rgba(0,0,0,.95),
+    inset 0 1px 0 rgba(255,255,255,.06);
+}
+.chat-msg.pp{
+  background:
+    linear-gradient(145deg, rgba(91,52,31,.28), rgba(0,0,0,.30)),
+    repeating-linear-gradient(0deg, rgba(255,255,255,.012) 0 1px, transparent 1px 4px);
+}
+.chat-msg.you{
+  background:
+    linear-gradient(145deg, rgba(46,107,82,.32), rgba(5,25,19,.28)),
+    repeating-linear-gradient(90deg, rgba(255,255,255,.015) 0 1px, transparent 1px 5px);
+}
+
+/* Inputs feel inset into the furniture instead of floating. */
+.chat-input-row input{
+  background:
+    linear-gradient(180deg, rgba(0,0,0,.36), rgba(0,0,0,.20)),
+    repeating-linear-gradient(0deg, rgba(255,255,255,.018) 0 1px, transparent 1px 4px);
+  box-shadow:
+    inset 0 2px 7px rgba(0,0,0,.5),
+    inset 0 0 0 1px rgba(255,226,159,.035);
+}
+.chat-input-row input:focus{
+  border-color:#e6c477;
+  box-shadow:
+    inset 0 2px 7px rgba(0,0,0,.5),
+    0 0 0 1px rgba(238,207,131,.34),
+    0 0 22px rgba(238,207,131,.16);
+}
+
+/* The manuscript becomes the hero object. */
+.page{
+  position:relative;
+  border-radius:2px 10px 10px 2px;
+  transform:rotateX(2.8deg) rotateY(-.45deg);
+  transform-origin:50% 50%;
+  box-shadow:
+    0 42px 70px -34px rgba(0,0,0,.94),
+    20px 0 35px -30px rgba(0,0,0,.65),
+    inset 0 1px 0 rgba(255,255,255,.20);
+  transition:transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s ease;
+}
+.page:hover{
+  transform:rotateX(1.7deg) rotateY(-.15deg) translateY(-1px);
+  box-shadow:
+    0 48px 78px -36px rgba(0,0,0,.95),
+    20px 0 38px -30px rgba(0,0,0,.68),
+    inset 0 1px 0 rgba(255,255,255,.22);
+}
+
+/* A warm edge catches the lantern. */
+.page::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  border:1px solid rgba(205,163,73,.12);
+  box-shadow:
+    inset 0 0 45px rgba(111,71,20,.09),
+    inset 0 0 4px rgba(255,255,255,.28);
+  mix-blend-mode:multiply;
+  z-index:10;
+}
+
+.spiral-spine{
+  background:
+    linear-gradient(90deg, #080403 0%, #24150d 20%, #0a0503 48%, #3a2111 72%, #0b0503 100%);
+  box-shadow:
+    inset -5px 0 8px rgba(0,0,0,.7),
+    inset 2px 0 3px rgba(238,207,131,.08);
+}
+
+/* Paper uses multiple low-frequency layers, not one flat fill. */
+.manuscript-tail,
+.buffer-crawl{
+  background-color:#faf3df;
+  background-blend-mode:multiply, normal, normal;
+}
+.manuscript-tail{
+  background-image:
+    radial-gradient(900px 260px at 50% 0%, rgba(255,255,255,.65), transparent 72%),
+    repeating-linear-gradient(0deg, transparent 0 27px, rgba(155,143,116,.20) 28px),
+    linear-gradient(180deg, #fffdf3, #f2e7d2 72%, #e8dcc4);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.9),
+    inset 0 -12px 25px -25px rgba(77,52,19,.55);
+}
+.buffer-crawl{
+  background-image:
+    radial-gradient(800px 300px at 50% 0%, rgba(255,255,255,.46), transparent 72%),
+    repeating-linear-gradient(0deg, transparent 0 27px, rgba(155,143,116,.22) 28px),
+    linear-gradient(180deg, #fbf4e4, #eee1ca);
+}
+
+/* Handwritten text gets a tiny ink lift. */
+.draft-area,
+.line{
+  text-shadow:0 .25px 0 rgba(0,0,0,.22);
+  letter-spacing:.005em;
+}
+
+/* Selection and active reading are now "lantern on paper", not yellow boxes. */
+.line:hover,
+.manuscript-tail .tail-line:hover{
+  background:
+    radial-gradient(320px 80px at var(--ui-light-x) 50%, rgba(238,207,131,.16), transparent 70%);
+}
+.line.reading,
+.manuscript-tail .tail-line.reading-now{
+  background:
+    linear-gradient(90deg, rgba(238,207,131,.20), rgba(238,207,131,.06) 65%, transparent);
+  box-shadow:
+    inset 3px 0 0 #cda349,
+    inset 0 0 22px rgba(238,207,131,.08);
+}
+
+/* Buttons become cast metal / ceramic instead of pill-shaped web controls. */
+button{
+  position:relative;
+  overflow:hidden;
+  border-radius:5px;
+  border-color:#5d4219;
+  background:
+    linear-gradient(155deg, rgba(255,255,255,.55), transparent 30%),
+    linear-gradient(160deg, #fffdf3 0%, #eee1c8 48%, #cdbb98 100%);
+  color:#684b18;
+  box-shadow:
+    0 5px 10px -5px rgba(0,0,0,.85),
+    inset 0 1px 1px rgba(255,255,255,.98),
+    inset 0 -2px 3px rgba(92,64,25,.38),
+    inset 0 0 0 1px rgba(100,70,30,.12);
+  transition:transform .16s ease, box-shadow .18s ease, filter .18s ease;
+}
+button::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(115deg, rgba(255,255,255,.26), transparent 24% 72%, rgba(115,73,14,.12));
+  pointer-events:none;
+  mix-blend-mode:overlay;
+}
+button:hover:not(:disabled){
+  filter:saturate(1.08) brightness(1.03);
+  box-shadow:
+    0 7px 16px -7px rgba(0,0,0,.92),
+    inset 0 1px 1px rgba(255,255,255,1),
+    inset 0 -2px 3px rgba(92,64,25,.40),
+    0 0 18px rgba(238,207,131,.28);
+}
+button:active:not(:disabled){
+  transform:translateY(1px) scale(.985);
+  box-shadow:
+    0 2px 5px -3px rgba(0,0,0,.9),
+    inset 0 2px 3px rgba(70,45,14,.34);
+}
+button.secondary{
+  background:
+    linear-gradient(145deg, rgba(255,255,255,.035), rgba(0,0,0,.13)),
+    rgba(30,16,10,.40);
+  color:#d9c6a0;
+  border-color:rgba(205,163,73,.18);
+}
+
+/* Rail becomes a vertical instrument panel. */
+.rail{
+  position:relative;
+}
+.rail::before{
+  content:"";
+  position:absolute;
+  inset:0 9px;
+  background:linear-gradient(90deg, rgba(0,0,0,.24), transparent 45%, rgba(255,220,137,.05));
+  border-left:1px solid rgba(238,207,131,.08);
+  border-right:1px solid rgba(0,0,0,.28);
+  pointer-events:none;
+}
+.rail-menu,
+.rail-btn{
+  z-index:2;
+}
+.rail-menu{
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  border-color:#73551f;
+  background:
+    radial-gradient(circle at 34% 27%, #fffef8 0 12%, transparent 13%),
+    linear-gradient(150deg, #fffef8, #e6d8bf 58%, #aa936d);
+  box-shadow:
+    0 7px 16px rgba(0,0,0,.68),
+    inset 0 2px 2px rgba(255,255,255,1),
+    inset 0 -2px 3px rgba(71,48,19,.48),
+    0 0 0 1px rgba(255,226,151,.12);
+}
+.rail-btn{
+  border-radius:4px;
+  height:28px;
+  background:
+    linear-gradient(155deg, rgba(255,255,255,.58), transparent 26%),
+    linear-gradient(160deg, #fffef8, #eadfcf 50%, #bda982);
+}
+.rail-btn.active{
+  background:
+    linear-gradient(155deg, rgba(255,255,255,.50), transparent 24%),
+    linear-gradient(160deg, #f7dda0, #cda349 48%, #80601e);
+  color:#201307;
+  box-shadow:
+    0 0 20px rgba(238,207,131,.55),
+    0 6px 13px rgba(0,0,0,.62),
+    inset 0 2px 2px rgba(255,255,255,.72),
+    inset 0 -2px 3px rgba(75,47,10,.65);
+}
+
+/* Reference cards become little archival labels. */
+.ref-item{
+  border-radius:4px;
+  background:
+    linear-gradient(145deg, rgba(255,255,255,.035), rgba(0,0,0,.16)),
+    rgba(15,8,5,.32);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.035);
+}
+.ref-item:hover{
+  transform:translateX(2px);
+  border-color:rgba(205,163,73,.45);
+  box-shadow:
+    inset 3px 0 0 rgba(205,163,73,.7),
+    0 5px 12px -9px rgba(0,0,0,.9);
+}
+
+/* Document bar is a brass nameplate. */
+.docbar{
+  min-height:42px;
+  padding:7px 16px;
+  background:
+    linear-gradient(180deg, rgba(255,224,152,.045), transparent),
+    rgba(15,8,5,.24);
+  box-shadow:
+    inset 0 -1px 0 rgba(205,163,73,.10),
+    0 5px 18px -16px rgba(0,0,0,.9);
+}
+.doc-title{
+  text-shadow:0 1px 1px #090604;
+}
+.save-status{
+  padding:3px 7px;
+  border:1px solid rgba(205,163,73,.12);
+  border-radius:3px;
+}
+
+/* Menu gets proper depth and a material header. */
+.menu-panel{
+  background:
+    linear-gradient(135deg, rgba(255,218,132,.05), transparent 30%),
+    linear-gradient(160deg,#432516,#1c0e08 88%);
+  border:1px solid rgba(205,163,73,.35);
+  border-radius:5px;
+  box-shadow:
+    0 24px 48px -18px rgba(0,0,0,.95),
+    0 0 0 1px rgba(255,228,156,.05),
+    inset 0 1px 0 rgba(255,240,188,.12);
+  backdrop-filter:blur(14px) saturate(1.15);
+}
+
+/* Status strip feels like a machine readout. */
+.status-strip{
+  background:linear-gradient(180deg, rgba(0,0,0,.08), rgba(0,0,0,.18));
+  box-shadow:inset 0 1px 0 rgba(255,220,145,.05);
+}
+.status-dot{
+  box-shadow:0 0 0 2px rgba(255,255,255,.035);
+}
+.status-dot.playing{
+  box-shadow:0 0 8px rgba(46,107,82,.9);
+}
+.status-dot.paused{
+  box-shadow:0 0 8px rgba(238,207,131,.8);
+}
+
+/* Scrollbars: dark wood + brass thumb. */
+*{
+  scrollbar-width:thin;
+  scrollbar-color:#7d5a21 rgba(0,0,0,.18);
+}
+*::-webkit-scrollbar{width:8px;height:8px}
+*::-webkit-scrollbar-track{
+  background:rgba(0,0,0,.16);
+}
+*::-webkit-scrollbar-thumb{
+  background:linear-gradient(90deg,#5a3d15,#cda349,#6b4a18);
+  border-radius:8px;
+  border:2px solid transparent;
+  background-clip:padding-box;
+}
+
+/* Keyboard focus is obvious but still in-world. */
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible{
+  outline:1px solid rgba(238,207,131,.82);
+  outline-offset:2px;
+}
+
+/* Reduced motion stays respected. */
+@media (prefers-reduced-motion: reduce){
+  *, *::before, *::after{
+    scroll-behavior:auto !important;
+    transition-duration:.01ms !important;
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+  }
+}
+
+
+/* ============================================================
+   v14 BINDING FIX
+   The old binding was a stack of flattened ellipses. This is a
+   continuous, perspective wire coil with paper holes, shadow,
+   highlight and a dark recessed binding channel.
+   ============================================================ */
+
+.spiral-spine{
+  position:relative;
+  flex:0 0 64px;
+  background:
+    linear-gradient(90deg,
+      #090604 0%,
+      #21150d 12%,
+      #0d0805 27%,
+      #24170e 52%,
+      #090604 76%,
+      #1b1009 100%);
+  box-shadow:
+    inset -10px 0 13px -11px rgba(0,0,0,.95),
+    inset 8px 0 11px -12px rgba(238,207,131,.20),
+    1px 0 0 rgba(205,163,73,.10);
+  overflow:hidden;
+}
+
+.spiral-spine::before{
+  content:"";
+  position:absolute;
+  top:0;
+  bottom:0;
+  left:7px;
+  width:5px;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      rgba(0,0,0,.72) 0 7px,
+      rgba(238,207,131,.05) 8px 9px,
+      rgba(0,0,0,.72) 10px 18px
+    );
+  box-shadow:
+    inset 1px 0 rgba(255,230,161,.05),
+    2px 0 8px rgba(0,0,0,.55);
+  pointer-events:none;
+  z-index:0;
+}
+
+.spiral-spine::after{
+  content:"";
+  position:absolute;
+  top:0;
+  bottom:0;
+  right:4px;
+  width:2px;
+  background:linear-gradient(
+    90deg,
+    rgba(0,0,0,.65),
+    rgba(255,224,147,.16),
+    rgba(0,0,0,.75)
+  );
+  pointer-events:none;
+  z-index:3;
+}
+
+.spiral-spine canvas{
+  position:relative;
+  z-index:2;
+  width:100%;
+  height:100%;
+  display:block;
+  filter:drop-shadow(1px 2px 2px rgba(0,0,0,.72));
+}
+
+
+/* ============================================================
+   v15 NOTEBOOK-DOMINANT LAYOUT
+   The notebook is the visual endpoint of the UI. Nothing is allowed
+   to compete with it on its right side. Existing functionality stays.
+   ============================================================ */
+
+/* Let the manuscript occupy the entire work surface. The old glass
+   container becomes the desk beneath the notebook rather than another
+   competing frame. */
+.work{
+  padding:0;
+  border-radius:10px;
+  border-width:1px;
+  overflow:hidden;
+  background:
+    radial-gradient(ellipse 75% 40% at 48% 0%, rgba(238,207,131,.16), transparent 68%),
+    linear-gradient(180deg,#2a160d,#160b06 82%);
+}
+.work::before{opacity:.62;}
+.work::after{z-index:0;}
+
+/* The actual notebook is now the dominant object, flush to the available
+   work area. No decorative UI is permitted to occupy the space after it. */
+.work > .page{
+  width:100%;
+  height:100%;
+  min-width:0;
+  margin:0;
+  border-radius:4px 0 0 4px;
+  transform:none;
+  box-shadow:
+    0 34px 60px -30px rgba(0,0,0,.92),
+    inset 0 1px 0 rgba(255,255,255,.16);
+}
+.work > .page:hover{
+  transform:none;
+  box-shadow:
+    0 38px 66px -30px rgba(0,0,0,.94),
+    inset 0 1px 0 rgba(255,255,255,.18);
+}
+
+/* The notebook has a physical cover edge on the right. It is the end of
+   the UI, not the beginning of another panel. */
+.page-sheets{
+  min-width:0;
+  overflow:hidden;
+  border-radius:0 7px 7px 0;
+  box-shadow:inset -13px 0 20px -19px rgba(0,0,0,.8);
+}
+
+/* Keep all content inside the notebook's paper plane. */
+.manuscript-tail,.buffer-crawl{min-width:0;}
+
+/* Existing left-side controls get the same physical desk language as the
+   notebook: wood substrate, brass edging, engraved labels. */
+.left-col{
+  gap:8px;
+  min-width:0;
+}
+.left-col .glass{
+  border-radius:6px;
+  border-width:2px;
+  background:
+    linear-gradient(145deg,rgba(255,218,132,.055),transparent 24%),
+    linear-gradient(160deg,#432516,#1a0c07 90%);
+  box-shadow:
+    0 18px 30px -20px rgba(0,0,0,.9),
+    inset 0 1px 0 rgba(255,240,188,.10),
+    inset 0 -18px 25px -28px rgba(0,0,0,.9);
+}
+.left-col .pane-label{
+  margin-bottom:8px;
+  padding:6px 8px 7px 10px;
+  border-bottom:1px solid rgba(205,163,73,.18);
+  color:#e8ca83;
+}
+.left-col .chat-msg,
+.left-col .ref-item{
+  border-radius:3px;
+}
+
+/* The rail is a binding tool strip, not a second navigation destination. */
+.rail{
+  border-radius:5px;
+  background:linear-gradient(180deg,#24140b,#0c0704);
+  box-shadow:
+    inset 1px 0 rgba(255,231,164,.08),
+    inset -1px 0 rgba(0,0,0,.8),
+    0 12px 24px -18px rgba(0,0,0,.9);
+}
+
+/* Hard clip: if any legacy/future element gets added after the notebook,
+   it cannot create a competing right-hand UI column. */
+.work > *:not(.page){display:none !important;}
+
+/* At narrower widths, preserve the notebook instead of squeezing a phantom
+   right-side panel into existence. */
+@media (max-width:1050px){
+  .shell{grid-template-columns:minmax(230px,.72fr) 32px minmax(0,2.3fr);}
+}
+@media (max-width:780px){
+  .shell{grid-template-columns:0 30px minmax(0,1fr);padding:6px;gap:5px;}
+  .left-col{display:none;}
+  .work > .page{border-radius:3px;}
+}
+
+</style>
+</head>
+<body>
+
+<svg aria-hidden="true" width="0" height="0"
+     style="position:absolute;left:-9999px;top:-9999px;overflow:hidden">
+  <defs>
+    <filter id="twoi-metal-relief" x="-30%" y="-30%" width="160%" height="160%">
+      <feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="3"
+                    seed="27" result="metalNoise"/>
+      <feDisplacementMap in="SourceGraphic" in2="metalNoise" scale=".8"
+                         xChannelSelector="R" yChannelSelector="G" result="relief"/>
+      <feSpecularLighting in="relief" surfaceScale="2.2"
+          specularConstant=".62" specularExponent="18"
+          lighting-color="#f3d27d" result="spec">
+        <feDistantLight azimuth="228" elevation="54"/>
+      </feSpecularLighting>
+      <feComposite in="spec" in2="SourceGraphic" operator="in" result="specCut"/>
+      <feBlend in="SourceGraphic" in2="specCut" mode="screen"/>
+    </filter>
+
+    <filter id="twoi-paper-relief" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency=".018" numOctaves="2"
+                    seed="41" result="paperNoise"/>
+      <feDiffuseLighting in="paperNoise" surfaceScale="1.1"
+          diffuseConstant=".42" lighting-color="#d6c09a" result="paperLight">
+        <feDistantLight azimuth="245" elevation="58"/>
+      </feDiffuseLighting>
+      <feComposite in="paperLight" in2="SourceGraphic" operator="in" result="paperCut"/>
+      <feBlend in="SourceGraphic" in2="paperCut" mode="soft-light"/>
+    </filter>
+  </defs>
+</svg>
+
+
+<div class="shell">
+  <div class="left-col">
+    <div class="docbar">
+      <input id="docTitle" class="doc-title" type="text" value="Untitled Pubcast 2i Document" />
+      <span id="saveStatus" class="save-status">unsaved</span>
+    </div>
+    <div class="chat-pane glass" id="chatPane">
+      <div class="pane-label">PubPartner — Chat<button class="pane-close" id="chatCloseBtn" title="Close this panel">✕</button></div>
+      <div class="chat-log" id="chatLog"></div>
+      <div class="chat-input-row">
+        <input id="chatInput" type="text" placeholder="Talk with PubPartner about this scene…" />
+        <button class="secondary" id="chatMicBtn" title="Dictate (voice input)">🎤</button>
+        <button id="chatSendBtn">Send</button>
+      </div>
+    </div>
+    <div class="ref-pane glass" id="refPane">
+      <div class="pane-label">Reference / Continuity<button class="pane-close" id="refCloseBtn" title="Close this panel">✕</button></div>
+      <div class="ref-list" id="refList"></div>
+      <button class="secondary ref-open" id="refOpenBtn">Open another document…</button>
+    </div>
+    <div class="status-strip">
+      <span class="status-dot" id="statusDot"></span><span id="statusText">idle</span>
+      <span id="branchLabel">branch: original</span>
+      <span id="llmStatus" class="llm-status" title="Click to configure">no LLM configured</span>
+      <span id="wordMeta" style="margin-left:auto;">0 words drafted</span>
+    </div>
+  </div>
+
+  <div class="rail">
+    <div class="rail-menu" id="menuBtn" title="Menu" tabindex="0" role="button" aria-haspopup="true" aria-expanded="false">☰</div>
+    <div class="menu-panel" id="menuPanel">
+      <div class="menu-note">Finalized manuscript text is locked. Select a line, then unlock it deliberately.</div>
+      <button class="secondary toggle-item" id="chatToggleBtn">💬 Chat panel</button>
+      <button class="secondary toggle-item" id="refToggleBtn">📁 Reference panel</button>
+      <button class="secondary toggle-item" id="coWriteToggleBtn">🤝 Co-writing mode</button>
+      <button id="saveBtn" class="secondary">Save</button>
+      <button class="secondary" id="saveAsBtn">Save As…</button>
+      <button id="openDocBtn" class="secondary">Open document…</button>
+      <button class="secondary" id="restoreAutosaveBtn" style="display:none;">Restore autosave…</button>
+      <button class="secondary" id="unlockBtn">Unlock selected / line…</button>
+      <button class="secondary" id="lockAllBtn">Lock all finalized text</button>
+      <button class="secondary" id="approveBtn">Commit draft to manuscript now</button>
+      <button class="secondary" id="genBtn">Generate next page…</button>
+      <button class="secondary" id="newChapterBtn">Start new chapter</button>
+      <button class="secondary" id="findReplaceBtn">Find &amp; replace…</button>
+      <button class="secondary" id="exportBtn">Export manuscript…</button>
+      <button class="secondary" id="llmSettingsBtn">⚙ LLM provider…</button>
+    </div>
+    <div class="rail-spacer"></div>
+    <div class="rail-stack">
+      <button class="rail-btn" id="stopBtn" title="Stop">■</button>
+      <button class="rail-btn" id="skipBtn" title="Skip ahead">⏭</button>
+      <button class="rail-btn" id="playBtn" title="Play / Pause">▶</button>
+      <input class="rail-speed" id="speed" type="range" min="1" max="5" value="3" title="Read speed" />
+    </div>
+  </div>
+
+  <div class="work glass">
+    <div class="page">
+      <div class="spiral-spine" aria-hidden="true"><canvas id="spineCanvas"></canvas></div>
+      <div class="page-sheets">
+        <div class="manuscript-tail" id="manuscriptTail"><span class="zlabel">Manuscript — locked</span></div>
+        <div class="tortoise-seam" id="crawlSeam" aria-hidden="true"></div>
+        <div class="buffer-crawl" id="bufferCrawl">
+          <div class="reading-indicator" id="readingIndicator"></div>
+          <textarea class="draft-area" id="draftArea" placeholder="Keep writing…" spellcheck="true"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="llmModalBackdrop">
+  <div class="modal glass" id="llmModal">
+    <div class="pane-label">LLM Provider</div>
+    <div class="modal-body">
+      <label>Provider</label>
+      <select id="llmProvider">
+        <option value="claude">Claude (Anthropic API)</option>
+        <option value="openai">OpenAI / OpenAI-compatible cloud</option>
+        <option value="local">Local LLM (Ollama, LM Studio, etc.)</option>
+      </select>
+
+      <div id="llmFieldsClaude" class="llm-fields">
+        <label>API key</label>
+        <input id="llmClaudeKey" type="password" placeholder="sk-ant-…" autocomplete="off" />
+        <label>Model</label>
+        <input id="llmClaudeModel" type="text" placeholder="claude-sonnet-5" />
+      </div>
+
+      <div id="llmFieldsOpenai" class="llm-fields">
+        <label>API key</label>
+        <input id="llmOpenaiKey" type="password" placeholder="sk-…" autocomplete="off" />
+        <label>Base URL (OpenAI-compatible)</label>
+        <input id="llmOpenaiEndpoint" type="text" placeholder="https://api.openai.com/v1" />
+        <label>Model</label>
+        <input id="llmOpenaiModel" type="text" placeholder="gpt-4o-mini" />
+      </div>
+
+      <div id="llmFieldsLocal" class="llm-fields">
+        <label>Endpoint (OpenAI-compatible chat/completions URL)</label>
+        <input id="llmLocalEndpoint" type="text" placeholder="http://localhost:11434/v1/chat/completions" />
+        <label>Model</label>
+        <input id="llmLocalModel" type="text" placeholder="llama3" />
+        <div class="menu-note" style="padding-left:0;">Works with Ollama (OpenAI-compat endpoint), LM Studio, or any local server exposing an OpenAI-style /chat/completions route. No key needed for most local servers.</div>
+      </div>
+
+      <div class="menu-note" style="padding-left:0;">Stored only in this browser (localStorage), never sent anywhere except the provider you pick above. Nothing here touches Anthropic's servers unless you choose Claude.</div>
+    </div>
+    <div class="modal-actions">
+      <button class="secondary" id="llmTestBtn">Test connection</button>
+      <button class="secondary" id="llmCancelBtn">Cancel</button>
+      <button id="llmSaveBtn">Save</button>
+    </div>
+    <div id="llmTestResult" class="llm-test-result"></div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="frModalBackdrop">
+  <div class="modal glass" id="frModal">
+    <div class="pane-label">Find &amp; Replace</div>
+    <div class="modal-body">
+      <label>Find</label>
+      <input id="frFind" type="text" placeholder="text to find…" autocomplete="off" />
+      <label>Replace with</label>
+      <input id="frReplace" type="text" placeholder="replacement text…" autocomplete="off" />
+      <div class="menu-note" style="padding-left:0;">Searches and replaces across the draft buffer and the line currently being read — the same editable text lock-in/regeneration already applies to. Finalized (locked) manuscript text is intentionally not touched here; select a locked line and use ☰ → Unlock selected / line… first if it needs a fix. This is a plain substring match. If a replacement changes the direction of the story (the same detection used for single-line edits), content after that point will regenerate — locked-in lines are kept.</div>
+    </div>
+    <div class="modal-actions">
+      <button class="secondary" id="frCancelBtn">Close</button>
+      <button id="frReplaceAllBtn">Replace all</button>
+    </div>
+    <div id="frResult" class="llm-test-result"></div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   HANDOFF NOTE (read this before editing):
+   Engine (state model, structural-edit detection, save/load,
+   speech, branches) is carried over from Pubcast-2i-Prototype.html
+   almost unchanged. What's NEW in this file:
+   - Buffer is sized in WORDS (page-based), not fixed line count.
+   - REACTION_MS pause after each line finishes reading, before
+     auto-advancing — gives a beat to interrupt.
+   - approveBtn-equivalent (genBtn is repurposed as "Generate";
+     TODO: a dedicated Approve action to force-commit early is
+     not yet wired — see TODO list at bottom of this comment block).
+   - Chat pane and Reference pane are visual + basic local echo
+     only. Not connected to a real PubPartner backend yet.
+   TODO for next session:
+   1. Wire chat input to an actual generation call (currently
+      chatSendBtn just echoes into chatLog).
+   2. Add explicit "Approve" control to force-flush buffer into
+      committed before it reaches PAGE word threshold.
+   3. Reference pane ("Open another document…") is a static list;
+      wire to real file open / chapter-scroll-back.
+   4. Verify Star Wars crawl scroll direction reads correctly at
+      long buffer lengths (currently relies on column-reverse flex
+      + scrollTop, not a true perspective transform).
+   5. Replace SCENE/ALT_DOCKS/ALT_GENERIC demo arrays with real
+      generation once PubPartner API is wired in.
+   ============================================================ */
+
+// ============================================================
+// LLM PROVIDER ADAPTER LAYER
+// Pluggable: Claude (Anthropic), OpenAI/OpenAI-compatible cloud,
+// or a local model server (Ollama / LM Studio / any OpenAI-style
+// /chat/completions endpoint). Swap providers without touching
+// any of the editor engine below.
+// ============================================================
+const LLM_CONFIG_KEY = 'pubcast2i_llm_config_v1';
+function defaultLLMConfig(){
+  return {
+    provider: 'claude',
+    claude: { apiKey:'', model:'claude-sonnet-5' },
+    openai: { apiKey:'', endpoint:'https://api.openai.com/v1', model:'gpt-4o-mini' },
+    local:  { endpoint:'http://localhost:11434/v1/chat/completions', model:'llama3' }
+  };
+}
+function loadLLMConfig(){
+  try{
+    const raw = localStorage.getItem(LLM_CONFIG_KEY);
+    if(!raw) return defaultLLMConfig();
+    const parsed = JSON.parse(raw);
+    const defaults = defaultLLMConfig();
+    // Object.assign here would be a shallow merge: a saved config missing a
+    // field inside e.g. `local` (say, an old save with only `model` set)
+    // would wipe out defaults.local.endpoint entirely rather than filling
+    // just the missing field — and endpoint has no fallback at call time,
+    // so that surfaces later as a crash on `c.endpoint.trim()`, not here.
+    const merged = Object.assign({}, defaults, parsed);
+    for(const provider of ['claude','openai','local']){
+      merged[provider] = Object.assign({}, defaults[provider], parsed && parsed[provider]);
+    }
+    return merged;
+  }catch(e){ return defaultLLMConfig(); }
+}
+function saveLLMConfigToStorage(cfg){
+  try{ localStorage.setItem(LLM_CONFIG_KEY, JSON.stringify(cfg)); }catch(e){ /* storage unavailable */ }
+}
+let llmConfig = loadLLMConfig();
+
+const RETRY_DELAY_MS = 700;         // pause before the one automatic retry
+const ERROR_BODY_PREVIEW_CHARS = 300; // how much of a raw error body we surface to the user
+const JSON_PARSE_ERR_PREVIEW_CHARS = 150;
+const CLAUDE_MAX_TOKENS = 700;      // cap on a single "continue the manuscript" generation
+
+// Attach an HTTP status to thrown errors so callers (like withRetry) can
+// tell "worth retrying" (network blip / 429 / 5xx) apart from "will never
+// succeed" (4xx auth/bad-request) without re-parsing the message string.
+function httpError(label, status, bodyText){
+  const err = new Error(label+' '+status+': '+redactSecrets(bodyText).slice(0,ERROR_BODY_PREVIEW_CHARS));
+  err.status = status;
+  return err;
+}
+// Best-effort scrub of anything that looks like a bearer token / API key
+// before it ever reaches the visible chat log (issue: raw error bodies could
+// echo back request headers from a misconfigured proxy).
+function redactSecrets(text){
+  return String(text)
+    .replace(/sk-[a-zA-Z0-9_-]{10,}/g, '[redacted-key]')
+    .replace(/Bearer\s+[a-zA-Z0-9._-]{10,}/gi, 'Bearer [redacted]')
+    .replace(/x-api-key['"]?\s*[:=]\s*['"]?[a-zA-Z0-9_-]{10,}/gi, 'x-api-key: [redacted]');
+}
+async function withRetry(fn){
+  try{ return await fn(); }
+  catch(err){
+    // Only retry things that are plausibly transient: a network-level
+    // failure (no status — fetch itself threw), a rate limit (429), or a
+    // server-side error (5xx). A 4xx like a bad API key or malformed
+    // request will fail identically on retry, so don't waste the call.
+    const retryable = err.status===undefined || err.status===429 || err.status>=500;
+    if(!retryable) throw err;
+    await new Promise(r=>setTimeout(r,RETRY_DELAY_MS));
+    return await fn();
+  }
+}
+async function safeJson(res, label){
+  const raw = await res.text();
+  try{ return JSON.parse(raw); }
+  catch(e){ throw new Error(label+' returned a non-JSON response ('+res.status+'): '+redactSecrets(raw).slice(0,JSON_PARSE_ERR_PREVIEW_CHARS)); }
+}
+
+const LLM_ADAPTERS = {
+  claude: {
+    label:'Claude',
+    configured(cfg){ return !!(cfg.claude.apiKey && cfg.claude.apiKey.trim()); },
+    async send(messages, cfg){
+      const c = cfg.claude;
+      return withRetry(async ()=>{
+        const res = await fetch('https://api.anthropic.com/v1/messages', {
+          method:'POST',
+          headers:{
+            'Content-Type':'application/json',
+            'x-api-key': c.apiKey.trim(),
+            'anthropic-version':'2023-06-01',
+            'anthropic-dangerous-direct-browser-access':'true'
+          },
+          body: JSON.stringify({
+            model: (c.model||'claude-sonnet-5').trim(),
+            max_tokens: CLAUDE_MAX_TOKENS,
+            messages
+          })
+        });
+        if(!res.ok){ throw httpError('Claude API', res.status, await res.text()); }
+        const data = await safeJson(res,'Claude API');
+        return (data.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('\n').trim();
+      });
+    }
+  },
+  openai: {
+    label:'OpenAI',
+    configured(cfg){ return !!(cfg.openai.apiKey && cfg.openai.apiKey.trim()); },
+    async send(messages, cfg){
+      const c = cfg.openai;
+      const base = (c.endpoint||'https://api.openai.com/v1').replace(/\/+$/,'');
+      return withRetry(async ()=>{
+        const res = await fetch(base+'/chat/completions', {
+          method:'POST',
+          headers:{ 'Content-Type':'application/json', 'Authorization':'Bearer '+c.apiKey.trim() },
+          body: JSON.stringify({ model:(c.model||'gpt-4o-mini').trim(), messages })
+        });
+        if(!res.ok){ throw httpError('OpenAI API', res.status, await res.text()); }
+        const data = await safeJson(res,'OpenAI API');
+        return (data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content || '').trim();
+      });
+    }
+  },
+  local: {
+    label:'Local LLM',
+    configured(cfg){ return !!(cfg.local.endpoint && cfg.local.endpoint.trim()); },
+    async send(messages, cfg){
+      const c = cfg.local;
+      return withRetry(async ()=>{
+        const res = await fetch(c.endpoint.trim(), {
+          method:'POST',
+          headers:{ 'Content-Type':'application/json' },
+          body: JSON.stringify({ model:(c.model||'local-model').trim(), messages, stream:false })
+        });
+        if(!res.ok){ throw httpError('Local LLM', res.status, await res.text()); }
+        const data = await safeJson(res,'Local LLM server');
+        // Documented as OpenAI-compatible, but many local servers (e.g. Ollama's
+        // native /api/chat) don't speak that shape. Rather than silently trusting
+        // whichever shape happens to parse, check explicitly and warn once so a
+        // dev debugging a "wrong" response can see why the fallback fired.
+        if(data.choices && data.choices[0]){
+          return (data.choices[0].message?.content || data.choices[0].text || '').trim();
+        }
+        if(data.message && typeof data.message.content === 'string'){
+          console.warn('[2i] Local LLM endpoint returned Ollama-native /api/chat shape, not the documented OpenAI-compatible shape. Response was still used, but consider pointing the endpoint at an OpenAI-compatible route (e.g. Ollama\'s /v1/chat/completions) for a guaranteed contract.');
+          return data.message.content.trim();
+        }
+        return JSON.stringify(data).slice(0,500);
+      });
+    }
+  }
+};
+
+function llmIsConfigured(){
+  const a = LLM_ADAPTERS[llmConfig.provider];
+  return a ? a.configured(llmConfig) : false;
+}
+async function callLLM(messages){
+  const adapter = LLM_ADAPTERS[llmConfig.provider];
+  if(!adapter) throw new Error('Unknown provider "'+llmConfig.provider+'"');
+  if(!adapter.configured(llmConfig)) throw new Error(adapter.label+' is not configured yet — open ⚙ LLM provider… in the menu.');
+  return adapter.send(messages, llmConfig);
+}
+function updateLLMStatusPill(){
+  const pill = document.getElementById('llmStatus');
+  if(!pill) return;
+  const a = LLM_ADAPTERS[llmConfig.provider];
+  if(a && a.configured(llmConfig)){
+    pill.textContent = a.label+' connected';
+    pill.className = 'llm-status ok';
+  } else {
+    pill.textContent = 'no LLM configured';
+    pill.className = 'llm-status';
+  }
+}
+
+const SCENE = [
+  "The rain kept tapping the window in that slow, deliberate rhythm.",
+  "Sahira slid the envelope across the table without looking up.",
+  "\"You don't have to open it here,\" she said.",
+  "Repeat turned it over once, feeling the weight of whatever was inside.",
+  "\"I know,\" he said. \"I'm going to anyway.\"",
+  "He peeled back the flap slowly, like it might still change its mind.",
+  "The paper inside was thinner than he expected.",
+  "For a second neither of them said anything at all.",
+  "Then he folded it back along its original crease.",
+  "\"Okay,\" he said. \"Okay. I believe you.\"",
+  "He tucked the envelope into his jacket pocket, close to his chest.",
+  "The diner's fluorescent lights buzzed faintly overhead.",
+  "Sahira watched him with an expression he couldn't quite name.",
+  "\"You're not going to say anything else?\" she asked.",
+  "\"Not yet,\" he said. \"Not until I know it's real.\"",
+  "The waitress refilled coffee neither of them had asked for.",
+  "Outside, the rain hadn't let up, and neither had the quiet between them."
+];
+const ALT_DOCKS = [
+  "He pushed the chair back and stood before she could answer.",
+  "\"I'm not waiting on this one,\" he said, already reaching for his coat.",
+  "The docks weren't far, and the envelope wasn't getting lighter in his pocket.",
+  "Sahira called after him but the door had already swung shut.",
+  "Rain hit him the second he stepped outside, cold and immediate.",
+  "He didn't look back at the diner window."
+];
+const ALT_GENERIC = [
+  "\"Say something else, then,\" she said, quieter now.",
+  "He turned the salt shaker over in his fingers instead of answering.",
+  "\"You always do this,\" she said. \"Go quiet right when it matters.\"",
+  "He looked up at her, finally, and there wasn't anything guarded left in it.",
+  "\"I'm not going quiet,\" he said. \"I'm just done guessing what you need me to say.\"",
+  "The rain outside had eased into something softer, almost polite about it."
+];
+const BRANCHES = { docks: ALT_DOCKS, generic: ALT_GENERIC, original: SCENE };
+let currentBranch = 'original';
+let pool = SCENE.slice();
+let pointer = 0;
+let committed = [];
+let buffer = [];
+// Co-writing mode is a real on/off state, not something inferred from
+// whatever happens to be in the buffer — off by default. Off: no buffer
+// section, no grey zone, just the manuscript and AI chat available on the
+// side. On: the full draft-area pipeline (reading, reaction window, Lock
+// In) shows and runs. Toggled from the rail — see updateCoWritingModeUI().
+let coWritingMode = false;
+// A line highlighted and locked in by the user (right-click -> Lock in)
+// stays in the draft area — it hasn't crossed into the manuscript, and
+// locking it doesn't force it there early — but it's protected from AI
+// regeneration, and its rendering switches to the same serif font
+// committed text uses (see .line.locked in the CSS) as the visible signal
+// it's finalized. It still graduates into `committed` the normal way, via
+// the same word-cap crossing every other buffer line goes through — since
+// it already renders as locked text, nothing visibly changes when it does.
+let lockedLines = new Set(); // indices of buffer lines locked in by the user
+let reading = null;
+let playing = false;
+let editingTarget = null;
+let selectedLineIndex = null;
+let committedChapters = [];
+let currentChapter = 1;
+let speaking = false;
+let reactionTimer = null;
+// Bumped every time openDocumentForEditing() swaps in a different document's
+// state. Async work started against the *previous* document (an in-flight
+// LLM generation call, a chat reply) captures the epoch it started under;
+// when it resolves, it checks the epoch is still current before writing its
+// result into `pool`/`chatHistory`/etc. Without this, a slow request begun
+// against document A that resolves after the user has already opened
+// document B would silently splice A's generated content into B.
+let docEpoch = 0;
+
+// --- NEW: page-based buffer sizing ---
+const WORDS_PER_PAGE = 300;
+const BUFFER_PAGES = 1.5;
+const BUFFER_WORD_CAP = Math.round(WORDS_PER_PAGE * BUFFER_PAGES);
+const REACTION_MS = 12000; // 10-15s reaction window after each line reads
+
+const SPEED_MS = {1:2600, 2:2000, 3:1500, 4:1000, 5:650};
+
+const manuscriptTail = document.getElementById('manuscriptTail');
+const bufferCrawl = document.getElementById('bufferCrawl');
+const crawlSeam = document.getElementById('crawlSeam');
+const pageSheetsEl = document.querySelector('.page-sheets');
+const coWriteToggleBtn = document.getElementById('coWriteToggleBtn');
+const draftArea = document.getElementById('draftArea');
+const readingIndicator = document.getElementById('readingIndicator');
+const playBtn = document.getElementById('playBtn');
+const stopBtn = document.getElementById('stopBtn');
+const approveBtn = document.getElementById('approveBtn');
+const skipBtn = document.getElementById('skipBtn');
+const genBtn = document.getElementById('genBtn');
+const speedInput = document.getElementById('speed');
+const docTitleInput = document.getElementById('docTitle');
+const saveBtn = document.getElementById('saveBtn');
+const saveAsBtn = document.getElementById('saveAsBtn');
+const saveStatus = document.getElementById('saveStatus');
+const menuBtn = document.getElementById('menuBtn');
+const menuPanel = document.getElementById('menuPanel');
+const openDocBtn = document.getElementById('openDocBtn');
+const restoreAutosaveBtn = document.getElementById('restoreAutosaveBtn');
+const unlockBtn = document.getElementById('unlockBtn');
+const lockAllBtn = document.getElementById('lockAllBtn');
+const newChapterBtn = document.getElementById('newChapterBtn');
+const findReplaceBtn = document.getElementById('findReplaceBtn');
+const statusDot = document.getElementById('statusDot');
+const statusText = document.getElementById('statusText');
+const branchLabelEl = document.getElementById('branchLabel');
+const wordMetaEl = document.getElementById('wordMeta');
+const chatLog = document.getElementById('chatLog');
+const chatInput = document.getElementById('chatInput');
+const chatSendBtn = document.getElementById('chatSendBtn');
+const refList = document.getElementById('refList');
+const refOpenBtn = document.getElementById('refOpenBtn');
+
+// --- Chat/Reference panel visibility. Each panel closes and reopens only
+// from an explicit click — the pane's own ✕ button to close, the matching
+// menu toggle to reopen. Nothing here runs automatically in either
+// direction. When both happen to be closed, the shell drops the now-empty
+// left column so the manuscript actually reclaims that width instead of
+// just showing blank space where the panels used to be.
+const shellEl = document.querySelector('.shell');
+const chatPaneEl = document.getElementById('chatPane');
+const refPaneEl = document.getElementById('refPane');
+const chatCloseBtn = document.getElementById('chatCloseBtn');
+const refCloseBtn = document.getElementById('refCloseBtn');
+const chatToggleBtn = document.getElementById('chatToggleBtn');
+const refToggleBtn = document.getElementById('refToggleBtn');
+let chatPaneOpen = true;
+let refPaneOpen = true;
+function updatePanelVisibility(){
+  chatPaneEl.classList.toggle('closed', !chatPaneOpen);
+  refPaneEl.classList.toggle('closed', !refPaneOpen);
+  chatToggleBtn.classList.toggle('on', chatPaneOpen);
+  refToggleBtn.classList.toggle('on', refPaneOpen);
+  shellEl.classList.toggle('no-left-panels', !chatPaneOpen && !refPaneOpen);
+}
+chatCloseBtn.onclick = ()=>{ chatPaneOpen=false; updatePanelVisibility(); };
+refCloseBtn.onclick = ()=>{ refPaneOpen=false; updatePanelVisibility(); };
+// Menu stays open after toggling — these are settings, not one-shot
+// actions, so snapping the menu shut on every click would just force
+// reopening it to flip a second thing right after.
+chatToggleBtn.onclick = ()=>{ chatPaneOpen=!chatPaneOpen; updatePanelVisibility(); };
+refToggleBtn.onclick = ()=>{ refPaneOpen=!refPaneOpen; updatePanelVisibility(); };
+updatePanelVisibility(); // sync initial "On" state — HTML no longer hardcodes it
+
+let documentHandle = null;
+let documentDirty = true;
+let documentTitle = 'Untitled Pubcast 2i Document';
+
+function setDirty(dirty=true){ documentDirty = dirty; saveStatus.textContent = dirty ? 'unsaved changes' : 'saved'; }
+function safeTitle(){ return (docTitleInput.value||'').trim() || 'Untitled Pubcast 2i Document'; }
+function fileNameFromTitle(t){ return (t.replace(/[\\/:*?"<>|]/g,'-').replace(/\s+/g,' ').trim()||'Untitled Pubcast 2i Document') + '.2i'; }
+function markDocumentChanged(){ setDirty(true); scheduleAutosave(); }
+
+function documentPayload(){
+  documentTitle = safeTitle();
+  return { format:'2i-document', version:3, title:documentTitle, savedAt:new Date().toISOString(),
+    state:{ committed:committed.slice(), committedChapters:committedChapters.slice(), currentChapter,
+      buffer:buffer.slice(), locked:Array.from(lockedLines), reading: reading?{text:reading.text}:null,
+      branch:currentBranch, pointer, pool:pool.slice(), chatHistory:chatHistory.slice(),
+      speed:Number(speedInput.value), coWriting:coWritingMode } };
+}
+function downloadDocument(payload,fileName){
+  const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob); const a=document.createElement('a');
+  a.href=url; a.download=fileName;
+  // Some browsers (older Safari/Firefox in particular) don't reliably fire
+  // a programmatic .click() on an <a> that was never attached to the DOM.
+  // Attaching it (even invisibly) before clicking, and removing it right
+  // after, is the standard cross-browser-safe pattern.
+  a.style.display='none'; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+// ============================================================
+// AUTOSAVE (IndexedDB) — cross-browser safety net
+// ============================================================
+// showSaveFilePicker/showOpenFilePicker (used above for real in-place saves)
+// are Chromium-only; Firefox and Safari fall back to plain downloads, with
+// no way to write back to the same file. For those browsers especially, an
+// accidental tab close or crash between downloads means real lost work.
+// This is a best-effort background snapshot into IndexedDB — NOT a
+// replacement for actually saving a .2i file, just a safety net so "I forgot
+// to save and the tab died" doesn't mean starting over. Failures here are
+// swallowed (logged, not surfaced) since autosave breaking shouldn't
+// interrupt anyone's writing session.
+const AUTOSAVE_DB_NAME = 'pubcast2i-autosave';
+const AUTOSAVE_STORE = 'snapshots';
+const AUTOSAVE_KEY = 'current';
+function openAutosaveDB(){
+  return new Promise((resolve,reject)=>{
+    if(!('indexedDB' in window)){ reject(new Error('IndexedDB unavailable')); return; }
+    const req = indexedDB.open(AUTOSAVE_DB_NAME, 1);
+    req.onupgradeneeded = ()=>{ if(!req.result.objectStoreNames.contains(AUTOSAVE_STORE)) req.result.createObjectStore(AUTOSAVE_STORE); };
+    req.onsuccess = ()=> resolve(req.result);
+    req.onerror = ()=> reject(req.error);
+  });
+}
+async function writeAutosaveSnapshot(payload){
+  try{
+    const db = await openAutosaveDB();
+    await new Promise((resolve,reject)=>{
+      const tx = db.transaction(AUTOSAVE_STORE,'readwrite');
+      tx.objectStore(AUTOSAVE_STORE).put(payload, AUTOSAVE_KEY);
+      tx.oncomplete=()=>resolve(); tx.onerror=()=>reject(tx.error);
+    });
+  }catch(e){ console.warn('[2i] autosave write failed (non-fatal):', e); }
+}
+async function readAutosaveSnapshot(){
+  try{
+    const db = await openAutosaveDB();
+    return await new Promise((resolve,reject)=>{
+      const tx = db.transaction(AUTOSAVE_STORE,'readonly');
+      const req = tx.objectStore(AUTOSAVE_STORE).get(AUTOSAVE_KEY);
+      req.onsuccess=()=>resolve(req.result||null); req.onerror=()=>reject(req.error);
+    });
+  }catch(e){ return null; }
+}
+async function clearAutosaveSnapshot(){
+  try{
+    const db = await openAutosaveDB();
+    await new Promise((resolve,reject)=>{
+      const tx = db.transaction(AUTOSAVE_STORE,'readwrite');
+      tx.objectStore(AUTOSAVE_STORE).delete(AUTOSAVE_KEY);
+      tx.oncomplete=()=>resolve(); tx.onerror=()=>reject(tx.error);
+    });
+  }catch(e){ /* best-effort */ }
+  // The "Restore autosave…" menu item is the only UI surface that reflects
+  // whether a snapshot exists. Previously the three save paths below called
+  // clearAutosaveSnapshot() and stopped there — the snapshot was gone from
+  // IndexedDB, but the menu item stayed visible and clickable for the rest
+  // of the session (only a page reload re-ran the boot-time check and hid
+  // it). Clicking it in that state produced a "No autosave found" toast for
+  // a button the user had every reason to think still worked. This is the
+  // one place every clear path funnels through, so it's the one place that
+  // needs to keep the button in sync — no caller has to remember to do it.
+  if(restoreAutosaveBtn) restoreAutosaveBtn.style.display = 'none';
+}
+const AUTOSAVE_DEBOUNCE_MS = 2500;
+let autosaveTimer = null;
+function scheduleAutosave(){
+  if(autosaveTimer) clearTimeout(autosaveTimer);
+  autosaveTimer = setTimeout(()=>{ autosaveTimer=null; writeAutosaveSnapshot(documentPayload()); }, AUTOSAVE_DEBOUNCE_MS);
+}
+
+async function saveAsDocument(){
+  const payload=documentPayload(); const suggestedName=fileNameFromTitle(payload.title);
+  if('showSaveFilePicker' in window){
+    try{
+      const handle=await window.showSaveFilePicker({suggestedName,types:[{description:'2i Document',accept:{'application/json':['.2i']}}]});
+      const w=await handle.createWritable(); await w.write(JSON.stringify(payload,null,2)); await w.close();
+      documentHandle=handle; setDirty(false); clearAutosaveSnapshot(); return;
+    }catch(err){
+      if(err && err.name==='AbortError') return; // user cancelled the picker — not an error
+      // Anything else (permission revoked mid-write, disk full, etc.) is a
+      // real failure. Surface it instead of silently falling through to a
+      // browser download with no explanation of why "Save As" behaved
+      // differently than the user clicked for.
+      reportError('Save As failed, falling back to a plain download', err);
+    }
+  }
+  downloadDocument(payload,suggestedName); documentHandle=null; setDirty(false); clearAutosaveSnapshot();
+}
+async function saveDocument(){
+  const payload=documentPayload();
+  if(documentHandle){
+    try{ const w=await documentHandle.createWritable(); await w.write(JSON.stringify(payload,null,2)); await w.close(); setDirty(false); clearAutosaveSnapshot(); return; }
+    catch(err){
+      // Previously this silently discarded the error and fell through to
+      // saveAsDocument() (a totally different UX — a fresh file-save dialog
+      // popping up) with no indication to the user why "Save" suddenly
+      // stopped saving in place. Report it through the same channel as
+      // every other failure in the app before falling back.
+      documentHandle=null;
+      reportError('Save failed, opening Save As instead', err);
+    }
+  }
+  await saveAsDocument();
+}
+saveBtn.onclick=()=>{ setMenuOpen(false); saveDocument(); };
+saveAsBtn.onclick=()=>{ setMenuOpen(false); saveAsDocument(); };
+
+// documentDirty was previously write-only: set by setDirty(), read by
+// nothing — meaning the state it exists to track (unsaved changes) had no
+// actual protection anywhere, despite the variable's name and the app
+// having a "saved" / "unsaved changes" status pill implying there was one.
+// This is the feature that variable was for.
+window.addEventListener('beforeunload', (e)=>{
+  if(!documentDirty) return;
+  e.preventDefault();
+  e.returnValue = '';
+});
+
+// Shared "open a .2i file" flow: prefer the native File System Access API
+// picker where available, fall back to a hidden <input type=file> click
+// everywhere else. This block used to be copy-pasted verbatim in two
+// places (three counting the AbortError-check formatting in saveAsDocument)
+// with inconsistent spacing between the copies — a tell that it was
+// hand-duplicated rather than factored. One function now, one place to fix.
+// Returns {file, handle} — handle is the writable FileSystemFileHandle when
+// opened via the native picker, or null via the <input type=file> fallback.
+// Previously this discarded the handle and returned only the File, which
+// meant a document opened through the Chromium picker had no way to Save
+// back in place afterward — every Save silently became a fresh Save As
+// dialog, with no indication to the user that "Save" had quietly changed
+// what it does depending on how the file was opened.
+async function pickOpenFile(){
+  if('showOpenFilePicker' in window){
+    try{
+      const [handle] = await window.showOpenFilePicker({ types:[{ description:'2i Document', accept:{'application/json':['.2i']} }] });
+      return { file: await handle.getFile(), handle };
+    }catch(err){
+      if(err && err.name==='AbortError') return null; // user cancelled — not an error
+      // Fall through to the <input type=file> fallback below rather than
+      // failing outright — some browsers advertise the API but reject it
+      // in certain contexts (e.g. cross-origin iframes).
+    }
+  }
+  return new Promise(resolve=>{
+    const input=document.createElement('input');
+    input.type='file'; input.accept='.2i,application/json';
+    input.onchange=()=>resolve(input.files[0] ? { file: input.files[0], handle: null } : null);
+    input.click();
+  });
+}
+
+// Loads a parsed {format, title, state} document payload into the working
+// area. Shared by openDocumentForEditing() (loading a real .2i file) and
+// restoreAutosaveSnapshot() (loading the IndexedDB autosave fallback) so
+// there's exactly one place that knows how to reconstruct app state from a
+// saved payload, instead of two copies drifting apart over time.
+function applyLoadedDocument(data, titleFallback, opts){
+  if(data.format!=='2i-document' || !data.state) throw new Error('not a 2i document');
+  // Stop any active playback/speech from the *current* document before
+  // swapping state out from under it — otherwise a scheduled reaction-
+  // window timer or in-flight speechSynthesis callback could fire after
+  // the switch and call tick() against the newly-loaded document's
+  // pool/pointer, effectively auto-advancing a document the user hasn't
+  // even looked at yet. Also invalidates any in-flight LLM request (see
+  // docEpoch above) so its result can't land in the new document either.
+  if(playing) stopPlaying();
+  // A pending autosave debounce from the document being switched away from
+  // doesn't get a docEpoch check like generation/chat do above — it was
+  // never landing in the wrong document (the snapshot is a single global
+  // slot, and documentPayload() reads whatever's in memory at the moment
+  // the timer actually fires, which by then is already the new document),
+  // but that was incidental, not intentional: a debounce timer scheduled
+  // against document A firing 2.5s later and silently autosaving document
+  // B's in-progress edit is still the wrong event doing the write. Cancel
+  // it outright; if B needs autosaving, its own edits will reschedule one.
+  if(autosaveTimer){ clearTimeout(autosaveTimer); autosaveTimer=null; }
+  docEpoch++;
+  documentTitle = data.title || titleFallback;
+  docTitleInput.value = documentTitle;
+  committed = Array.isArray(data.state.committed) ? data.state.committed : [];
+  committedChapters = Array.isArray(data.state.committedChapters) ? data.state.committedChapters : [];
+  currentChapter = data.state.currentChapter || 1;
+  buffer = Array.isArray(data.state.buffer) ? data.state.buffer : [];
+  // `locked` is the current field name (Lock In). `pinned` (v10-v11) and
+  // `bufferedProtected` (v9) are read as fallbacks in that order, so
+  // documents saved by any earlier version of this app still restore their
+  // protected lines correctly under the new name.
+  lockedLines = new Set(Array.isArray(data.state.locked) ? data.state.locked
+    : (Array.isArray(data.state.pinned) ? data.state.pinned
+    : (Array.isArray(data.state.bufferedProtected) ? data.state.bufferedProtected : [])));
+  reading = data.state.reading ? {text:data.state.reading.text} : null;
+  currentBranch = data.state.branch || 'original';
+  // `pool` wasn't part of the save format before v3 — for files saved by
+  // older versions of this app, fall back to the demo array matching the
+  // restored branch (best-effort) rather than leaving whatever pool
+  // happened to be in memory, which could belong to a completely
+  // unrelated document and send `pointer` indexing into the wrong content.
+  pool = Array.isArray(data.state.pool) ? data.state.pool.slice()
+    : (BRANCHES[currentBranch] ? BRANCHES[currentBranch].slice() : []);
+  pointer = data.state.pointer || 0;
+  chatHistory = Array.isArray(data.state.chatHistory) ? data.state.chatHistory.slice() : [];
+  rebuildChatLogFromHistory();
+  speedInput.value = data.state.speed || 3;
+  coWritingMode = !!data.state.coWriting;
+  updateCoWritingModeUI();
+  documentHandle = (opts && opts.handle) || null;
+  selectedLineIndex = null;
+  setDirty(!!(opts && opts.dirty));
+  updateBranchLabel();
+  renderRefPane();
+  render();
+  document.title = documentTitle + ' — 2i';
+  setMenuOpen(false);
+}
+
+async function openDocumentForEditing(){
+  const picked = await pickOpenFile();
+  if(!picked) return;
+  try{
+    const text = await picked.file.text();
+    const data = JSON.parse(text);
+    applyLoadedDocument(data, picked.file.name, { handle: picked.handle, dirty: false });
+  }catch(err){
+    reportError('Could not open that file — make sure it\'s a valid 2i document (.2i file)', err);
+  }
+}
+openDocBtn.onclick = openDocumentForEditing;
+
+// Loads the IndexedDB autosave snapshot (if any) into the working area,
+// through the same applyLoadedDocument() path a real file-open uses. Marked
+// dirty on restore (unlike opening a real file) since by definition this
+// content was never actually written to a .2i file — the whole point of
+// autosave is that it's still "unsaved" from the user's perspective.
+async function restoreAutosaveSnapshot(){
+  const snap = await readAutosaveSnapshot();
+  if(!snap){ toast('No autosave found.'); return; }
+  try{
+    applyLoadedDocument(snap, 'Restored autosave', { handle:null, dirty:true });
+    toast('Autosave restored — remember to Save to a file when you\'re happy with it.', 3200);
+  }catch(err){
+    reportError('Could not restore the autosave snapshot', err);
+  }
+}
+restoreAutosaveBtn.onclick = restoreAutosaveSnapshot;
+
+docTitleInput.addEventListener('input',()=>{ documentTitle=safeTitle(); markDocumentChanged(); document.title=documentTitle+' — 2i'; });
+document.title=safeTitle()+' — 2i';
+
+// menuBtn is a styled <div>, not a native <button> — it needs role/tabindex
+// (set in the HTML) plus its own keyboard handling and aria-expanded state,
+// none of which a div gets for free the way a real <button> would.
+function setMenuOpen(open){
+  menuPanel.classList.toggle('open', open);
+  menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+}
+menuBtn.onclick=(e)=>{ e.stopPropagation(); setMenuOpen(!menuPanel.classList.contains('open')); };
+menuBtn.addEventListener('keydown',(e)=>{
+  if(e.key==='Enter' || e.key===' ' || e.key==='Spacebar'){
+    e.preventDefault(); setMenuOpen(!menuPanel.classList.contains('open'));
+  }
+});
+document.addEventListener('click',(e)=>{ if(!menuPanel.contains(e.target)&&e.target!==menuBtn) setMenuOpen(false); });
+unlockBtn.onclick=()=>{
+  setMenuOpen(false);
+  if(!committed.length){ toast('There are no finalized lines to unlock yet.'); return; }
+  let index = Number.isInteger(selectedLineIndex) ? selectedLineIndex : committed.length-1;
+  if(index<0 || index>=committed.length) index = committed.length-1;
+  pauseForEdit();
+  editingTarget = {type:'committed', index};
+  render();
+  focusEditor();
+};
+lockAllBtn.onclick=()=>{
+  setMenuOpen(false);
+  selectedLineIndex = null;
+  if(editingTarget && editingTarget.type==='committed') editingTarget = null;
+  render();
+};
+newChapterBtn.onclick=()=>{ setMenuOpen(false); currentChapter+=1; markDocumentChanged(); render(); toast('Chapter '+currentChapter+' is now active.'); };
+
+// --- LLM settings modal ---
+const llmModalBackdrop = document.getElementById('llmModalBackdrop');
+const llmModal = document.getElementById('llmModal');
+const llmProviderSel = document.getElementById('llmProvider');
+const llmFieldEls = {
+  claude: document.getElementById('llmFieldsClaude'),
+  openai: document.getElementById('llmFieldsOpenai'),
+  local: document.getElementById('llmFieldsLocal')
+};
+// Every other frequently-used element in the app is cached once into a
+// top-level const (chatLog, saveBtn, etc. — 25+ of them). The LLM settings
+// modal was the one place that broke that convention: populateLLMForm(),
+// readLLMFormIntoConfig(), and the test-connection handler each re-ran
+// document.getElementById(...) seven times per call, every time the modal
+// opened or saved. Cached once here like everything else.
+const llmFormInputs = {
+  claudeKey: document.getElementById('llmClaudeKey'),
+  claudeModel: document.getElementById('llmClaudeModel'),
+  openaiKey: document.getElementById('llmOpenaiKey'),
+  openaiEndpoint: document.getElementById('llmOpenaiEndpoint'),
+  openaiModel: document.getElementById('llmOpenaiModel'),
+  localEndpoint: document.getElementById('llmLocalEndpoint'),
+  localModel: document.getElementById('llmLocalModel')
+};
+const llmTestResultEl = document.getElementById('llmTestResult');
+const llmSettingsBtn = document.getElementById('llmSettingsBtn');
+const llmStatusPillEl = document.getElementById('llmStatus');
+
+function populateLLMForm(){
+  llmProviderSel.value = llmConfig.provider;
+  llmFormInputs.claudeKey.value = llmConfig.claude.apiKey;
+  llmFormInputs.claudeModel.value = llmConfig.claude.model;
+  llmFormInputs.openaiKey.value = llmConfig.openai.apiKey;
+  llmFormInputs.openaiEndpoint.value = llmConfig.openai.endpoint;
+  llmFormInputs.openaiModel.value = llmConfig.openai.model;
+  llmFormInputs.localEndpoint.value = llmConfig.local.endpoint;
+  llmFormInputs.localModel.value = llmConfig.local.model;
+  showLLMFieldsFor(llmConfig.provider);
+}
+function showLLMFieldsFor(provider){
+  Object.keys(llmFieldEls).forEach(k=> llmFieldEls[k].classList.toggle('active', k===provider));
+}
+function openLLMModal(){
+  setMenuOpen(false);
+  populateLLMForm();
+  llmTestResultEl.textContent='';
+  llmTestResultEl.className='llm-test-result';
+  llmModalBackdrop.classList.add('open');
+  const firstInput = llmFieldEls[llmConfig.provider].querySelector('input');
+  if(firstInput) firstInput.focus();
+}
+function closeLLMModal(){ llmModalBackdrop.classList.remove('open'); llmSettingsBtn.focus(); }
+llmProviderSel.addEventListener('change', ()=> showLLMFieldsFor(llmProviderSel.value));
+llmSettingsBtn.onclick = openLLMModal;
+document.getElementById('llmCancelBtn').onclick = closeLLMModal;
+llmModalBackdrop.addEventListener('click', (e)=>{ if(e.target===llmModalBackdrop) closeLLMModal(); });
+llmStatusPillEl.onclick = openLLMModal;
+
+function readLLMFormIntoConfig(){
+  return {
+    provider: llmProviderSel.value,
+    claude: { apiKey: llmFormInputs.claudeKey.value, model: llmFormInputs.claudeModel.value || 'claude-sonnet-5' },
+    openai: { apiKey: llmFormInputs.openaiKey.value, endpoint: llmFormInputs.openaiEndpoint.value || 'https://api.openai.com/v1', model: llmFormInputs.openaiModel.value || 'gpt-4o-mini' },
+    local:  { endpoint: llmFormInputs.localEndpoint.value || 'http://localhost:11434/v1/chat/completions', model: llmFormInputs.localModel.value || 'llama3' }
+  };
+}
+document.getElementById('llmSaveBtn').onclick = ()=>{
+  llmConfig = readLLMFormIntoConfig();
+  saveLLMConfigToStorage(llmConfig);
+  updateLLMStatusPill();
+  closeLLMModal();
+};
+document.getElementById('llmTestBtn').onclick = async ()=>{
+  const testCfg = readLLMFormIntoConfig();
+  llmTestResultEl.className='llm-test-result'; llmTestResultEl.textContent='Testing…';
+  const adapter = LLM_ADAPTERS[testCfg.provider];
+  try{
+    if(!adapter) throw new Error('Unknown provider "'+testCfg.provider+'"');
+    if(!adapter.configured(testCfg)) throw new Error('Fill in the required fields above first.');
+    const reply = await adapter.send([{role:'user', content:'Reply with exactly: OK'}], testCfg);
+    llmTestResultEl.className='llm-test-result ok';
+    llmTestResultEl.textContent = '✓ Connected. Response: '+(reply||'(empty)').slice(0,120);
+  }catch(err){
+    llmTestResultEl.className='llm-test-result err';
+    llmTestResultEl.textContent = '✗ '+err.message;
+  }
+};
+
+// Accessibility: neither the LLM settings modal nor the hamburger menu had
+// any keyboard escape hatch — only a click outside them or an explicit
+// Cancel button closed them, with no focus trap or auto-focus either.
+// Escape now closes whichever is open (modal takes priority since it sits
+// on top), and openLLMModal()/closeLLMModal() above handle focus in/out.
+document.addEventListener('keydown', (e)=>{
+  if(e.key!=='Escape') return;
+  if(llmModalBackdrop.classList.contains('open')){ closeLLMModal(); return; }
+  if(frModalBackdrop.classList.contains('open')){ closeFindReplace(); return; }
+  if(menuPanel.classList.contains('open')){ setMenuOpen(false); menuBtn.focus(); }
+});
+
+// Full keyboard focus trap, applied to any modal: Escape-to-close and
+// initial/return focus are handled per-modal (open*/close* functions below),
+// but without this, Tab could still walk focus straight out of a modal and
+// onto whatever's underneath it on the page. While attached, Tab/Shift+Tab
+// cycle only through the modal's own focusable elements, wrapping at each
+// end instead of escaping. Applied to both the LLM settings modal and the
+// Find & Replace modal.
+function trapFocus(modalEl){
+  modalEl.addEventListener('keydown', (e)=>{
+    if(e.key!=='Tab') return;
+    const focusables = Array.from(modalEl.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'))
+      .filter(el => !el.disabled && el.offsetParent !== null);
+    if(!focusables.length) return;
+    const first = focusables[0], last = focusables[focusables.length-1];
+    if(e.shiftKey && document.activeElement===first){ e.preventDefault(); last.focus(); }
+    else if(!e.shiftKey && document.activeElement===last){ e.preventDefault(); first.focus(); }
+  });
+}
+trapFocus(llmModal);
+updateLLMStatusPill();
+
+// --- Find & Replace: operates on the draft buffer and the currently-
+// reading line only (see modal copy) — the same editable surface the
+// lock-in/regenerate machinery already works on. Locked manuscript text stays
+// locked, consistent with the rest of the app's "deliberate unlock" model. ---
+const frModalBackdrop = document.getElementById('frModalBackdrop');
+const frModal = document.getElementById('frModal');
+const frFindInput = document.getElementById('frFind');
+const frReplaceInput = document.getElementById('frReplace');
+const frResultEl = document.getElementById('frResult');
+trapFocus(frModal);
+function openFindReplace(){
+  setMenuOpen(false);
+  // Every other modal in the app (see populateLLMForm()) starts from a
+  // clean/current state on open. This one previously didn't — the last
+  // find/replace terms from a prior use of the modal, possibly in a
+  // completely different session, sat in the fields with no indication
+  // they were stale rather than something the user just typed.
+  frFindInput.value=''; frReplaceInput.value='';
+  frResultEl.textContent=''; frResultEl.className='llm-test-result';
+  frModalBackdrop.classList.add('open');
+  frFindInput.focus();
+}
+function closeFindReplace(){ frModalBackdrop.classList.remove('open'); findReplaceBtn.focus(); }
+function countOccurrences(haystack, needle){ return needle ? haystack.split(needle).length-1 : 0; }
+// Previously this replaced text directly with no call to isStructuralEdit()
+// anywhere in the function — every other way to edit a line in this app
+// (commitBufferEdit, commitReadingEdit) runs that check and, if the edit
+// changes what happens next in the story, drops the now-stale forward
+// content and regenerates around it. Find & Replace was the one path that
+// could rewrite a plot-relevant word ("stay" -> "never stay" across five
+// lines in one pass) and leave the old, now-contradictory generated
+// continuation sitting there untouched, with nothing telling the writer
+// their draft no longer follows from what they just typed. This now runs
+// the identical detection per changed line and, if anything structural is
+// found, triggers the same forward-drop-and-regenerate behavior — scoped to
+// the earliest structurally-changed buffer line, since one Replace All can
+// touch many lines but "the point the story changed" is still a single spot.
+function performReplaceAll(){
+  const find = frFindInput.value;
+  if(!find){ frResultEl.className='llm-test-result err'; frResultEl.textContent='Enter something to find first.'; return; }
+  const replace = frReplaceInput.value;
+  let count = 0;
+  let earliestStructuralBufferIndex = -1;
+  const newBuffer = buffer.slice();
+  for(let i=0;i<newBuffer.length;i++){
+    const oldLine = newBuffer[i];
+    const n = countOccurrences(oldLine, find);
+    if(!n) continue;
+    count += n;
+    const newLine = oldLine.split(find).join(replace);
+    newBuffer[i] = newLine;
+    if(earliestStructuralBufferIndex===-1 && isStructuralEdit(oldLine, newLine)) earliestStructuralBufferIndex = i;
+  }
+  buffer = newBuffer;
+
+  let touchedReading = false, readingStructural = false;
+  if(reading){
+    const n = countOccurrences(reading.text, find);
+    if(n){
+      count += n;
+      const newReadingText = reading.text.split(find).join(replace);
+      readingStructural = isStructuralEdit(reading.text, newReadingText);
+      reading = {text: newReadingText};
+      touchedReading = true;
+    }
+  }
+
+  if(count===0){
+    frResultEl.className='llm-test-result';
+    frResultEl.textContent = 'No matches found in the draft buffer'+(reading?' or current line':'')+'.';
+    return;
+  }
+
+  markDocumentChanged();
+  const structural = earliestStructuralBufferIndex!==-1 || readingStructural;
+  if(structural){
+    // Same forward-drop-preserve-locked logic commitBufferEdit uses for a
+    // single-line edit, applied from the earliest line Replace All actually
+    // changed the direction of.
+    if(earliestStructuralBufferIndex!==-1){
+      const i = earliestStructuralBufferIndex;
+      const keptAfter = [];
+      for(let j=i+1;j<buffer.length;j++){ if(lockedLines.has(j)) keptAfter.push(buffer[j]); }
+      buffer = buffer.slice(0,i+1).concat(keptAfter);
+      const rebuiltLocked = new Set();
+      for(let j=0;j<=i;j++){ if(lockedLines.has(j)) rebuiltLocked.add(j); }
+      for(let k=0;k<keptAfter.length;k++){ rebuiltLocked.add(i+1+k); }
+      lockedLines = rebuiltLocked;
+    }
+    const rerouteText = reading ? reading.text : (buffer.length ? buffer[buffer.length-1] : find);
+    reading = null;
+    rerouteIfTriggered(rerouteText);
+    flashRegen();
+  }
+  render();
+
+  frResultEl.className='llm-test-result ok';
+  frResultEl.textContent = '✓ '+count+' replacement'+(count===1?'':'s')+' made'+(touchedReading?' (including the current line)':'')+
+    (structural ? ' — this changed the direction of the story, so content after the edit is regenerating.' : '.');
+}
+findReplaceBtn.onclick = openFindReplace;
+document.getElementById('frCancelBtn').onclick = closeFindReplace;
+document.getElementById('frReplaceAllBtn').onclick = performReplaceAll;
+frModalBackdrop.addEventListener('click', (e)=>{ if(e.target===frModalBackdrop) closeFindReplace(); });
+
+// --- Export: a plain, human-readable snapshot of the manuscript (finalized
+// text plus whatever's currently in the draft buffer), grouped by chapter.
+// Deliberately not the .2i save format — this is for reading/sharing
+// outside the app, not for reopening here. ---
+function buildExportText(){
+  const parts = [];
+  const title = safeTitle();
+  parts.push('# '+title, '');
+  const chapters = [...new Set(committedChapters)];
+  if(!chapters.length && !committed.length){
+    // nothing committed yet — fall through to just the buffer below
+  }
+  chapters.forEach(ch=>{
+    const chapterLines = committed.filter((_,i)=>committedChapters[i]===ch);
+    if(!chapterLines.length) return;
+    parts.push('## Chapter '+ch, '', chapterLines.join('\n\n'), '');
+  });
+  if(buffer.length){
+    parts.push('## Chapter '+currentChapter+' (draft — not yet finalized)', '', buffer.join('\n\n'), '');
+  }
+  if(reading){
+    parts.push('_(currently mid-line: '+reading.text+')_', '');
+  }
+  if(parts.length<=2){ parts.push('_Nothing written yet._'); }
+  return parts.join('\n');
+}
+function exportManuscript(){
+  setMenuOpen(false);
+  const text = buildExportText();
+  const blob = new Blob([text], {type:'text/markdown'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = fileNameFromTitle(safeTitle()).replace(/\.2i$/,'')+'.md';
+  a.style.display='none'; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+  toast('Exported as Markdown (.md).');
+}
+document.getElementById('exportBtn').onclick = exportManuscript;
+
+// --- Voice input (dictation) for chat, via Web Speech API ---
+const SpeechRecognitionAPI = window.SpeechRecognition || window.webkitSpeechRecognition;
+const chatMicBtn = document.getElementById('chatMicBtn');
+if(SpeechRecognitionAPI){
+  const recognizer = new SpeechRecognitionAPI();
+  recognizer.continuous = false;
+  recognizer.interimResults = true;
+  recognizer.lang = 'en-US';
+  let listening = false;
+  let baseText = '';
+  recognizer.onresult = (e)=>{
+    let interim='', final='';
+    for(let i=e.resultIndex;i<e.results.length;i++){
+      const t=e.results[i][0].transcript;
+      if(e.results[i].isFinal) final+=t; else interim+=t;
+    }
+    chatInput.value = (baseText + ' ' + final + interim).trim();
+  };
+  recognizer.onend = ()=>{ listening=false; chatMicBtn.classList.remove('listening'); };
+  recognizer.onerror = (e)=>{
+    listening=false; chatMicBtn.classList.remove('listening');
+    // 'no-speech' just means it timed out waiting for you to talk — normal,
+    // not worth interrupting the writer over. Anything else (mic denied,
+    // no audio device, network hiccup for cloud-backed recognition, etc.)
+    // previously vanished with zero indication of what happened beyond the
+    // red pulse turning off; now it's reported like any other failure.
+    const reason = e && e.error;
+    if(reason && reason!=='no-speech' && reason!=='aborted'){
+      const messages = {
+        'not-allowed':'Microphone permission was denied.',
+        'audio-capture':'No microphone was found.',
+        'network':'A network error interrupted speech recognition.',
+        'service-not-allowed':'Speech recognition service is unavailable.'
+      };
+      reportError('Voice input stopped', new Error(messages[reason] || ('error: '+reason)));
+    }
+  };
+  chatMicBtn.onclick = ()=>{
+    if(listening){ recognizer.stop(); return; }
+    baseText = chatInput.value.trim();
+    try{ recognizer.start(); listening=true; chatMicBtn.classList.add('listening'); }
+    catch(e){ /* already started */ }
+  };
+} else {
+  chatMicBtn.title = 'Voice input not supported in this browser (try Chrome/Edge)';
+  chatMicBtn.onclick = ()=> alert('This browser doesn\'t support speech recognition. Try Chrome or Edge, or type instead.');
+}
+
+// Word-boundary keyword set used to flag an edit as "structural" (i.e. it
+// changes what happens next, not just how it's phrased). Previously this
+// was a set of unanchored substring matches (e.g. `/leav/`), which
+// false-positived on any word merely *containing* the fragment — "cleave",
+// "cleaving", "docket", etc. — even when nothing about direction changed.
+// Every alternative below is wrapped so it only matches on a real word
+// boundary. This also folds in common negation contractions/words (never,
+// won't, can't, doesn't, refuses…) which previously slipped through both
+// the keyword check *and* the word-overlap fallback below: negating a
+// sentence ("she would stay" -> "she would never stay") barely changes
+// word overlap or length, so without an explicit negation check the old
+// code reported these 180-degree plot reversals as "minor edits."
+const STRUCTURAL_TRIGGER_RE = /\b(docks?|leav(?:e|es|ing|ed)?|stand(?:s|ing)?|walk(?:ed|s|ing)?\s+out|coats?|actually|instead|wait(?:ed|ing|s)?|never|not|no|n['\u2019]t|won['\u2019]t|wouldn['\u2019]t|can['\u2019]t|cannot|couldn['\u2019]t|doesn['\u2019]t|didn['\u2019]t|isn['\u2019]t|wasn['\u2019]t|aren['\u2019]t|weren['\u2019]t|refus(?:e|es|ed|ing))\b/i;
+// Narrower subset used only to pick a *direction* for the demo-mode branch
+// reroute below (docks vs. generic) — not every structural trigger implies
+// a location change, so this stays intentionally smaller than the set above.
+const LOCATION_TRIGGER_RE = /\b(docks?|leav(?:e|es|ing|ed)?|stand(?:s|ing)?|walk(?:ed|s|ing)?\s+out|coats?)\b/i;
+
+function isStructuralEdit(oldText,newText){
+  if(oldText.trim()===newText.trim()) return false;
+  if(STRUCTURAL_TRIGGER_RE.test(newText)) return true;
+  const norm=s=>s.toLowerCase().replace(/[^a-z0-9' ]/g,'').split(/\s+/).filter(Boolean);
+  const oldWords=norm(oldText), newWords=norm(newText); const oldSet=new Set(oldWords);
+  const shared=newWords.filter(w=>oldSet.has(w)).length;
+  const overlap=shared/Math.max(newWords.length,1);
+  const lenDelta=Math.abs(oldWords.length-newWords.length)/Math.max(oldWords.length,newWords.length,1);
+  return overlap<0.55 || lenDelta>0.4;
+}
+// Handles what happens to the *generation queue* after a structural edit.
+//
+// Previously this unconditionally overwrote `pool` with one of the
+// hardcoded pre-LLM demo arrays (BRANCHES.docks / .generic), even when a
+// real provider was configured and actively generating prose — so a
+// writer using a real LLM would edit a line, and the app would silently
+// discard their AI-generated continuation and splice in canned demo
+// sentences about docks. The demo branches now only ever apply when no
+// LLM is configured (i.e. the tool is being used in its out-of-the-box
+// demo mode). With a real provider configured, a structural edit simply
+// clears the forward queue — the existing pointer/pool consumption logic
+// in tick()/generateMoreIntoPool() then naturally calls the LLM again with
+// the *edited* manuscript as context, so the continuation follows the new
+// direction instead of being overridden by a hardcoded guess at one.
+function rerouteIfTriggered(text){
+  if(llmIsConfigured()){
+    pool = [];
+    pointer = 0;
+    currentBranch = 'live';
+    updateBranchLabel();
+    return;
+  }
+  let target;
+  if(LOCATION_TRIGGER_RE.test(text)) target='docks';
+  else if(currentBranch==='original' || currentBranch==='live') target='generic';
+  else target = currentBranch==='docks' ? 'generic' : 'docks';
+  currentBranch=target; pool=BRANCHES[target].slice(); pointer=0; updateBranchLabel();
+}
+function updateBranchLabel(){ branchLabelEl.textContent='branch: '+(currentBranch==='live' ? 'live (AI-directed)' : currentBranch); }
+
+function bufferWordCount(){ return buffer.join(' ').trim().split(/\s+/).filter(Boolean).length; }
+
+function commitBufferEdit(i,newText){
+  const oldText=buffer[i]; const structural=isStructuralEdit(oldText,newText);
+  buffer[i]=newText; markDocumentChanged();
+  if(structural){
+    // Normal behavior: everything after the edited line gets dropped so it
+    // can regenerate around the new direction. Locked-in lines are the
+    // exception — they survive the cut and keep their place relative to
+    // the edit, instead of being wiped along with everything else.
+    const keptAfter = [];
+    for(let j=i+1;j<buffer.length;j++){
+      if(lockedLines.has(j)) keptAfter.push(buffer[j]);
+    }
+    buffer = buffer.slice(0,i+1).concat(keptAfter);
+    const rebuiltLocked = new Set();
+    for(let j=0;j<=i;j++){ if(lockedLines.has(j)) rebuiltLocked.add(j); }
+    for(let k=0;k<keptAfter.length;k++){ rebuiltLocked.add(i+1+k); }
+    lockedLines = rebuiltLocked;
+    reading=null; rerouteIfTriggered(newText); flashRegen();
+  } else { flashOk(); }
+  editingTarget=null; render();
+}
+function commitReadingEdit(newText){
+  const oldText=reading?reading.text:''; const structural=isStructuralEdit(oldText,newText);
+  reading={text:newText}; markDocumentChanged();
+  if(structural){ rerouteIfTriggered(newText); flashRegen(); } else { flashOk(); }
+  editingTarget=null; render();
+}
+function flashRegen(){ showFlag({ok:false,text:'↻ regenerating forward from your edit…'}, 900); }
+function flashOk(){ showFlag({ok:true,text:'✓ minor edit — nothing downstream touched'}, 1400); }
+let pendingFlag=null;
+let pendingFlagTimer=null;
+// Both flash helpers share one timer slot. Without this, a quick
+// flashRegen() (900ms) followed by a flashOk() (1400ms) before the first
+// timer fires would let the *first* timer's callback null out the *second*
+// flag partway through its own display window — the message would vanish
+// early or the wrong one would show. Clearing the previous timer before
+// arming a new one keeps only the most recent flag's timer live.
+function showFlag(flag, ms){
+  if(pendingFlagTimer){ clearTimeout(pendingFlagTimer); }
+  pendingFlag = flag;
+  pendingFlagTimer = setTimeout(()=>{ pendingFlag=null; pendingFlagTimer=null; render(); }, ms);
+  render();
+}
+
+// Non-blocking notification, reusing the same flash-message channel as
+// flashRegen/flashOk, for places that previously used a blocking alert()
+// purely to announce something (no input needed) — e.g. "no lines to
+// unlock yet", "chapter changed". Kept separate from reportError(), which
+// is specifically for failures and goes to the chat log instead.
+function toast(text, ms=1800){ showFlag({ok:true,text}, ms); }
+
+function lockBufferLines(indices){
+  indices.forEach(i=> lockedLines.add(i));
+  markDocumentChanged();
+  render();
+}
+function unlockBufferLines(indices){
+  indices.forEach(i=> lockedLines.delete(i));
+  markDocumentChanged();
+  render();
+}
+
+// --- Lock In: highlight text in the draft area, right-click, choose Lock
+// in (or Unlock, if everything selected is already locked). Snapped to
+// whole lines — the app's data model is one buffer entry per line, so a
+// selection touching any part of a line locks/unlocks that entire line,
+// not an arbitrary character range within it. ---
+let contextMenuEl = null;
+function closeContextMenu(){
+  if(contextMenuEl){ contextMenuEl.remove(); contextMenuEl=null; }
+  document.removeEventListener('click', closeContextMenu);
+  document.removeEventListener('keydown', closeContextMenuOnEscape);
+}
+function closeContextMenuOnEscape(e){ if(e.key==='Escape') closeContextMenu(); }
+function openContextMenu(x, y, indices){
+  closeContextMenu();
+  const allLocked = indices.every(i=> lockedLines.has(i));
+  contextMenuEl = document.createElement('div');
+  contextMenuEl.className = 'context-menu glass';
+  const btn = document.createElement('button');
+  btn.textContent = allLocked ? 'Unlock' : 'Lock in';
+  btn.onclick = (e)=>{
+    e.stopPropagation();
+    if(allLocked) unlockBufferLines(indices); else lockBufferLines(indices);
+    window.getSelection().removeAllRanges();
+    closeContextMenu();
+  };
+  contextMenuEl.appendChild(btn);
+  document.body.appendChild(contextMenuEl);
+  // Keep it on-screen if the click was near the right/bottom edge.
+  const rect = contextMenuEl.getBoundingClientRect();
+  contextMenuEl.style.left = Math.min(x, window.innerWidth - rect.width - 8) + 'px';
+  contextMenuEl.style.top = Math.min(y, window.innerHeight - rect.height - 8) + 'px';
+  // Deferred so the click that opened the menu doesn't immediately close it
+  // via the same listener (document click bubbles after this handler returns).
+  setTimeout(()=>{
+    document.addEventListener('click', closeContextMenu);
+    document.addEventListener('keydown', closeContextMenuOnEscape);
+  }, 0);
+}
+draftArea.addEventListener('contextmenu', (e)=>{
+  const start = draftArea.selectionStart, end = draftArea.selectionEnd;
+  if(start===end) return; // nothing highlighted — let the normal menu show
+  const lines = draftArea.value.split('\n');
+  const touched = [];
+  let offset = 0;
+  for(let i=0;i<lines.length;i++){
+    const lineStart = offset;
+    const lineEnd = offset + lines[i].length; // exclusive of the \n separator
+    if(lineStart < end && start < lineEnd) touched.push(i); // half-open interval overlap
+    offset = lineEnd + 1;
+  }
+  if(!touched.length) return;
+  e.preventDefault();
+  // Same reasoning as before: pause playback so nothing can shift buffer
+  // indices out from under the menu while it's open (auto-graduation is
+  // now blur-triggered rather than per-keystroke, but pausing here is
+  // still the correct guard against the menu going stale).
+  pauseForEdit();
+  openContextMenu(e.clientX, e.clientY, touched);
+});
+
+function focusEditor(){ const ta=document.querySelector('textarea'); if(ta){ ta.focus(); ta.setSelectionRange(ta.value.length,ta.value.length); } }
+function pauseForEdit(){ if(playing) stopPlaying(); }
+
+function render(){
+  // manuscript tail — the most recent locked lines, individually
+  // selectable/editable. Was hardcoded to 2 lines (a preview sliver);
+  // that's the exact thing "I can't see the manuscript" was about. This
+  // isn't the whole document — that's a bigger, separate ask — but it's
+  // enough real context to actually read, not just confirm the last line
+  // landed.
+  // manuscript — every locked line, full stop. Not a windowed "tail" —
+  // that was overbuilt complexity for a problem that doesn't exist here.
+  // It's a normal, growing, scrollable text area, same as any word
+  // processor: it gets longer as you write, you scroll to see earlier
+  // parts. The CSS bounds the viewport (max-height + overflow-y), not
+  // the content — nothing here ever gets cut off from what's rendered.
+  manuscriptTail.innerHTML = '<span class="zlabel">Manuscript — locked</span>';
+  const soloReading = !coWritingMode && playing && manuscriptReadIndex!=null;
+  if(!committed.length){
+    const e=document.createElement('div'); e.style.color='var(--pencil-soft)'; e.style.fontStyle='italic';
+    e.textContent='Nothing finalized yet.'; manuscriptTail.appendChild(e);
+  } else {
+    let readingEl = null;
+    committed.forEach((t,i)=>{
+      const isEditingThis = editingTarget && editingTarget.type==='committed' && editingTarget.index===i;
+      const div=document.createElement('div');
+      if(isEditingThis){
+        div.className='tail-line-editing';
+        div.innerHTML = '<textarea rows="2">'+escapeHtml(t)+'</textarea><div class="line-controls"><button data-save-committed="'+i+'">Save</button><button data-cancel-committed="1" class="secondary">Cancel</button></div>';
+      } else {
+        div.className = 'tail-line'+(selectedLineIndex===i?' selected':'')+(soloReading && i===manuscriptReadIndex ? ' reading-now':'');
+        div.textContent = t;
+        div.title = 'Click to select this line, then use ☰ → Unlock selected / line… to edit it';
+        div.onclick = ()=>{ selectedLineIndex = (selectedLineIndex===i) ? null : i; render(); };
+        if(soloReading && i===manuscriptReadIndex) readingEl = div;
+      }
+      manuscriptTail.appendChild(div);
+    });
+    // Follow along as it reads — scrolling to keep your place, not a
+    // separate windowing mechanism. Only matters while solo-reading;
+    // otherwise the browser's natural scroll position is left alone.
+    if(readingEl) readingEl.scrollIntoView({block:'center', behavior:'smooth'});
+  }
+
+  // reading indicator — the ONE line actively being AI-read stays its own
+  // small element, not part of the big draftArea textarea below, since a
+  // plain textarea can't animate part of its own text (the sweep-highlight
+  // only works because this is a separate, small DOM node).
+  readingIndicator.innerHTML = '';
+  if(pendingFlag){ const f=document.createElement('div'); f.className='regen-flag'+(pendingFlag.ok?' ok':''); f.textContent=pendingFlag.text; readingIndicator.appendChild(f); }
+  if(lockedLines.size){
+    const lk=document.createElement('div'); lk.className='locked-count';
+    lk.textContent = '🔒 '+lockedLines.size+' line'+(lockedLines.size===1?'':'s')+' locked in';
+    readingIndicator.appendChild(lk);
+  }
+  if(reading){
+    const isEditingReading = editingTarget && editingTarget.type==='reading';
+    const div=document.createElement('div');
+    if(isEditingReading){
+      div.className='line editing';
+      div.innerHTML = '<textarea rows="2">'+escapeHtml(reading.text)+'</textarea><div class="line-controls"><button data-save-reading="1">Save &amp; regenerate forward</button><button data-cancel-reading="1" class="secondary">Cancel</button></div>';
+    } else {
+      div.className = 'line reading' + (inReaction ? ' reaction' : '');
+      const sweep=document.createElement('span'); sweep.className='sweep';
+      if(playing && !inReaction){ sweep.style.animationDuration = SPEED_MS[speedInput.value]+'ms'; }
+      div.appendChild(sweep);
+      div.appendChild(document.createTextNode(reading.text));
+      if(inReaction){ const ring=document.createElement('span'); ring.className='reaction-ring'; ring.title='Reaction window — click to interrupt'; div.appendChild(ring); }
+      div.onclick = ()=>{ pauseForEdit(); clearReaction(); editingTarget={type:'reading'}; render(); focusEditor(); };
+    }
+    readingIndicator.appendChild(div);
+  }
+  const saveReadingBtn = readingIndicator.querySelector('[data-save-reading]');
+  if(saveReadingBtn) saveReadingBtn.onclick=()=>{ const ta=readingIndicator.querySelector('textarea'); commitReadingEdit(ta.value); };
+  const cancelReadingBtn = readingIndicator.querySelector('[data-cancel-reading]');
+  if(cancelReadingBtn) cancelReadingBtn.onclick=()=>{ editingTarget=null; render(); };
+
+  // draft area — the settled buffer, one continuous editable textarea.
+  // Only ever written to when the user doesn't currently have it focused,
+  // so a re-render triggered by something unrelated (a toast, a chat
+  // reply, playback advancing) never fights their cursor or interrupts
+  // active typing. See reconcileDraftArea() for how edits sync back into
+  // `buffer`, and why locked lines survive a delete.
+  if(document.activeElement !== draftArea){
+    draftArea.value = buffer.join('\n');
+    autosizeDraftArea();
+  }
+  const saveCommittedBtn = manuscriptTail.querySelector('[data-save-committed]');
+  if(saveCommittedBtn) saveCommittedBtn.onclick=()=>{
+    const idx=parseInt(saveCommittedBtn.getAttribute('data-save-committed'));
+    const ta=manuscriptTail.querySelector('textarea');
+    committed[idx]=ta.value; markDocumentChanged(); editingTarget=null; selectedLineIndex=null; render();
+  };
+  const cancelCommittedBtn = manuscriptTail.querySelector('[data-cancel-committed]');
+  if(cancelCommittedBtn) cancelCommittedBtn.onclick=()=>{ editingTarget=null; render(); };
+
+  bufferCrawl.scrollTop = 0; // newest (bottom of doc) stays anchored near visual bottom via column-reverse
+
+  statusDot.className='status-dot '+(playing?'playing':((buffer.length||committed.length||reading)?'paused':''));
+  statusText.textContent = playing ? (speaking?'reading aloud…':'reading…') : (inReaction ? 'reaction window…' : ((buffer.length||committed.length||reading)?'paused':'idle'));
+  wordMetaEl.textContent = bufferWordCount()+' / '+BUFFER_WORD_CAP+' words in buffer';
+  playBtn.textContent = playing ? '⏸' : '▶';
+  if(refMode==='list') renderRefPane();
+}
+function escapeHtml(s){ return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+let inReaction = false;
+function clearReaction(){ inReaction=false; if(reactionTimer){ clearTimeout(reactionTimer); reactionTimer=null; } }
+
+let speechToken = 0;
+function speechText(text,done){
+  if(!('speechSynthesis' in window)){ if(done) done(); return false; }
+  // Calling cancel() below fires the *previous* utterance's onerror (not
+  // onend) if one was still speaking. That handler used to call whatever
+  // `done` callback closure was live at that moment — which, by the time
+  // it fires, is racing against `reading` already having moved on to the
+  // next line — so it would fire the wrong tick's "finished reading"
+  // logic (reaction window opening early, while the new line is still
+  // being spoken). A per-call token makes onstart/onend/onerror no-ops
+  // for any utterance that isn't the current one.
+  const myToken = ++speechToken;
+  window.speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(text);
+  u.rate = 0.75 + (Number(speedInput.value)-1)*0.12; u.pitch=1;
+  u.onstart=()=>{ if(myToken!==speechToken) return; speaking=true; render(); };
+  u.onend=()=>{ if(myToken!==speechToken) return; speaking=false; render(); if(done) done(); };
+  u.onerror=()=>{ if(myToken!==speechToken) return; speaking=false; render(); if(done) done(); };
+  window.speechSynthesis.speak(u); return true;
+}
+function stopSpeech(){ if('speechSynthesis' in window) window.speechSynthesis.cancel(); speechToken++; speaking=false; }
+
+// Solo-mode manuscript read-through (co-writing mode off): Play reads the
+// actual committed manuscript aloud, start to finish — not the AI pool,
+// since there is no AI pool to read from in this mode. No reaction window:
+// committed text is already finalized, so there's nothing to pause and
+// react to here the way there is with a fresh AI-drafted line. Persists
+// across Stop/Play so resuming continues from where you left off rather
+// than restarting from the top each time.
+let manuscriptReadIndex = null;
+function tickManuscriptRead(){
+  if(manuscriptReadIndex==null) manuscriptReadIndex = 0;
+  if(manuscriptReadIndex >= committed.length){ stopPlaying(); return; }
+  render();
+  speechText(committed[manuscriptReadIndex], ()=>{
+    if(!playing || coWritingMode) return; // mode or playback could've changed mid-utterance
+    manuscriptReadIndex++;
+    tickManuscriptRead();
+  });
+}
+
+function graduateIfOverCap(){
+  while(bufferWordCount() > BUFFER_WORD_CAP && buffer.length){
+    committed.push(buffer.shift());
+    committedChapters.push(currentChapter);
+    // every remaining buffer index just shifted down by one — carry locked lines with them
+    const shifted = new Set();
+    lockedLines.forEach(idx => { if(idx > 0) shifted.add(idx-1); });
+    lockedLines = shifted;
+  }
+}
+
+// Approve: force the whole current buffer into the locked manuscript now,
+// without waiting for it to hit the page-word cap. Same "you can still
+// unlock it later" rule applies — this isn't more permanent than the
+// normal auto-graduate.
+function approveBuffer(){
+  if(!buffer.length) return;
+  committed.push(...buffer);
+  committedChapters.push(...buffer.map(()=>currentChapter));
+  buffer = [];
+  lockedLines = new Set();
+  markDocumentChanged();
+  renderRefPane();
+  setMenuOpen(false);
+  render();
+}
+approveBtn.onclick = approveBuffer;
+
+// Co-writing mode toggle. Off: the buffer-crawl section and its seam
+// divider are removed from layout entirely (not just re-styled), and the
+// manuscript expands to fill that space — "just AI chat and your
+// manuscript." On: the full draft pipeline is back. Switching off with
+// content still sitting in the draft area locks it into the manuscript
+// first (same as Approve) rather than hiding it somewhere the user can no
+// longer see or reach.
+function updateCoWritingModeUI(){
+  pageSheetsEl.classList.toggle('solo-mode', !coWritingMode);
+  bufferCrawl.style.display = coWritingMode ? '' : 'none';
+  crawlSeam.style.display = coWritingMode ? '' : 'none';
+  coWriteToggleBtn.classList.toggle('on', coWritingMode);
+  coWriteToggleBtn.title = coWritingMode
+    ? 'Co-writing mode is on — AI can read aloud, draft, and review with you. Click to turn off.'
+    : 'Co-writing mode is off — just you and the page. Click to bring AI drafting/reading back in.';
+}
+coWriteToggleBtn.onclick = ()=>{
+  if(coWritingMode && buffer.length) approveBuffer(); // lock in whatever was mid-review before the section disappears
+  coWritingMode = !coWritingMode;
+  markDocumentChanged();
+  updateCoWritingModeUI();
+  render();
+};
+updateCoWritingModeUI(); // set correct initial layout — off by default
+
+// --- Manual writing (works with zero AI — this is the word-processor
+// core). draftArea is one continuous, directly-typable textarea over the
+// settled buffer — click anywhere, cursor lands there, type, exactly like
+// any word processor. No separate box, no button, no modifier key.
+//
+// Locked-in content is protected here too, not just from AI: if an edit
+// would remove a locked line's exact text — including Select All + Delete
+// wiping everything — that line gets restored. Matched by exact text, in
+// original relative order; two locked lines with byte-identical text is a
+// rare edge case where which specific original survives could be
+// ambiguous, but content is never lost either way.
+function reconcileDraftArea(){
+  const rawLines = draftArea.value.split('\n');
+  const baseLines = (rawLines.length===1 && rawLines[0]==='') ? [] : rawLines;
+  const lockedIndices = Array.from(lockedLines).sort((a,b)=>a-b);
+  const lockedTexts = lockedIndices.map(i=>buffer[i]).filter(t=>t!==undefined);
+  const missing = lockedTexts.filter(t=>!baseLines.includes(t));
+  let finalLines = baseLines;
+  if(missing.length){
+    finalLines = baseLines.concat(missing);
+    draftArea.value = finalLines.join('\n');
+    toast((missing.length===1 ? 'A locked line' : missing.length+' locked lines')+" can't be deleted — restored at the end. Unlock it first if you really want it gone.", 3600);
+  }
+  const newLockedLines = new Set();
+  finalLines.forEach((t,i)=>{ if(lockedTexts.includes(t)) newLockedLines.add(i); });
+  buffer = finalLines;
+  lockedLines = newLockedLines;
+  markDocumentChanged();
+  render();
+}
+function autosizeDraftArea(){
+  draftArea.style.height='auto';
+  draftArea.style.height=draftArea.scrollHeight+'px';
+}
+draftArea.addEventListener('input', ()=>{ reconcileDraftArea(); autosizeDraftArea(); });
+// Word-cap graduation only runs once the user steps away, not per-
+// keystroke — pulling the oldest lines out from under someone mid-typing
+// (text vanishing from the box they're actively composing in) would be
+// exactly the kind of surprising, disruptive behavior this whole app has
+// been trying to avoid all night.
+draftArea.addEventListener('blur', ()=>{ graduateIfOverCap(); render(); autosizeDraftArea(); });
+
+let generating = false;
+
+// Ask the configured LLM for the next 1-3 lines of prose continuing the
+// manuscript, and push them onto `pool` so the existing playback/buffer
+// engine (unchanged) just keeps consuming from `pool` as before.
+async function generateMoreIntoPool(){
+  if(generating) return false;
+  if(!llmIsConfigured()) return false;
+  generating = true;
+  genBtn.disabled = true;
+  statusText.textContent = 'generating…';
+  const requestEpoch = docEpoch; // see docEpoch declaration for why
+  try{
+    const prompt = 'Continue this manuscript with the next 2-4 sentences of prose, matching tone and voice. '+
+      'Return ONLY the new prose, no preamble, no quotes around it, no meta-commentary. '+
+      'Each sentence should be its own line.\n\n'+manuscriptContextForLLM();
+    const reply = await callLLM([{role:'user', content: prompt}]);
+    if(requestEpoch !== docEpoch) return false; // a different document is open now — discard this result
+    const newLines = reply.split(/\n+/).map(l=>l.trim()).filter(Boolean);
+    if(newLines.length){ pool = pool.concat(newLines); }
+    return newLines.length>0;
+  }catch(err){
+    reportError('Generation failed', err);
+    return false;
+  }finally{
+    generating = false;
+    genBtn.disabled = false;
+    render();
+  }
+}
+
+async function tick(){
+  if(reading){
+    buffer.push(reading.text); markDocumentChanged(); reading=null;
+    graduateIfOverCap();
+  }
+  if(pointer >= pool.length && llmIsConfigured() && !generating){
+    const got = await generateMoreIntoPool();
+    if(!got && pointer>=pool.length){ stopPlaying(); render(); return; }
+  }
+  if(pointer < pool.length){
+    reading={ text: pool[pointer] }; pointer++; markDocumentChanged(); render();
+    if(playing){
+      speechText(reading.text, ()=>{
+        if(!playing || !reading) return;
+        inReaction = true; render();
+        reactionTimer = setTimeout(()=>{ inReaction=false; if(playing && reading) tick(); }, REACTION_MS);
+      });
+    }
+  } else { stopPlaying(); }
+  render();
+}
+function startPlaying(){
+  if(playing) return; playing=true; clearReaction();
+  if(!coWritingMode){ tickManuscriptRead(); render(); return; }
+  if(!reading && (pointer<pool.length || llmIsConfigured())) tick();
+  else if(reading) speechText(reading.text, ()=>{ if(!playing||!reading) return; inReaction=true; render(); reactionTimer=setTimeout(()=>{ inReaction=false; if(playing&&reading) tick(); }, REACTION_MS); });
+  render();
+}
+function stopPlaying(){ stopSpeech(); clearReaction(); playing=false; render(); }
+function skipReaction(){ if(inReaction){ clearReaction(); if(playing && reading) tick(); } }
+
+playBtn.onclick=()=> playing ? stopPlaying() : startPlaying();
+stopBtn.onclick=()=>{ stopPlaying(); };
+skipBtn.onclick=()=>{
+  if(!coWritingMode){
+    manuscriptReadIndex = (manuscriptReadIndex==null) ? 0 : manuscriptReadIndex+1;
+    if(playing){ stopSpeech(); tickManuscriptRead(); } else { render(); }
+    return;
+  }
+  if(inReaction){ skipReaction(); return; }
+  if(playing && reading){ stopSpeech(); clearReaction(); tick(); return; }
+  if(!playing && (pointer<pool.length || llmIsConfigured())){ tick(); }
+};
+genBtn.onclick=()=>{ if(!playing && !generating){ setMenuOpen(false); tick(); } }; // manual "generate next line" — real LLM call if a provider is configured, else falls back to demo pool
+speedInput.onchange=markDocumentChanged;
+
+// --- Chat: wired to whichever LLM provider is configured (see LLM_ADAPTERS) ---
+function addChatMsg(who,text,thinking){
+  const div=document.createElement('div'); div.className='chat-msg '+(who==='you'?'you':'pp')+(thinking?' thinking':'');
+  div.innerHTML='<span class="who">'+(who==='you'?'You':'PubPartner')+'</span>'+escapeHtml(text);
+  chatLog.appendChild(div); chatLog.scrollTop=chatLog.scrollHeight;
+  return div;
+}
+// Single, consistent channel for surfacing failures to the writer, so
+// business-logic functions (chat send, generation) don't each reach into
+// the DOM/chat panel directly and don't each decide their own message format.
+function reportError(context, err){
+  console.error('[2i]', context, err);
+  addChatMsg('pp', '⚠ '+(context?context+': ':'')+err.message);
+}
+const WELCOME_GREETING = "Hi. I'm here to help you write — give me a few details and I'll draft a starting point, or bring me what you've got and I'll help you find the next direction, or just clean it up. I'd also recommend we read your manuscript out loud together sometime, so we can catch anything out of place. Got a few pieces that don't connect yet? I can stitch them together with transitions, keeping the details and language you want. Nothing changes unless you ask me to — so, where do you want to start?";
+addChatMsg('pp', WELCOME_GREETING);
+
+// Rebuilds the visible chat log from a restored chatHistory (used after
+// opening a document). chatHistory only stores the {role, content} pairs
+// used as model context, not rendered DOM, so this maps them back onto
+// addChatMsg's 'you' / 'pp' convention.
+function rebuildChatLogFromHistory(){
+  chatLog.innerHTML = '';
+  if(!chatHistory.length){
+    addChatMsg('pp', WELCOME_GREETING);
+    return;
+  }
+  chatHistory.forEach(m=> addChatMsg(m.role==='user' ? 'you' : 'pp', m.content));
+}
+
+function manuscriptContextForLLM(){
+  const recentCommitted = committed.slice(-6).join('\n');
+  const bufferText = buffer.join('\n');
+  const readingText = reading ? reading.text : '';
+  return [
+    recentCommitted ? 'RECENT LOCKED MANUSCRIPT:\n'+recentCommitted : 'RECENT LOCKED MANUSCRIPT: (nothing finalized yet)',
+    bufferText ? '\nCURRENT DRAFT BUFFER (not yet locked):\n'+bufferText : '',
+    readingText ? '\nMOST RECENT LINE:\n'+readingText : ''
+  ].join('\n');
+}
+
+const CHAT_HISTORY_CAP = 16; // max {role, content} pairs kept as context sent to the model
+let chatHistory = []; // running {role, content} pairs sent to the model for context
+
+let chatSending = false;
+async function sendChat(){
+  // Disabling the Send button stops mouse clicks, but does nothing about
+  // the Enter-key listener on the input — that had no awareness of a
+  // request already being in flight. Hitting Enter twice quickly could
+  // start two concurrent sendChat() calls, and since replies can resolve
+  // in either order, the second message's reply could render before the
+  // first's. This guard makes the function itself re-entrancy-safe,
+  // matching the pattern generateMoreIntoPool() already used correctly.
+  if(chatSending) return;
+  const v=chatInput.value.trim(); if(!v) return;
+  chatSending = true;
+  addChatMsg('you',v); chatInput.value='';
+  chatHistory.push({role:'user', content:v});
+  chatSendBtn.disabled = true; chatSendBtn.textContent='…';
+  const thinkingEl = addChatMsg('pp','…thinking…', true);
+  const requestEpoch = docEpoch; // see docEpoch declaration for why
+  try{
+    const systemContext = 'You are PubPartner, a collaborative fiction-writing assistant embedded in the Pubcast 2i manuscript editor. '+
+      'Be concise, specific, and useful — a writing partner in the room, not a generic chatbot. Here is the manuscript context:\n\n'+
+      manuscriptContextForLLM();
+    const messages = [{role:'user', content: systemContext}, ...chatHistory];
+    const reply = await callLLM(messages);
+    thinkingEl.remove();
+    if(requestEpoch !== docEpoch) return; // a different document is open now — this reply belongs to the old one, discard it
+    addChatMsg('pp', reply || '(empty response)');
+    chatHistory.push({role:'assistant', content: reply||''});
+    if(chatHistory.length>CHAT_HISTORY_CAP) chatHistory = chatHistory.slice(-CHAT_HISTORY_CAP);
+  }catch(err){
+    thinkingEl.remove();
+    if(requestEpoch === docEpoch) reportError('', err);
+  }finally{
+    chatSendBtn.disabled = false; chatSendBtn.textContent='Send';
+  }
+}
+chatSendBtn.onclick=sendChat;
+chatInput.addEventListener('keydown',e=>{ if(e.key==='Enter') sendChat(); });
+
+// --- Reference pane: real chapter scroll-back (this document) + real
+// "open another document" (reads any .2i file, read-only, does NOT touch
+// the active working document's state). ---
+let refMode = 'list'; // 'list' | 'view'
+let refViewTitle = '';
+let refViewText = '';
+
+function currentDocChapterList(){
+  const chapters = [...new Set(committedChapters)];
+  return chapters.map(ch => ({
+    label: 'Chapter '+ch+' — this document',
+    getText: () => committed.filter((_,i)=>committedChapters[i]===ch).join('\n\n')
+  }));
+}
+
+function renderRefPane(){
+  if(refMode==='view'){
+    refOpenBtn.style.display='none';
+    refList.innerHTML =
+      '<button class="secondary ref-view-back" id="refBackBtn">← Back to list</button>'+
+      '<div class="ref-view-title">'+escapeHtml(refViewTitle)+'</div>'+
+      '<div class="ref-view-text">'+escapeHtml(refViewText || '— nothing finalized in this chapter yet —')+'</div>';
+    document.getElementById('refBackBtn').onclick = ()=>{ refMode='list'; renderRefPane(); };
+    return;
+  }
+  refOpenBtn.style.display='';
+  refList.innerHTML='';
+  const chapters = currentDocChapterList();
+  if(!chapters.length){
+    const e=document.createElement('div'); e.className='ref-item'; e.style.cursor='default';
+    e.innerHTML='<span style="color:var(--pencil-soft);font-style:italic;">No finalized chapters yet — nothing to scroll back to.</span>';
+    refList.appendChild(e);
+    return;
+  }
+  chapters.forEach(ch=>{
+    const el=document.createElement('div'); el.className='ref-item';
+    el.innerHTML='<span>'+escapeHtml(ch.label)+'</span><small>scroll back</small>';
+    el.onclick=()=>{ refViewTitle=ch.label; refViewText=ch.getText(); refMode='view'; renderRefPane(); };
+    refList.appendChild(el);
+  });
+}
+
+async function openReferenceDocument(){
+  const picked = await pickOpenFile();
+  if(!picked) return;
+  try{
+    const text = await picked.file.text();
+    const data = JSON.parse(text);
+    if(data.format!=='2i-document' || !data.state) throw new Error('not a 2i document');
+    const chapters = Array.isArray(data.state.committed) ? data.state.committed : [];
+    refViewTitle = (data.title || picked.file.name) + ' — external reference (read-only)';
+    refViewText = chapters.join('\n\n');
+    refMode='view'; renderRefPane();
+  }catch(err){
+    reportError('Could not read that as a 2i document', err);
+  }
+}
+refOpenBtn.onclick = openReferenceDocument;
+renderRefPane();
+
+updateBranchLabel();
+render();
+
+// Boot-time autosave check: non-blocking (no dialog interrupting the
+// welcome message) — just reveal the menu button and mention it once in
+// chat if a snapshot exists. If IndexedDB is unavailable entirely (private
+// browsing in some browsers, etc.), this silently no-ops rather than erroring.
+(async ()=>{
+  const snap = await readAutosaveSnapshot();
+  if(snap && snap.state){
+    restoreAutosaveBtn.style.display = '';
+    const when = snap.savedAt ? new Date(snap.savedAt).toLocaleString() : 'a previous session';
+    addChatMsg('pp', 'I found an autosaved draft from '+when+' that was never saved to a file — this matters most in Firefox/Safari, where Save can\'t write back to the same file. Open ☰ → Restore autosave… if you want it back.');
+  }
+})();
+
+
+// ===== SPIRAL SPINE v14: continuous physical wire coil =====
+function drawSpiralSpine(){
+  const canvas=document.getElementById('spineCanvas');
+  if(!canvas) return;
+
+  const rect=canvas.parentElement.getBoundingClientRect();
+  const dpr=Math.min(window.devicePixelRatio||1,2);
+  const w=Math.max(1,Math.round(rect.width*dpr));
+  const h=Math.max(1,Math.round(rect.height*dpr));
+
+  canvas.width=w;
+  canvas.height=h;
+
+  const ctx=canvas.getContext('2d');
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+
+  const W=rect.width, H=rect.height;
+  const cx=W*0.53;
+  const rx=Math.min(22, W*0.36);
+  const pitch=20.5;
+  const start=-7;
+  const turns=Math.ceil((H+18)/pitch)+1;
+
+  // Recess behind the wire. This makes the coil look seated in a binding channel.
+  const recess=ctx.createLinearGradient(cx-rx-7,0,cx+rx+9,0);
+  recess.addColorStop(0,'rgba(0,0,0,.80)');
+  recess.addColorStop(.28,'rgba(0,0,0,.38)');
+  recess.addColorStop(.55,'rgba(255,222,145,.045)');
+  recess.addColorStop(.82,'rgba(0,0,0,.48)');
+  recess.addColorStop(1,'rgba(0,0,0,.82)');
+  ctx.fillStyle=recess;
+  ctx.fillRect(cx-rx-8,0,rx*2+16,H);
+
+  // Paper-side punched holes. These sit underneath the wire and make the
+  // binding read as a notebook construction instead of a decorative stripe.
+  for(let i=0;i<turns;i++){
+    const y=start+i*pitch+pitch*.50;
+    if(y < -10 || y > H+10) continue;
+
+    const hole=ctx.createRadialGradient(cx-rx+2,y-1,0,cx-rx+2,y,5.2);
+    hole.addColorStop(0,'rgba(35,20,10,.78)');
+    hole.addColorStop(.58,'rgba(77,51,25,.34)');
+    hole.addColorStop(1,'rgba(255,239,194,.04)');
+
+    ctx.fillStyle=hole;
+    ctx.beginPath();
+    ctx.ellipse(cx-rx+1,y,5.2,4.1,0,0,Math.PI*2);
+    ctx.fill();
+  }
+
+  // Build one continuous helical path. The flattened ellipse at each turn
+  // creates the familiar notebook-wire perspective.
+  function helixPath(offset=0){
+    const p=new Path2D();
+    const steps=turns*44;
+    for(let i=0;i<=steps;i++){
+      const t=i/44;
+      const a=t*Math.PI*2 + Math.PI*0.04;
+      const y=start + t*pitch + offset;
+      const x=cx + rx*Math.cos(a);
+      // Slightly compress the loop vertically, as a real wire seen face-on.
+      const localY=y + Math.sin(a)*2.4;
+
+      if(i===0) p.moveTo(x,localY);
+      else p.lineTo(x,localY);
+    }
+    return p;
+  }
+
+  // Deep contact shadow.
+  const path=helixPath(1.8);
+  ctx.save();
+  ctx.lineCap='round';
+  ctx.lineJoin='round';
+  ctx.strokeStyle='rgba(0,0,0,.82)';
+  ctx.lineWidth=5.6;
+  ctx.stroke(path);
+  ctx.restore();
+
+  // Main aged nickel/brass wire. It is deliberately not a flat grey line.
+  const wireGrad=ctx.createLinearGradient(0,0,W,0);
+  wireGrad.addColorStop(0,'#3c2d20');
+  wireGrad.addColorStop(.18,'#bca36f');
+  wireGrad.addColorStop(.30,'#f7ecd0');
+  wireGrad.addColorStop(.42,'#8f7950');
+  wireGrad.addColorStop(.58,'#d8c18a');
+  wireGrad.addColorStop(.72,'#fff4d5');
+  wireGrad.addColorStop(.86,'#806944');
+  wireGrad.addColorStop(1,'#35271b');
+
+  ctx.save();
+  ctx.lineCap='round';
+  ctx.lineJoin='round';
+  ctx.strokeStyle=wireGrad;
+  ctx.lineWidth=4.15;
+  ctx.stroke(helixPath());
+  ctx.restore();
+
+  // Dark underside and bright upper edge give the round wire an actual
+  // cylindrical profile.
+  ctx.save();
+  ctx.globalCompositeOperation='multiply';
+  ctx.lineCap='round';
+  ctx.strokeStyle='rgba(54,35,13,.56)';
+  ctx.lineWidth=1.55;
+  ctx.translate(0,1.15);
+  ctx.stroke(helixPath());
+  ctx.restore();
+
+  ctx.save();
+  ctx.globalCompositeOperation='screen';
+  ctx.lineCap='round';
+  ctx.strokeStyle='rgba(255,248,218,.74)';
+  ctx.lineWidth=0.92;
+  ctx.translate(-0.35,-0.72);
+  ctx.stroke(helixPath());
+  ctx.restore();
+
+  // Tiny glints at the crest of each loop. These are restrained, so it reads
+  // as metal rather than chrome jewelry.
+  for(let i=0;i<turns;i++){
+    const y=start+i*pitch+pitch*.20;
+    if(y < -8 || y > H+8) continue;
+
+    const glint=ctx.createRadialGradient(cx+rx*.30,y,0,cx+rx*.30,y,5);
+    glint.addColorStop(0,'rgba(255,248,218,.58)');
+    glint.addColorStop(.3,'rgba(255,235,176,.20)');
+    glint.addColorStop(1,'rgba(255,235,176,0)');
+    ctx.fillStyle=glint;
+    ctx.beginPath();
+    ctx.arc(cx+rx*.30,y,5,0,Math.PI*2);
+    ctx.fill();
+  }
+}
+window.addEventListener('load',drawSpiralSpine);
+drawSpiralSpine();
+
+
+// The notebook binding is responsive. Redraw at the actual device-pixel
+// density after resize so the wire stays crisp rather than stretching.
+let spineResizeTimer = null;
+window.addEventListener('resize', ()=>{
+  if(spineResizeTimer) clearTimeout(spineResizeTimer);
+  spineResizeTimer = setTimeout(drawSpiralSpine, 120);
+});
+
+/* v13: cursor-responsive lantern light.
+   This is intentionally cheap: CSS does the compositing; JS only moves two vars. */
+(function installTwoILight(){
+  const root = document.documentElement;
+  let raf = 0, lastX = 50, lastY = 18;
+  function move(e){
+    lastX = (e.clientX / Math.max(1, innerWidth)) * 100;
+    lastY = (e.clientY / Math.max(1, innerHeight)) * 100;
+    if(raf) return;
+    raf = requestAnimationFrame(()=>{
+      root.style.setProperty('--ui-light-x', lastX.toFixed(2) + '%');
+      root.style.setProperty('--ui-light-y', lastY.toFixed(2) + '%');
+      raf = 0;
+    });
+  }
+  addEventListener('pointermove', move, {passive:true});
+})();
+
+</script>
+</body>
+</html>
