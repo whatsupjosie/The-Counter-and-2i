@@ -594,10 +594,21 @@ function addChatMsg(who,text){
   chatLog.appendChild(div); chatLog.scrollTop=chatLog.scrollHeight;
 }
 addChatMsg('pp',"Welcome back. Say the word and I'll draft the next page — we'll go over it together before anything locks in.");
-function sendChat(){
+async function sendChat(){
   const v=chatInput.value.trim(); if(!v) return;
   addChatMsg('you',v); chatInput.value='';
-  setTimeout(()=>addChatMsg('pp','(placeholder reply — not yet wired to a real model call)'),350);
+  try {
+    const response = await fetch('http://localhost:8787/api/chat/character', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ character_id: 'pete', message: v, room_id: 'studio', user_id: 'user' })
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.error || `HTTP ${response.status}`);
+    addChatMsg('pp', data.reply || '(no response)');
+  } catch (error) {
+    addChatMsg('pp', `[Connection error: ${error.message}]`);
+  }
 }
 chatSendBtn.onclick=sendChat;
 chatInput.addEventListener('keydown',e=>{ if(e.key==='Enter') sendChat(); });
